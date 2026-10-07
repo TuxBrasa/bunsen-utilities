@@ -446,7 +446,7 @@ chooseDesktop(){
 
 $(gettext "(Conkys running on native Wayland cannot be assigned to a desktop
  so this choice will be applied in X11 sessions only.)") "
-    choice=$($DLGDEC $WINICON --center --list --title="$TITLE" \
+    choice=$($DLGDEC $WINICON --list --title="$TITLE" \
         --text="$yadtext" \
         --radiolist \
         --column=$(gettext "Select"):RD --column="$(gettext "Desktop Name"):TEXT" --column=$(gettext "desktop"):HD \
@@ -470,7 +470,7 @@ chooseStartup(){
         name=${file#$CONKYPATH/}
         sflst+=("$chk" "$(pangoEscape "$name")" "$file")
     done < <(bl-conky-session --list)
-    choice=$($DLGDEC $WINICON --center --list --title="$TITLE" \
+    choice=$($DLGDEC $WINICON --list --title="$TITLE" \
         --text="$(gettext "Choose the startup Conky session:")" \
         --radiolist \
         --column="$(gettext "Select"):RD" --column="$(gettext "Session File"):TEXT" --column="$(gettext "Filepath"):HD" \
@@ -495,7 +495,7 @@ loadDialog() {
 
     ## Populate dialog from array, get chosen conky(s)
 
-    choice=$($DLGDEC $WINICON --center --list --title="$TITLE" \
+    choice=$($DLGDEC $WINICON --list --title="$TITLE" \
         --text="$(printf "$(gettext "Session will be saved to: 
 %s")" "<b>$SESSIONFILE</b>")" \
         --checklist \
@@ -623,7 +623,7 @@ while [[ -n $1 ]];do
         -z|--choose-sessfile)
             while true
             do
-                SFNAME=$($DLGDEC $WINICON --center --entry \
+                SFNAME=$($DLGDEC $WINICON --entry \
                 --title="$(gettext "Save Conky sessionfile")" \
                 --entry-label="$(gettext "New saved session file:")" \
                 --text="$(printf "$(gettext "File to be saved in %s") \n\n" "<b>$CONKYPATH/</b>")" \
