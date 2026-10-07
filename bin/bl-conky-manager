@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 #    bl-conky-manager: BunsenLabs Conky selection and switcher script
 #    Copyright (C) 2015-2019  damo    <damo@bunsenlabs.org>
@@ -47,6 +47,59 @@
 #
 ########################################################################
 
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-conky-manager script
+
+clear
+
+TEXTDOMAIN="bl-conky-manager"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+which conky        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "$(gettext "Warning")" \
+--text "$(gettext "The conky program is not installed.")" \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+which bl-conky-session  1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "$(gettext "Warning")" \
+--text "$(gettext "The bl-conky-session program is not installed.")" \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+
 CONKYPATH="$HOME/.config/conky"
 BLDEFAULT=$(readlink -f "$CONKYPATH/BL-Default-conky.conf") # BL-Default-conky.conf is a symlink to this release's default conky
 DEFAULTSESSFILE="$CONKYPATH/conky-sessionfile"
@@ -60,8 +113,9 @@ OBPATH="$HOME/.config/bunsen/openbox" # not currently used in this script
 LABPATH="$HOME/.config/bunsen/labwc" # path used by BunsenLabs
 LABRCFILE="$LABPATH/rc.xml"
 
-USAGE1='
-    USAGE:  bl-conky-manager [OPTION]...FILES
+
+
+USAGE1="$(gettext "USAGE:  bl-conky-manager [OPTION]...FILES
 
     With no command option the script runs the gui
 
@@ -69,9 +123,11 @@ USAGE1='
     -f,--file <FILENAME>    : specify file to save session to
     -z,--choose-sessfile    : run filename entry dialog for new saved session
     -s,--choose-startup     : choose session file to run at startup
-'
+")"
 
-USAGE2='bl-conky-manager is a Conky selection and switcher script
+
+
+USAGE2="$(gettext 'bl-conky-manager is a Conky selection and switcher script
 which uses yad to generate a graphical user interface.
 
 Usage: bl-conky-manager [OPTION]...FILES
@@ -79,6 +135,7 @@ Usage: bl-conky-manager [OPTION]...FILES
 With no command option the script runs the gui
 
 Optional arguments:
+
     -h,--help   : This USAGE help
     -f,--file <FILENAME> : specify file to save session to
     -z,--choose-sessfile : run gui filename entry dialog for new saved session
@@ -103,9 +160,11 @@ Examples:
 
         bl-conky-session &
 
-'
+')"
+
 
 # look for a help option somewhere, then exit
+
 for i in "$@"
 do
     case "$i" in
@@ -116,39 +175,57 @@ do
     esac
 done
 
+
 BL_COMMON_LIBDIR='/usr/lib/bunsen/common'
+
 # shellcheck source=/dev/null
 if ! . "$BL_COMMON_LIBDIR/bl-includes" 2> /dev/null; then
-    echo $"Error: Failed to locate bl-includes in $BL_COMMON_LIBDIR" >&2
+
+    printf '%s\n' \
+    "$(printf "$(gettext "Error: Failed to source bl-includes in %s")" "$BL_COMMON_LIBDIR")" >&2
+
     exit 1
 fi
+
+
 # pangoEscape() for yad text display of filenames
 # is provided in bl-includes
 
 if [ ! -f "$DEFAULTSESSFILE" ] ; then
-    echo "$0: Failed to locate ${DEFAULTSESSFILE}, generating default..." >&2
+
+    printf "$(gettext "%s: Failed to locate %s, generating default...")" "$0" "${DEFAULTSESSFILE}" >&2
+
     echo "$BLDEFAULT" > "$DEFAULTSESSFILE"
 fi
 
-if [[ ! -f "$STARTSESSION" ]]; then
-    echo "$0: generating missing symlink $STARTSESSION to $DEFAULTSESSFILE"
-    ln -s "$DEFAULTSESSFILE" "$STARTSESSION" || echo "$0: WARNING: failed to create symlink $STARTSESSION"
+
+if [[ ! -f $STARTSESSION ]]; then
+
+    printf "$(gettext "%s: generating missing symlink %s to %s")" "$0" "$STARTSESSION" "$DEFAULTSESSFILE"
+
+    ln -s "$DEFAULTSESSFILE" "$STARTSESSION" || printf "$(gettext "%s: WARNING: failed to create symlink %s")" "$0" "$STARTSESSION"
+
 fi
 
+
 ### DIALOG VARIABLES
+
 DLG="yad --center --undecorated --borders=20 "
 DLGDEC="yad --center --borders=20 "
-TITLE="BunsenLabs Conky Manager"
+TITLE="$(gettext "BunsenLabs Conky Manager")"
 WINICON="--window-icon=distributor-logo-bunsenlabs"
-OK="--button=OK:0"
-APPLY="--button=Apply:0"
-CANCEL="--button=gtk-cancel:1"
-CLOSE="--button=Close:1"
+OK="--button=$(gettext "OK"):0"
+APPLY="--button=$(gettext "Apply"):0"
+CANCEL="--button=$(gettext "Cancel"):1"
+CLOSE="--button=$(gettext "Close"):1"
+
+
 ########## FUNCTIONS ###################################################
 
 CPATH_REGEX='.*(conky.*\.conf|conky|conkyrc)'
 
 # populates global array runningConkys
+
 getRunning(){
     unset runningConkys
     local pid command CPATH
@@ -156,7 +233,9 @@ getRunning(){
     while read -r pid; do
         mapfile -d '' -t command < "/proc/${pid}/cmdline" # use NULL delimiter to split cmdline into array 'command'
         [[ ${command[0]} = 'conky' ]]  || {
-            echo "$0: pgrep parsing failed: command is not 'conky'" >&2
+
+            printf "$(gettext "%s: pgrep parsing failed: command is not 'conky'")" "$0" >&2
+
             continue
         }
         for i in "${!command[@]}"; do
@@ -166,15 +245,19 @@ getRunning(){
         [[ -z $CPATH ]] && CPATH="$CONKYDEFAULT"
         [[ $CPATH = /* ]] || CPATH="$HOME/$CPATH" # assume path is relative to $HOME
         [[ -f $CPATH ]] || {
-            echo "$0: pgrep conky parsing failed: $CPATH is not a file" >&2
+
+            printf "$(gettext "%s: pgrep conky parsing failed: %s is not a file")" "$0" "$CPATH" >&2
+
             continue
         }
         runningConkys["$CPATH"]=1
     done < <(pgrep -x 'conky' -u "$USER")
 }
 
+
 # $1 holds full path to config file
 # returns 0 if a running conky is using that file
+
 isRunning(){
     local file=$1
     [[ ${runningConkys["$file"]} = 1 ]] && return 0
@@ -189,7 +272,7 @@ findConkys(){
     for file in "$CONKYPATH"/**;do
         [[ -f $file ]] || continue
         [[ $file =~ ${CPATH_REGEX}$ ]] || continue # ignore other than conky config files
-        name=${file#"$CONKYPATH"/}
+        name=${file#$CONKYPATH/}
         if isRunning "$file"; then
             check='TRUE'
         else
@@ -200,9 +283,12 @@ findConkys(){
     shopt -u globstar
 }
 
+
+
 # makes global array "CONKY_CONF"
+
 parseConkyfile(){
-    [[ -f $1 ]] || { echo "$1 is not a file." >&2;return 1;}
+    [[ -f $1 ]] || { printf "$(gettext "%s is not a file.")" "$1" >&2;return 1;}
     unset CONKY_CONF
     declare -Ag CONKY_CONF
     local line parse=false comment=false conkyconf name value
@@ -250,14 +336,17 @@ parseConkyfile(){
         value=${BASH_REMATCH[2]#[\'\"]} # strip quotes
         value=${value%[\'\"]}
         CONKY_CONF["${name}"]="${value}"
-        conkyconf=${conkyconf#*"${BASH_REMATCH[0]}"}
+        conkyconf=${conkyconf#*${BASH_REMATCH[0]}}
     done
 }
 
+
+
 # for version 1.09 conky files
 # makes global array "CONKY_CONF"
+
 parseConkyfile_1.09(){
-    [[ -f $1 ]] || { echo "$1 is not a file." >&2;return 1;}
+    [[ -f $1 ]] || { printf "$(gettext "%s is not a file.")" "$1" >&2;return 1;}
     unset CONKY_CONF
     declare -Ag CONKY_CONF
     local name value
@@ -269,14 +358,17 @@ parseConkyfile_1.09(){
     done < <(sed 's/\#.*$//' "$1")
 }
 
+
 # usage: parseConky <file>
 # creates array CONKY_CONF
 # echo "Value of key $key is: ${CONKY_CONF[$key]}"
+
 parseConky(){
     local path=$1
     if ! grep -Eq '(^|[[:blank:]])conky\.config[[:blank:]]*=?' "$path"
     then
-        #yad_info "This conky uses v1.09 syntax.\nIt is recommended to convert the conky to v1.10 syntax.\nSee: https://forums.bunsenlabs.org/viewtopic.php?id=3983"
+        # yad_info "$(gettext "This conky uses v1.09 syntax.\nIt is recommended to convert the conky to v1.10 syntax.\nSee: https://forums.bunsenlabs.org/viewtopic.php?id=3983")"
+
         parseConkyfile() {
             parseConkyfile_1.09 "$@"
         }
@@ -284,21 +376,29 @@ parseConky(){
     parseConkyfile "$path"
 }
 
+
 # determine stickiness of conkyfile by CONKY_CONF
+
 isSticky(){
+
 #    parseConky "$1" # parseConky should have been run before isSticky
+
     [[ ${CONKY_CONF[own_window]} != true ]] && return 0
     [[ ${CONKY_CONF[own_window_type]+X} = X ]] && [[ ${CONKY_CONF[own_window_type]} != normal ]] && return 0
     [[ ${CONKY_CONF[own_window_hints]} = *sticky* ]] && return 0
+
     return 1
 }
 
+
 # parse labwc's rc.xml to get the number of desktops
 # unlike X with wmctrl, the config is the only place to look
+
 getLabDesktops(){
     command -v xmlstarlet >/dev/null || return 1 # desktop choice is only for X11 anyway
 
     # these variables are global here but local in chooseDesktop()
+
     named_desktops=()
     count_named_desktops=0
     count_all_desktops=0
@@ -313,13 +413,15 @@ getLabDesktops(){
     [[ $count_all_desktops =~ ^[1-9][0-9]*$ ]] || return 1
 }
 
+
 # usage: chooseDesktop [<path>]
 # will use <path> in message, if known
+
 chooseDesktop(){
     local path dtplst desktop a b c d e f g h name choice count_named_desktops count_all_desktops yadtext
     local -a named_desktops
     [[ -n $1 ]] && path=$1
-    dtplst=(TRUE "Desktop where launched" "x")
+    dtplst=(TRUE "$(gettext "Desktop where launched")" "x")
     # shellcheck disable=SC2034
     case "$BUNSEN_SESSION_TYPE" in
     x11)
@@ -339,23 +441,24 @@ chooseDesktop(){
         done
         ;;
     esac
-    yadtext="Choose a desktop for $(pangoEscape "${path##*/}"):"
+    yadtext="$(printf "$(gettext "Choose a desktop for %s:")" "$(pangoEscape "${path##*/}")"
     [[ ${CONKY_CONF[out_to_wayland]} = 'true' ]] && yadtext+="
 
-(Conkys running on native Wayland cannot be assigned to a desktop
- so this choice will be applied in X11 sessions only.)"
-    choice=$($DLGDEC $WINICON --list --title="$TITLE" \
+$(gettext "(Conkys running on native Wayland cannot be assigned to a desktop
+ so this choice will be applied in X11 sessions only.)") "
+    choice=$($DLGDEC $WINICON --center --list --title="$TITLE" \
         --text="$yadtext" \
-        --radiolist --width=300 --height=400 \
-        --column=Select:RD --column="Desktop Name:TEXT" --column=desktop:HD \
-        "${dtplst[@]}" --separator='' --print-column=3 "$OK" ) || return 1
+        --radiolist \
+        --column=$(gettext "Select"):RD --column="$(gettext "Desktop Name"):TEXT" --column=$(gettext "desktop"):HD \
+        "${dtplst[@]}" --separator='' --print-column=3 "$OK" --width="300" --height="400" ) || return 1
     [[ $choice = x || -z $choice ]] && return 1
     printf '%s' "$choice"
 }
 
+
 chooseStartup(){
     local file chk name sflst choice
-    type bl-conky-session >/dev/null 2>&1 || { "$0: '--choose-startup' option uses bl-conky-session" >&2; return 1;}
+    type bl-conky-session >/dev/null 2>&1 || { printf "$(gettext "%s: '--choose-startup' option uses bl-conky-session")" "$0" >&2; return 1;}
     while read -r file;
     do
         if [[ $file = *\ \* ]]; then # current startup filepath has appended ' *'
@@ -364,52 +467,67 @@ chooseStartup(){
         else
             chk=FALSE
         fi
-        name=${file#"$CONKYPATH"/}
+        name=${file#$CONKYPATH/}
         sflst+=("$chk" "$(pangoEscape "$name")" "$file")
     done < <(bl-conky-session --list)
-    choice=$($DLGDEC $WINICON --list --title="$TITLE" \
-        --text="Choose the startup Conky session:" \
-        --radiolist --width=300 --height=400 \
-        --column=Select:RD --column="Session File:TEXT" --column="Filepath:HD" \
-        "${sflst[@]}" --separator='' --print-column=3 "$OK" "$CANCEL") || return 1
+    choice=$($DLGDEC $WINICON --center --list --title="$TITLE" \
+        --text="$(gettext "Choose the startup Conky session:")" \
+        --radiolist \
+        --column="$(gettext "Select"):RD" --column="$(gettext "Session File"):TEXT" --column="$(gettext "Filepath"):HD" \
+        "${sflst[@]}" --separator='' --print-column=3 "$OK" "$CANCEL" --width="300" --height="400") || return 1
     [[ -z $choice ]] && return 1
     bl-conky-session --set-startup "$choice" || return 1
 }
 
+
 setStartupDlg(){
     [[ "$SESSIONFILE" = "$STARTSESSION" ]] && return 0
-    if $DLG $WINICON --title="Conky sessionfile" --text="Set ${SESSIONFILE}\n as default startup session?" --button='Yes':0 --button='No':1 ; then
+
+    if $DLG $WINICON --center --title="$(gettext "Conky sessionfile")" --text="$(printf "$(gettext "Set %s 
+as default startup session?")" "${SESSIONFILE}")" --button="$(gettext "Yes")":0 --button="$(gettext "No")":1 ; then
         bl-conky-session --set-startup "$SESSIONFILE" || return 1
     fi
 }
 
+
 loadDialog() {
     local choice retval desktop
+
     ## Populate dialog from array, get chosen conky(s)
-    choice=$($DLGDEC $WINICON --list --title="$TITLE" \
-        --text="Session will be saved to:\n <b>$SESSIONFILE</b>" \
-        --checklist --width=400 --height=500 \
-        --column="Select:CHK" --column="Conky Name:TEXT" --column=path:HD "${LISTCONKY[@]}" \
+
+    choice=$($DLGDEC $WINICON --center --list --title="$TITLE" \
+        --text="$(printf "$(gettext "Session will be saved to: 
+%s")" "<b>$SESSIONFILE</b>")" \
+        --checklist \
+        --column="$(gettext "Select"):CHK" --column="$(gettext "Conky Name"):TEXT" --column=path:HD "${LISTCONKY[@]}" \
         --separator='' --print-column=3 \
-        $APPLY --button='Apply+Close':2 $CLOSE \
+        $APPLY --button="$(gettext "Apply+Close")":2 $CLOSE \
+        --width="400" --height="500" \
         )
     retval=$?
 
     if (( retval == 1 )); then # close button pressed
+
         # if session file is empty restore previous saved-sessions file
+
         if [[ ! -s "$SESSIONFILE" ]];then
-            #rm -f "$SESSIONFILE"
-            if  [[ -f $SAVEDSESSIONS.bkp ]]; then
-                mv "$SAVEDSESSIONS.bkp" "$SAVEDSESSIONS"
+            # rm -f "$SESSIONFILE"
+            if  [[ -f $SESSIONS.bkp ]]; then
+                mv "$SESSIONS.bkp" "$SESSIONS"
             fi
         fi
         setStartupDlg
         exit
     fi
 
+
     if [[ -z $choice ]];then  # No conkys chosen
-        MSG="Nothing chosen.\n\nKill all running Conkys?"
-        $DLG $WINICON --title="$TITLE" --text="$MSG" $OK --button='Try Again':1
+
+        MSG="$(gettext "Nothing chosen.
+
+Kill all running Conkys?")"
+
+        $DLG $WINICON --center --title="$TITLE" --text="$MSG" $OK --button="$(gettext "Try Again")":1
         if [[ $? = 1 ]];then
             return
         fi
@@ -417,12 +535,17 @@ loadDialog() {
             pkill -x -u "$USER" conky
             sleep 0.5 # make sure killed conkys are not running at next iteration of getRunning()
         fi
-        MSG="The default Conky will be launched at next login.\nTo stop all conkys, edit ~/.config/bunsen/autostart:\n\nComment out 'bl-conky-session &amp;'"
-        $DLG $WINICON --title="$TITLE" --text="$MSG" $OK
+        MSG="$(gettext "The default Conky will be launched at next login.
+To stop all conkys, edit ~/.config/bunsen/autostart:
+
+Comment out 'bl-conky-session &amp;'")"
+        $DLG $WINICON --center --title="$TITLE" --text="$MSG" $OK
         return 0
     fi
 
+
     :> "$SESSIONFILE"    # Create/overwrite empty session file
+
 
     if type bl-conky-session >/dev/null 2>&1 ; then # bl-conky-session comes in the same package as bl-conky-manager
         # Find the chosen conkys, add them to SESSIONFILE, then load it.
@@ -430,6 +553,7 @@ loadDialog() {
         do
             [[ -n $path ]] || continue
             parseConky "$path" # generates global array CONKY_CONF
+
             if isSticky; then # isSticky() refers to CONKY_CONF, as does chooseDesktop()
                 echo "${path#"$HOME"/}" >> "$SESSIONFILE" # put HOME-relative paths in sessionfile for better compatibility with BLOB
             else
@@ -440,6 +564,7 @@ loadDialog() {
                 fi
             fi
         done <<< "$choice"
+
         bl-conky-session --kill-running "$SESSIONFILE" # bl-conky-session can handle desktops too
     else # this code should seldom be needed
         # kill all conkys
@@ -447,11 +572,14 @@ loadDialog() {
             killall -u "$USER" conky
             sleep 0.5 # make sure killed conkys are not running at next iteration of getRunning()
         fi
+
+
         # Find the chosen conkys, launch them and add them to SESSIONFILE.
+
         while read -r path
         do
             [[ -n $path ]] || continue
-            echo "${path#"$HOME"/}" >> "$SESSIONFILE"
+            echo "${path#$HOME/}" >> "$SESSIONFILE"
             set -m # enable job control so forked conky is immune to signals
             # start the conky (adjust the sleep time if required)
             conky -c "$path" >/dev/null 2>&1 &
@@ -460,15 +588,20 @@ loadDialog() {
             sleep 0.5s
         done <<< "$choice"
     fi
+
+
 #   if there is a button that returns 2, it will apply changes and exit
     (( retval == 2 )) && { setStartupDlg; exit;}
 }
+
 
 ######## END FUNCTIONS #################################################
 
 SESSIONFILE=$STARTSESSION
 SFNAME=''
+
 # get args passed to script (session can be saved to a different file)
+
 while [[ -n $1 ]];do
     case "$1" in
 #        -h|--help)
@@ -480,24 +613,26 @@ while [[ -n $1 ]];do
                 SFNAME="$2"    # sessionfile has been specified
                 [[ $SFNAME = /* ]] && SFNAME="${SFNAME##*/}" # cope with absolute paths too, but must be in conky dir
                 NEWSESSFILE="$CONKYPATH/$SFNAME"
-                [[ -f $NEWSESSFILE ]] || { echo "$0: Session file $NEWSESSFILE not found" >&2; exit 1;}
+                [[ -f $NEWSESSFILE ]] || { printf "$(gettext "%s: Session file %s not found")" "$0" "$NEWSESSFILE" >&2; exit 1;}
                 break
             else
-                echo "$0: No session file name specified" >&2
+                printf "$(gettext "%s: No session file name specified")" "$0" >&2
                 exit 1
             fi
             ;;
         -z|--choose-sessfile)
             while true
             do
-                SFNAME=$($DLGDEC $WINICON --entry \
-                --title="Save Conky sessionfile" \
-                --entry-label="New saved session file:" \
-                --text="File to be saved in <b>$CONKYPATH/</b>\n\n" \
+                SFNAME=$($DLGDEC $WINICON --center --entry \
+                --title="$(gettext "Save Conky sessionfile")" \
+                --entry-label="$(gettext "New saved session file:")" \
+                --text="$(printf "$(gettext "File to be saved in %s") \n\n" "<b>$CONKYPATH/</b>")" \
                 $OK $CANCEL \
                 ) || exit 0
                 if [[ -z $SFNAME ]];then     # entry was empty
-                    if $DLG $WINICON --title="Conky sessionfile" --text="No file specified for new saved session\n\nTry again?" $OK $CLOSE; then
+                    if $DLG $WINICON --center --title="$(gettext "Conky sessionfile")" --text="$(gettext "No file specified for new saved session
+
+Try again?")" $OK $CLOSE; then
                         continue
                     else
                         exit 1
@@ -505,7 +640,9 @@ while [[ -n $1 ]];do
                 fi
                 NEWSESSFILE="$CONKYPATH/$SFNAME"
                 if [[ -e "$NEWSESSFILE" ]];then # sessionfile exists
-                    if ! $DLG $WINICON --title="Conky sessionfile" --text="Filename already exists\n\nOverwrite it?" $OK --button='Try Again':1; then
+                    if ! $DLG $WINICON --center --title="$(gettext "Conky sessionfile")" --text="$(gettext "Filename already exists
+
+Overwrite it?")" $OK --button="$(gettext "Try Again")":1; then
                         continue
                     fi
                 fi
@@ -518,7 +655,7 @@ while [[ -n $1 ]];do
             exit
             ;;
         *)
-            echo "$0: $1: unknown option"$'\n'
+            printf "\n$(gettext "%s: %s: unknown option")$\n" "$0" "$1"
             echo -e "$USAGE1"
             exit 1
             ;;
@@ -526,13 +663,16 @@ while [[ -n $1 ]];do
     shift
 done
 
+
 if [[ -n "$NEWSESSFILE" ]]; then
     SESSIONFILE="$NEWSESSFILE"
-    if grep -qx "$SESSIONFILE" "$SAVEDSESSIONS";then
-        echo "$0: session \"$SFNAME\" is already in saved sessions"
+    if grep -qx "$SESSIONFILE" "$SESSIONS";then
+
+        printf "\n$(gettext "%s: session %s is already in saved sessions")\n" "$0" "\"$SFNAME\""
+
     else
-        cp "$SAVEDSESSIONS" "$SAVEDSESSIONS.bkp"
-        echo "$SESSIONFILE" >> "$SAVEDSESSIONS"
+        cp "$SESSIONS" "$SESSIONS.bkp"
+        echo "$SESSIONFILE" >> "$SESSIONS"
     fi
 fi
 
@@ -540,3 +680,4 @@ while true;do
     findConkys
     loadDialog
 done
+
