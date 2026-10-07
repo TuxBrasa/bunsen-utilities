@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 #    bl-conky-edit: a BunsenLabs Conky Editor
 #    Copyright (C) 2015 damo    <damo@bunsenlabs.org>
@@ -27,29 +27,83 @@
 #
 ########################################################################
 
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-conky-edit script
+
+TEXTDOMAIN="bl-conky-edit"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+which conky        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "$(gettext "Warning")" \
+--text "$(gettext "The conky program is not installed.")" \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+which bl-text-editor        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "$(gettext "Warning")" \
+--text "$(gettext "The bl-text-editor program is not installed.")" \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
 CONKYPATH="$HOME/.config/conky"
 
-HELP="bl-conky-edit is a script to edit selected Conky config files
+
+HELP="$(gettext "bl-conky-edit is a script to edit selected Conky config files
 which are displayed in a yad window with checkboxes.
 
 Usage: bl-conky-edit [-h|--help]
 
 Optional arguments:
+
     -h | --help    Show this message (no other options are supported)
 
-Conkys must be in $CONKYPATH
+Conkys must be in %s
 The name must end with 'conkyrc', 'conky' or be '*conky*.conf'
 
 Checkmarked conkys will be opened in the text editor.
 Multiple conkys can be chosen.
-"
+")"
+
 
 ### DIALOG VARIABLES
+
 DLGDEC="yad --center  --borders=20 --width=400 --height=500 "
-TITLE="BunsenLabs Conky Edit"
+TITLE="$(gettext "BunsenLabs Conky Edit")"
 WINICON="--window-icon=distributor-logo-bunsenlabs"
-OK="--button=OK:0"
-CANCEL="--button=gtk-cancel:1"
+OK="--button=$(gettext "OK"):0"
+CANCEL="--button=$(gettext "Cancel"):1"
 
 ########## FUNCTIONS ###################################################
 
@@ -71,33 +125,46 @@ findConkys(){
 ######## END FUNCTIONS #################################################
 
 # look for a help option somewhere
+
 for i in "$@"
 do
     case "$i" in
     -h|--help)
-        echo "$HELP"
+
+        printf "$HELP" "$CONKYPATH"
+
         exit 0
         ;;
     esac
 done
 
+
 BL_COMMON_LIBDIR='/usr/lib/bunsen/common'
+
 if ! . "$BL_COMMON_LIBDIR/bl-includes" 2> /dev/null; then
-    echo $"Error: Failed to locate bl-includes in $BL_COMMON_LIBDIR" >&2
+
+    printf '%s\n' \
+    "$(printf "$(gettext 'Error: Failed to source bl-includes in %s')" "$BL_COMMON_LIBDIR")" >&2
+
     exit 1
 fi
+
 # pangoEscape() for yad text display of filenames
 # is provided in bl-includes
 
 # get conkys in CONKYPATH, recursively, add to array LISTCONKY
+
 findConkys
 
+
 ## Populate yad dialog from array, get choice(s)
+
 choice=$( $DLGDEC $WINICON --list --title="$TITLE" \
-    --text="Select Conkys to edit from the list\nMultiple Conkys can be chosen" \
-    --checklist --separator='' --no-selection \
-    --column="Select:CHK" --column="Conky Name:TEXT" --column="path:HD" "${LISTCONKY[@]}" \
-    --print-column=3 $OK $CANCEL )
+    --text="$(gettext "Select Conkys to edit from the list
+Multiple Conkys can be chosen")" \
+    --checklist \
+    --column="$(gettext "Select"):CHK" --column="$(gettext "Conky Name"):TEXT" --column="$(gettext "path"):HD" "${LISTCONKY[@]}" \
+    --separator='' --no-selection --print-column=3 $OK $CANCEL )
 
 if [[ $? == 1 ]]; then # cancel button pressed
     exit 0
@@ -110,3 +177,4 @@ else
     done <<< "$choice"
     bl-text-editor "${paths[@]}"
 fi
+
