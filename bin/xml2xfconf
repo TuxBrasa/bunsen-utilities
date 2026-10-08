@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # 
 #    xml2xfconf: convert xfconf xml file entries to xfconf-query commands
 #    Copyright (C) 2026  John Crawley <john@bunsenlabs.org>
@@ -15,9 +15,72 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+########################################################################
+
+
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the xml2xfconf script
+
+TEXTDOMAIN="xml2xfconf"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+if ! command -v yad &> /dev/null; then
+
+  echo -e "\nThe yad program is not installed.\n"
+
+  exit 1
+
+fi
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+
+
+for cmd in xmlstarlet; do
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        yad \
+            --center \
+            --window-icon "$logo" \
+            --image=dialog-error \
+            --timeout=10 \
+            --no-buttons \
+            --title "$(gettext "Warning")" \
+            --text "$(printf '%s\n' \
+                "$(gettext "The following required program is not installed: ")
+" \
+                "${cmd}")" \
+            --width="450" \
+            --height="100" \
+            2>/dev/null
+
+        exit 1
+    fi
+
+done
+
 
 # shellcheck disable=SC2016
-HELP='xml2xfconf: convert xfce xfconf xml file entries into xfconf-query commands
+HELP="$(gettext 'xml2xfconf: convert xfce xfconf xml file entries into xfconf-query commands
 
 SUMMARY:    xml2xfconf -x|--xml-file <filepath> [-c|--channel <channelname>]
 
@@ -37,7 +100,7 @@ USAGE EXAMPLE:
 restore=$(mktemp);
 xml2xfconf -x /path/to/xfce4-terminal.xml -c xfce4-terminal > "$restore";
 bash "$restore"
-'
+')"
 
 while [[ -n $1 ]]
 do
@@ -55,38 +118,54 @@ do
         shift 2
         ;;
     *)
-        echo "${0}: ${1}: no such option" >&2
+
+        printf "$(gettext "%s: %s: no such option")" "${0}" "${1}" >&2
+
         echo "$HELP"
+
         exit 1
         ;;
     esac
 done
 
 if ! hash xmlstarlet >/dev/null 2>&1; then
-    echo "${0}: xmlstarlet not found; install it first." >&2
+
+    printf "$(gettext "%s: xmlstarlet not found; install it first.")" "${0}" >&2
+
     exit 1
 fi
 
 if [[ -z "$XML" ]] ; then
-    echo "${0}: missing -x|--xml-file option" >&2
+
+    printf "$(gettext "%s: missing -x|--xml-file option")" "${0}" >&2
+
     echo "$HELP"
+
     exit 1
 fi
 
 if [[ ! -f "$XML" ]]; then
-    echo "${0}: $XML file not found" >&2
+
+    printf "$(gettext "%s: %s file not found")" "${0}" "$XML" >&2
+
     exit 1
 fi
 
 # Parse channel name from XML <channel name="...">
+
 channel=$(xmlstarlet sel -t -v "/channel/@name" "$XML" 2>/dev/null)
+
 if [[ -z "$channel" ]]; then
-    echo "${0}: Could not parse channel name from $XML" >&2
+
+    printf "$(gettext "%s: Could not parse channel name from %s")" "${0}" "$XML" >&2
+
     exit 1
 fi
 
 [[ -n $chk_channel ]] && [[ $chk_channel != "$channel" ]] && {
-    echo "${0}: Passed channel name $chk_channel does not match $channel in the xml file" >&2
+
+    printf "$(gettext "%s: Passed channel name %s does not match %s in the xml file")" "${0}" "$chk_channel" "$channel" >&2
+
     exit 1
 }
 
@@ -114,6 +193,7 @@ walk_properties() {
         fi
 
         # Counts
+
         local child_count
         child_count=$(xmlstarlet sel -t \
             -v "count($xpath/property[@name='$name']/property)" \
@@ -125,9 +205,11 @@ walk_properties() {
             "$XML" 2>/dev/null)
 
         # If this node is explicitly an array, treat it as such even if it has child <property> nodes
+
         if [[ "$type" = "array" ]] || [[ "$value_count" != "0" && "$child_count" = "0" ]]; then
 
             # Collect all types & values
+
             typevalues=()
             while IFS= read -r tv; do
                 typevalues+=("$tv")
@@ -147,16 +229,20 @@ walk_properties() {
             printf '\n'
 
            # CRITICAL: Always recurse into child properties after printing array
+
             if [[ "$child_count" != "0" ]]; then
                 walk_properties "$xpath/property[@name='$name']" "$prop_path"
             fi
             
         elif [[ "$child_count" != "0" ]]; then
+
             # Recurse into subtree (non-array case)
+
             walk_properties "$xpath/property[@name='$name']" "$prop_path"
 
         else
             # Scalar leaf: use @value
+
             local value
             value=$(xmlstarlet sel -t \
                 -m "$xpath/property[@name='$name']" \
@@ -164,6 +250,7 @@ walk_properties() {
                 "$XML" 2>/dev/null)
 
             # Map XML type to xfconf-query type
+
             local qtype
             case "$type" in
                 string|int|bool|double|uint) qtype="$type" ;;
@@ -178,4 +265,6 @@ walk_properties() {
 }
 
 # Start at the root <channel> element
+
 walk_properties "/channel" ""
+
