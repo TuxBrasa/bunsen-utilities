@@ -16,6 +16,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# Internationalized the bl-reload-gtk23 python script.
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter, Namespace
 from configparser import ConfigParser
 from pathlib import Path
@@ -34,7 +40,27 @@ import xdg.BaseDirectory # type: ignore
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk # type: ignore
 
-DESCRIPTION = ("""
+
+# LANG=pt_BR.UTF-8 ./bl-reload-gtk23 --help
+
+# To internationalize messages with gettext, put the entire string inside _().
+
+import gettext
+
+DOMAIN = "bl-reload-gtk23"
+LOCALE_DIR = Path(__file__).parent / "locale"
+
+translation = gettext.translation(
+    DOMAIN,
+    localedir=LOCALE_DIR,
+    fallback=True,
+)
+
+_ = translation.gettext
+
+
+
+DESCRIPTION = _("""
 After changing GTK2 and GTK3 configuration files, notify running GTK2 and GTK3 clients to apply
 those changes. The notification mechanism used by GTK3 requires that xsettingsd is running. If it is
 installed and not running, the program will launch it.
@@ -120,16 +146,16 @@ GTK_ENUMS = {
 
 def getopts() -> Namespace:
    ap = ArgumentParser(description=DESCRIPTION, formatter_class=ArgumentDefaultsHelpFormatter)
-   ap.add_argument("-d", "--debug", action="store_true", default=False, help="print debug information")
+   ap.add_argument("-d", "--debug", action="store_true", default=False, help=_("print debug information"))
    ap.add_argument("--debug-gtk-mappings", action="store_true", default=False,
-         help="debug action without side effects: dump the would-be GTK property type mappings and exit")
-   ap.add_argument("-f", "--force", action="store_true", default=False, help="ignore all errors")
+         help=_("debug action without side effects: dump the would-be GTK property type mappings and exit"))
+   ap.add_argument("-f", "--force", action="store_true", default=False, help=_("ignore all errors"))
    ap.add_argument("-s", "--sync-xsettingsd-from", type=Path, default=Path(xdg.BaseDirectory.save_config_path("gtk-3.0")) / "settings.ini",
-         help="Path of GTK3 settings.ini file to sync settings for xsettingsd from", metavar="FILE")
+         help=_("Path of GTK3 settings.ini file to sync settings for xsettingsd from"), metavar="FILE")
    ap.add_argument("-n", "--no-sync", action="store_true", default=False,
-         help="Do not modify xsettingsd config based on current GTK3 settings but still send SIGHUP to xsettingsd")
+         help=_("Do not modify xsettingsd config based on current GTK3 settings but still send SIGHUP to xsettingsd"))
    ap.add_argument("-S", "--no-signal", action="store_true", default=False,
-         help="Do not signal xsettingsd SIGHUP after rewriting its config file on --sync-xsettingsd-from")
+         help=_("Do not signal xsettingsd SIGHUP after rewriting its config file on --sync-xsettingsd-from"))
    opts = ap.parse_args()
    if opts.debug or opts.debug_gtk_mappings:
        logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
@@ -145,7 +171,13 @@ def debug_gtk_mappings() -> None:
          gtk_value = settings.get_property(gtk_property)
          logging.info(f"%-{align}s = %s (%s)", gtk_property, gtk_value, type(gtk_value))
       except TypeError:
-         logging.info(f"%-{align}s = ****************** does not exist **************************", gtk_property)
+
+         logging.info(
+             "%-*s = ****************** %s **************************",
+             align,
+             gtk_property,
+             _("does not exist"),
+         )
 
 def sync_gtk2() -> None:
    """ Tell GTK2 X11 clients to reload the GTK RC files and update their
@@ -230,7 +262,7 @@ def sync_gtk3(opts: Namespace) -> None:
             try:
                value_type = type(settings.get_property(key))
             except TypeError:
-               logging.warning("Found setting %s in settings which is not known to the currently installed GTK3 version, ignoring.", key)
+               logging.warning(_("Found setting %s in settings which is not known to the currently installed GTK3 version, ignoring."), key)
                continue
             target_value: Any = None
             if value_type is bool:
@@ -243,13 +275,13 @@ def sync_gtk3(opts: Namespace) -> None:
             elif value_type in GTK_ENUMS:
                target_value = int(value)
             else:
-               logging.warning("Ignoring source key of unhandled type: %s (%s)", value, value_type)
+               logging.warning(_("Ignoring source key of unhandled type: %s (%s)"), value, value_type)
                continue
-            logging.debug("Mapping FROM %s = %s (%s)", key, value, value_type)
-            logging.debug("        TO   %s %s (%s)", target_key, target_value, type(target_value))
+            logging.debug(_("Mapping FROM %s = %s (%s)"), key, value, value_type)
+            logging.debug(_("        TO   %s %s (%s)"), target_key, target_value, type(target_value))
             yield f"{target_key} {target_value}"
          else:
-            logging.debug("Ignoring key without defined mapping: %s", key)
+            logging.debug(_("Ignoring key without defined mapping: %s"), key)
 
    xsettingsd_process_found = False
    try:
@@ -258,11 +290,11 @@ def sync_gtk3(opts: Namespace) -> None:
       xsettingsd_config_dir = Path(xdg.BaseDirectory.save_config_path("xsettingsd"))
       xsettingsd_config_file = xsettingsd_config_dir / "xsettingsd.conf"
    except Exception as err:
-      raise RuntimeError("XDG failed to create the current user's xsettingsd directory")
+      raise RuntimeError(_("XDG failed to create the current user's xsettingsd directory"))
 
    if not opts.no_sync:
       if opts.sync_xsettingsd_from.is_file() and os.access(opts.sync_xsettingsd_from, os.F_OK | os.R_OK):
-         logging.debug("Loading GTK3 settings from: %s", opts.sync_xsettingsd_from)
+         logging.debug(_("Loading GTK3 settings from: %s"), opts.sync_xsettingsd_from)
          ini = ConfigParser()
          lines = [
             "# This configuration file is managed by bl-reload-gtk23",
@@ -275,28 +307,28 @@ def sync_gtk3(opts: Namespace) -> None:
                with xsettingsd_config_file.open("w") as OUT:
                   OUT.write("\n".join(lines + [""]))
             else:
-               logging.warning("GTK3 config without [Settings] section, ignoring file")
+               logging.warning(_("GTK3 config without [Settings] section, ignoring file"))
       else:
-         logging.warning("Argument to -s is not a file or inaccessible, ignoring: %s", opts.sync_xsettingsd_from)
+         logging.warning(_("Argument to -s is not a file or inaccessible, ignoring: %s"), opts.sync_xsettingsd_from)
    else:
-      logging.debug("Skipping syncing of xsettingsd config as requested")
+      logging.debug(_("Skipping syncing of xsettingsd config as requested"))
 
    if not opts.no_signal:
       for proc in psutil.process_iter():
          if proc.name() == "xsettingsd":
             proc.send_signal(signal.SIGHUP)
             xsettingsd_process_found = True
-            logging.debug("Found xsettingsd process and sent SIGHUP: PID %d", proc.pid)
+            logging.debug(_("Found xsettingsd process and sent SIGHUP: PID %d"), proc.pid)
             break
       if not xsettingsd_process_found:
          xsettingsd_binary = shutil.which("xsettingsd")
          if xsettingsd_binary is not None:
             proc = subprocess.Popen([xsettingsd_binary], cwd="/", start_new_session=True)
-            logging.debug("xsettingsd not running; started from %s; PID: %d", xsettingsd_binary, proc.pid)
+            logging.debug(_("xsettingsd not running; started from %s; PID: %d"), xsettingsd_binary, proc.pid)
          else:
-            raise RuntimeError("xsettingsd not running and not in PATH, no settings changes propagated")
+            raise RuntimeError(_("xsettingsd not running and not in PATH, no settings changes propagated"))
    else:
-      logging.debug("Skipping sending of SIGHUP to xsettingsd as requested")
+      logging.debug(_("Skipping sending of SIGHUP to xsettingsd as requested"))
 
 def main() -> int:
    opts = getopts()
@@ -306,21 +338,22 @@ def main() -> int:
       try:
          debug_gtk_mappings()
       except Exception as err:
-         logging.warning("debug_gtk_mappings() failed: %s", err)
+         logging.warning(_("debug_gtk_mappings() failed: %s"), err)
          ret |= 1 << 2
       return 0 if opts.force else ret
 
    try:
       sync_gtk2()
    except Exception as err:
-      logging.warning("Failed to reload GTK2 settings: %s", err)
+      logging.warning(_("Failed to reload GTK2 settings: %s"), err)
       ret |= 1 << 0
    try:
       sync_gtk3(opts)
    except Exception as err:
-      logging.warning("Failed to reload GTK3 settings: %s", err)
+      logging.warning(_("Failed to reload GTK3 settings: %s"), err)
       ret |= 1 << 1
    return 0 if opts.force else ret
 
 if __name__ == "__main__":
    raise SystemExit(main())
+
