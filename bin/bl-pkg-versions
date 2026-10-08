@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 #    bl-pkg-versions: a script to check versions of BunsenLabs packages
 #    Copyright (C) 2015-2025  John Crawley <john@bunsenlabs.org>
@@ -15,22 +15,86 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+########################################################################
 
-HELP="bl-pkg-versions: a script to check versions of BunsenLabs packages
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-pkg-versions script
+
+TEXTDOMAIN="bl-pkg-versions"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+if ! command -v yad &> /dev/null; then
+
+  echo -e "\nThe yad program is not installed.\n"
+
+  exit 1
+
+fi
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+for cmd in curl awk sed tput printf; do
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        yad \
+            --center \
+            --window-icon "$logo" \
+            --image=dialog-error \
+            --timeout=10 \
+            --no-buttons \
+            --title "$(gettext "Warning")" \
+            --text "$(printf '%s\n' \
+                "$(gettext "The following required program is not installed: ")
+" \
+                "${cmd}")" \
+            --width="450" \
+            --height="100" \
+            2>/dev/null
+
+        exit 1
+    fi
+
+done
+
+
+HELP="$(gettext "bl-pkg-versions: a script to check versions of BunsenLabs packages
 
 Usage:
+
     bl-pkg-versions [-h|--help][<release>]
 
 Options:
+
         -h, --help      Show this message.
-        <empty>|carbon          Check the Carbon packages.
-        boron   Check the Boron packages.
-        beryllium   Check the Beryllium packages.
+        <empty>|carbon  Check the Carbon packages.
+        boron           Check the Boron packages.
+        beryllium       Check the Beryllium packages.
         lithium         Check the Lithium packages.
 
 It will display the versions of bunsen packages
 on the BunsenLabs package and GitHub source repositories.
-"
+")"
+
+
 
 required_commands='curl awk sed tput printf'
 
@@ -69,7 +133,9 @@ lithium)
     readonly RELEASE=lithium
     ;;
 *)
-    echo "$1: no such option" >&2
+
+    printf "$(gettext "%s: no such option")" "$1" >&2
+
     exit 1
     ;;
 esac
@@ -81,11 +147,13 @@ for i in $required_commands
 do
     hash $i || missing_commands+=" $i"
 done
-[[ $missing_commands ]] && error_exit "This script requires the following commands: $missing_commands
+
+[[ $missing_commands ]] && error_exit "$(printf "$(gettext "This script requires the following commands: %s
 Please install the packages containing the missing commands
-and rerun the script."
+and rerun the script.")" "$missing_commands")"
 
 # get version of GitHub repo from sourcename
+
 lookup_github() {
     reponame="$1"
     chlog="${GITHUB_CONTENT_ROOT}/${reponame}/${GITHUB_BRANCH}/debian/changelog"
@@ -122,3 +190,4 @@ do
 done <<<"$repo_list"
 
 exit
+
