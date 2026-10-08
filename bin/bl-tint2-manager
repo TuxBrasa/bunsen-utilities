@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 #    bl-tint2-manager: a BunsenLabs tint2 selection and switcher script
 #    Copyright (C) 2015-2019  damo    <damo@bunsenlabs.org>
@@ -36,19 +36,87 @@
 #
 ########################################################################
 
+
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-tint2-manager script
+
+TEXTDOMAIN="bl-tint2-manager"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+if ! command -v yad &> /dev/null; then
+
+  echo -e "\nThe yad program is not installed.\n"
+
+  exit 1
+
+fi
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+
+
+for cmd in tint2 killall; do
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        yad \
+            --center \
+            --window-icon "$logo" \
+            --image=dialog-error \
+            --timeout=10 \
+            --no-buttons \
+            --title "$(gettext "Warning")" \
+            --text "$(printf '%s\n' \
+                "$(gettext "The following required program is not installed: ")
+" \
+                "${cmd}")" \
+            --width="450" \
+            --height="100" \
+            2>/dev/null
+
+        exit 1
+    fi
+
+done
+
+
+
+
+
+
 TINT2PATH="$HOME/.config/tint2"
 TINT2DEFAULT=$(readlink -f "${TINT2PATH}/tint2rc") # tint2rc is a symlink to this release's default tint2 file
 SESSIONFILE="$TINT2PATH/tint2-sessionfile"
-USAGE='bl-tint2-manager is a tint2 selection and switcher script
+
+USAGE="$(gettext 'bl-tint2-manager is a tint2 selection and switcher script
 which uses yad to generate a graphical user interface.
 
 Usage:  bl-tint2-manager
    or:  bl-tint2-manager -h|--help
 
 Optional arguments:
+
     -h | --help    Show this message (no other options are supported at this time)
 
 Use:
+
     With no command option the script runs the gui
 
     Tint2 config files must be in HOME/.config/tint2/
@@ -69,9 +137,10 @@ Use:
     following line to autostart:
 
             bl-tint2-session
-'
+')"
 
 # look for a help option somewhere, then exit
+
 for i in "$@"
 do
     case "$i" in
@@ -83,21 +152,29 @@ do
 done
 
 BL_COMMON_LIBDIR='/usr/lib/bunsen/common'
+
 if ! . "$BL_COMMON_LIBDIR/bl-includes" 2> /dev/null; then
-    echo $"Error: Failed to locate bl-includes in $BL_COMMON_LIBDIR" >&2
+
+    printf '%s\n' \
+    "$(printf "$(gettext 'Error: Failed to locate bl-includes in %s')" "$BL_COMMON_LIBDIR")" >&2
+
     exit 1
 fi
+
 # pangoEscape() for yad text display of filenames
 # is provided in bl-includes
 
 ### DIALOG VARIABLES
+
 DLG="yad --center --undecorated --borders=20 "
 DLGDEC="yad --center --borders=20 "
-TITLE="BunsenLabs Tint2 Manager"
+TITLE="$(gettext "BunsenLabs Tint2 Manager")"
 WINICON="--window-icon=distributor-logo-bunsenlabs"
-OK="--button=OK:0"
-APPLY="--button=Apply:0"
-CLOSE="--button=Close:1"
+OK="--button=$(gettext "OK"):0"
+APPLY="--button=$(gettext "Apply"):0"
+CLOSE="--button=$(gettext "Close"):1"
+
+
 ########## FUNCTIONS ###################################################
 
 getRunning(){
@@ -107,7 +184,9 @@ getRunning(){
     while read -r pid; do
         mapfile -d '' -t command < "/proc/${pid}/cmdline" # use NULL delimiter to split cmdline into array 'command'
         [[ ${command[0]} = 'tint2' ]]  || {
-            echo "$0: pgrep parsing failed: command is not 'tint2'" >&2
+
+            printf "$(gettext "%s: pgrep parsing failed: command is not 'tint2'")" "$0" >&2
+
             continue
         }
         if (( ${#command[@]} > 1 )); then
@@ -117,7 +196,9 @@ getRunning(){
             TPATH="$TINT2DEFAULT"
         fi
         [[ -f $TPATH ]] || {
-            echo "$0: pgrep tint2 parsing failed: $TPATH is not a file" >&2
+
+            printf "$(gettext "%s: pgrep tint2 parsing failed: %s is not a file")" "$0" "$TPATH" >&2
+
             continue
         }
         runningTints["$TPATH"]=1
@@ -126,6 +207,7 @@ getRunning(){
 
 # $1 should hold full path to config file
 # returns 0 if a running tint2 is using that file
+
 isRunning(){
     local file=$1
     [[ ${runningTints["$file"]} = 1 ]] && return 0
@@ -153,21 +235,29 @@ findTints(){
 }
 
 loadDialog() {
+
     local choice retval
+
     choice=$($DLGDEC $WINICON --list --title="$TITLE" \
-        --text="Select Tint2s from the list:" \
-        --checklist --width=400 --height=500 --print-column=2 \
-        --column="Select:CHK" --column="tint2 Name:TEXT" --column=path:HD "${LISTTINT[@]}" \
+        --text="$(gettext "Select Tint2s from the list:")" \
+        --checklist --print-column=2 \
+        --column="$(gettext "Select"):CHK" --column="$(gettext "tint2 Name"):TEXT" --column=$(gettext "path"):HD "${LISTTINT[@]}" \
         --separator='' --print-column=3 \
-        $APPLY --button='Apply+Close':2 $CLOSE \
+        $APPLY --button="$(gettext "Apply+Close")":2 $CLOSE \
+        --width="400" --height="500" \
         )
     retval=$?
     if (( retval == 1 )); then # close button pressed
         exit 0
     fi
     if [[ -z $choice ]];then  # No tint2s chosen
-        MSG="Nothing chosen.\n\nKill all running Tint2s?"
-        $DLG $WINICON --title="$TITLE" --text="$MSG" $OK --button='Try Again':1
+
+        MSG="$(gettext "Nothing chosen.
+
+Kill all running Tint2s?")"
+
+        $DLG $WINICON --title="$TITLE" --text="$MSG" $OK --button="$(gettext "Try Again")":1
+
         if [[ $? = 1 ]];then
             return
         fi
@@ -185,7 +275,9 @@ loadDialog() {
         [[ -n $path ]] || continue
         echo "${path#$HOME/}" >> "$SESSIONFILE" # strip $HOME to avoid unnecessary warnings from bl-obthemes when restoring
         set -m # enable job control so forked tint2 is immune to signals
+
         # start the tint2 (adjust the sleep time if required)
+
         tint2 -c "$path" >/dev/null 2>&1 &
         disown
         set +m
@@ -193,18 +285,26 @@ loadDialog() {
     done <<< "$choice"
 
 #   if there is a button that returns 2, it will apply changes and exit
+
     (( retval == 2 )) && exit 0
 }
 
 # get any commandline arguments (none expected)
+
 if ! (( $# == 0 ));then
     for arg in "$@";do
         if [[ $1 = "-h" ]] || [[ $1 = "--help" ]];then
+
             echo -e "$USAGE"
+
             exit 0
+
         else
-            echo "$0: ERROR: sorry I don't understand \"${arg}\"" >&2
+
+            printf "$(gettext "%s: ERROR: sorry I don't understand %s")" "$0" "\"${arg}\"" >&2
+
             echo -e "$USAGE"
+
             exit 1
         fi
     done
@@ -216,3 +316,4 @@ while true;do
 done
 
 exit 0
+
