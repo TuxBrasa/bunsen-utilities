@@ -105,22 +105,23 @@ THUMB_SIZE=250                      # Thumbnail to be 250px wide
 KEEP_BB=1                           # Flag to keep BBCode on clipboard
 TEST=0                              # Flag for '--test-account' parameter
 
-USAGE="bl-imgbb-upload is a script to take screenshots and upload them to imgbb
+USAGE="$(gettext "bl-imgbb-upload is a script to take screenshots and upload them to imgbb
 
 Credentials for an account can be set up.
-A settings file (imgbb.conf) is created in $HOME/.config/image-upload/imgbb
+A settings file (imgbb.conf) is created in %s
 The script returns BB-Code for the direct image link, and a linked thumbnail.
 YAD dialogs are used for user interaction.
 
 Usage:    bl-imgbb-upload [option]... [file]...
 
-With no script args, ${SCRIPT} will upload a screenshot of
+With no script args, %s will upload a screenshot of
 the full desktop.
 
 The first use will ask for a client API key, by logging in or registering
 for a new account.
 
 Arguments:
+
     -h, --help                   Show this help, exit
     -s, --select                 Take screenshot in select mode
     -w, --window                 Take screenshot in active window mode
@@ -139,7 +140,7 @@ before exiting the script.
 If more than one of '-f','-w', or '-s' are passed to the script, the LAST
 one will be used.
 
-"
+")"
 
 # if help option anywhere in args, output $USAGE and exit immediately
 
@@ -147,7 +148,9 @@ for i in "$@"
 do
     case "$i" in
     -h|--help)
-        echo "$USAGE"
+
+        printf "$USAGE" "$HOME/.config/image-upload/imgbb" "${SCRIPT}"
+
         exit 0
         ;;
     esac
