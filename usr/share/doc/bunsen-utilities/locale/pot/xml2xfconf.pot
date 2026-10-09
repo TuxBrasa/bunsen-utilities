@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: xml2xfconf 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: xml2xfconf:67
+msgid "Warning"
+msgstr ""
+
+#: xml2xfconf:69
+msgid "The following required program is not installed: "
+msgstr ""
+
+#: xml2xfconf:83
+msgid ""
+"xml2xfconf: convert xfce xfconf xml file entries into xfconf-query commands\n"
+"\n"
+"SUMMARY:    xml2xfconf -x|--xml-file <filepath> [-c|--channel "
+"<channelname>]\n"
+"\n"
+"Passed an xfce xfconf xml file, this script will print\n"
+"the necessary xfconf-query commands to update\n"
+"the xfconf database for that channel.\n"
+"\n"
+"If passed a channel name, that will be compared with\n"
+"the channel name defined in the xml,\n"
+"and if they are different the script will exit.\n"
+"\n"
+"This is expected to be useful when restoring the xfconf settings of\n"
+"an app whose xml file has been backed up.\n"
+"\n"
+"USAGE EXAMPLE:\n"
+"\n"
+"restore=$(mktemp);\n"
+"xml2xfconf -x /path/to/xfce4-terminal.xml -c xfce4-terminal > \"$restore\";\n"
+"bash \"$restore\"\n"
+msgstr ""
+
+#: xml2xfconf:122
+msgid "%s: %s: no such option"
+msgstr ""
+
+#: xml2xfconf:133
+msgid "%s: xmlstarlet not found; install it first."
+msgstr ""
+
+#: xml2xfconf:140
+msgid "%s: missing -x|--xml-file option"
+msgstr ""
+
+#: xml2xfconf:149
+msgid "%s: %s file not found"
+msgstr ""
+
+#: xml2xfconf:160
+msgid "%s: Could not parse channel name from %s"
+msgstr ""
+
+#: xml2xfconf:167
+msgid "%s: Passed channel name %s does not match %s in the xml file"
+msgstr ""

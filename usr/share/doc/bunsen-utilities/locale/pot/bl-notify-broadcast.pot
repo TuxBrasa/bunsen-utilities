@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-notify-broadcast 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 17:39-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-notify-broadcast:44
+msgid "Warning"
+msgstr ""
+
+#: bl-notify-broadcast:46
+msgid "The following required program is not installed: "
+msgstr ""
+
+#: bl-notify-broadcast:59
+msgid ""
+"Call notify-send for all current X users.\n"
+"Passed arguments (message, icon etc) are sent on as-is.\n"
+"This script must be run as root."
+msgstr ""
+
+#: bl-notify-broadcast:74
+msgid "%s error: %s"
+msgstr ""
+
+#: bl-notify-broadcast:85
+msgid ""
+"This script requires the following commands: %s\n"
+"Please install the packages containing the missing commands\n"
+"and rerun the script."
+msgstr ""
+
+#: bl-notify-broadcast:89
+msgid "This script must be run as root."
+msgstr ""

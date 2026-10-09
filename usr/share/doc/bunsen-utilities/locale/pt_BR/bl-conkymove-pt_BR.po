@@ -1,0 +1,178 @@
+# Portuguese translations for bl-conkymove package.
+# Copyright (C) 2026 THE bl-conkymove'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-conkymove package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-conkymove 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: 2026-10-09 09:22-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-conkymove:63
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-conkymove:64
+msgid "The conky program is not installed."
+msgstr "O programa conky não está instalado."
+
+#: bl-conkymove:69
+msgid ""
+"bl-conkymove is a script to set the position of a moveable Conky\n"
+"\n"
+"Usage:  bl-conkymove\n"
+"   or:  bl-conkymove -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported)\n"
+"\n"
+"After invoking the script, follow the displayed instructions\n"
+"to move a selected conky to a new position on the screen.\n"
+msgstr ""
+"bl-conkymove é um script para definir a posição de um Conky móvel\n"
+"\n"
+"Uso:  bl-conkymove\n"
+"  ou:  bl-conkymove -h|--help\n"
+"\n"
+"Argumentos opcionais:\n"
+"\n"
+"    -h | --help    Exibe esta mensagem (nenhuma outra opção é suportada)\n"
+"\n"
+"Após chamar o script, siga as instruções exibidas\n"
+"para mover o conky selecionado para uma nova posição na tela.\n"
+
+#: bl-conkymove:96
+msgid "%s error: %s"
+msgstr "Erro em %s: %s"
+
+#: bl-conkymove:110
+msgid ""
+"This script requires the following commands: %s\n"
+"Please install the packages containing the missing commands\n"
+"and rerun the script."
+msgstr ""
+"Este script requer os seguintes comandos: %s\n"
+"Por favor instale os pacotes contendo os comandos ausentes\n"
+"e execute novamente o script."
+
+#: bl-conkymove:119
+msgid "Error: Failed to locate yad-includes in %s"
+msgstr "Erro: Falha ao localizar yad-includes em %s"
+
+#: bl-conkymove:129 bl-conkymove:185
+msgid "%s is not a file."
+msgstr "%s não é um arquivo."
+
+#: bl-conkymove:213 bl-conkymove:246
+msgid "%s: config key %s does not exist"
+msgstr "%s: a chave de configuração %s não existe"
+
+#: bl-conkymove:306
+msgid "Exit"
+msgstr "Sair"
+
+#: bl-conkymove:306
+msgid ""
+"%s\n"
+"\n"
+"Choose again?"
+msgstr ""
+"%s\n"
+"\n"
+"Escolher novamente?"
+
+#: bl-conkymove:310 bl-conkymove:444 bl-conkymove:463
+msgid "Cancelled: exiting..."
+msgstr "Cancelado: saindo..."
+
+#: bl-conkymove:317
+msgid "Selection is not a conky"
+msgstr "A seleção não é um conky"
+
+#: bl-conkymove:319
+msgid "%s is not an absolute path."
+msgstr "%s não é um caminho absoluto."
+
+#: bl-conkymove:346
+msgid ""
+"This Conky has 'alignment none'\n"
+"so placement is handled by the Window Manager.\n"
+msgstr ""
+"Este Conky possui 'alignment none'\n"
+"portanto o posicionamento é gerenciado pelo Gerenciador de Janelas.\n"
+
+#: bl-conkymove:350
+msgid ""
+"Conky has 'alignment none',\n"
+"so placement is handled by the Window Manager\n"
+"Exiting..."
+msgstr ""
+"O Conky possui 'alignment none',\n"
+"portanto o posicionamento é gerenciado pelo Gerenciador de Janelas\n"
+"Saindo..."
+
+#: bl-conkymove:395
+msgid "%s: exit, restoring original %s"
+msgstr "%s: saindo, restaurando o %s original"
+
+#: bl-conkymove:400
+msgid "%s: exit, nothing to restore"
+msgstr "%s: saindo, nada a restaurar"
+
+#: bl-conkymove:420
+msgid ""
+"To pick a conky, click 'Select Conky',\n"
+"\n"
+"then click the 'xwininfo' cursor on the chosen conky\n"
+"to record its position."
+msgstr ""
+"Para escolher um conky, clique em 'Selecionar Conky',\n"
+"\n"
+"e depois clique com o cursor do 'xwininfo' no conky escolhido\n"
+"para registrar sua posição."
+
+#: bl-conkymove:424
+msgid "Select Conky"
+msgstr "Selecionar Conky"
+
+#: bl-conkymove:424 bl-conkymove:457
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-conkymove:432
+msgid ""
+"This conky uses v1.09 syntax.\n"
+"It is recommended to convert the conky to v1.10 syntax.\n"
+"See: https://forums.bunsenlabs.org/viewtopic.php?id=3983"
+msgstr ""
+"Este conky usa a sintaxe v1.09.\n"
+"É recomendável converter o conky para a sintaxe v1.10.\n"
+"Veja: https://forums.bunsenlabs.org/viewtopic.php?id=3983"
+
+#: bl-conkymove:453
+msgid ""
+"Move the Conky to the desired location\n"
+"with Alt+L-mousebutton Drag.\n"
+"\n"
+"Then click 'OK' to record the new position."
+msgstr ""
+"Mova o Conky para a localização desejada\n"
+"arrastando com Alt+botão esquerdo do mouse.\n"
+"\n"
+"Depois clique em 'OK' para registrar a nova posição."
+
+#: bl-conkymove:457
+msgid "OK"
+msgstr "OK"
+

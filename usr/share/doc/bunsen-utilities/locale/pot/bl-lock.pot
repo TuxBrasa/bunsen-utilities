@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-lock 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-lock:68
+msgid ""
+"\n"
+"bl-lock is a wrapper for the configured screenlock command\n"
+"\n"
+"Usage:  bl-lock\n"
+"   or:  bl-lock -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported)\n"
+"\n"
+"If running in live mode, offer up a prompt detailing the live session "
+"password.\n"
+"Else, run %s\n"
+msgstr ""
+
+#: bl-lock:100
+msgid "%s: %s no such command."
+msgstr ""
+
+#: bl-lock:110
+msgid "Lock screen info:"
+msgstr ""
+
+#: bl-lock:110
+msgid ""
+"Lock screen has detected you are running a live session.\n"
+"The username needed to unlock the screen is \"user\" and the password is "
+"\"live\".\n"
+"This notice will only be displayed once per live session."
+msgstr ""
+
+#: bl-lock:112
+msgid "OK"
+msgstr ""

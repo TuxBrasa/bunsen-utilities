@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-tint2-session 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-tint2-session:74
+msgid "Warning"
+msgstr ""
+
+#: bl-tint2-session:76
+msgid "The following required program is not installed: "
+msgstr ""
+
+#: bl-tint2-session:94
+msgid ""
+"bl-tint2-session is a script to parse a saved Tint2 session file\n"
+"and start the tint2s.\n"
+"\n"
+"Usage: bl-tint2-session [OPTION(S)]...[FILES]\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    --help | -h\n"
+"        show this message\n"
+"    <SESSIONFILE>\n"
+"\n"
+"With no command arguments, the script uses the default tint2 session file\n"
+"~/.config/tint2/tint2-sessionfile\" if it exists and is non-empty,\n"
+"otherwise the default tint2rc is written to a new tint2-sessionfile.\n"
+"\n"
+"If a filepath is passed it is used as the session file,\n"
+"multiple sessions can be loaded.\n"
+"\n"
+"If not absolute, sessionfile paths are assumed to be relative to ~/.config/"
+"tint2/\n"
+"\n"
+"Relative tint2 paths are checked against HOME and ~/.config/tint2/,\n"
+"with the latter having priority.\n"
+"\n"
+"NOTE this script will return an error if passed an empty sessionfile.\n"
+"To avoid that, check the file before calling bl-tint2-session.\n"
+"\n"
+"To start the default tint2 session at login,\n"
+"add the following line to autostart:\n"
+"\n"
+"    bl-tint2-session\n"
+msgstr ""
+
+#: bl-tint2-session:154
+msgid "%s: %s: no such option"
+msgstr ""
+
+#: bl-tint2-session:177
+msgid "%s: WARNING: cannot read %s"
+msgstr ""
+
+#: bl-tint2-session:200
+msgid "%s: ERROR: session file %s did not launch any tint2s."
+msgstr ""
+
+#: bl-tint2-session:206
+msgid "%s: ERROR: session file %s is empty or does not exist."
+msgstr ""
+
+#: bl-tint2-session:216
+msgid "%s: There is no non-empty default session file: %s, generating now..."
+msgstr ""
+
+#: bl-tint2-session:224
+msgid "%s: ERROR: unable to generate default session file."
+msgstr ""

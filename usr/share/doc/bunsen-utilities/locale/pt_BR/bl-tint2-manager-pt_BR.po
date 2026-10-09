@@ -1,0 +1,164 @@
+# Portuguese translations for bl-tint2-manager package.
+# Copyright (C) 2026 THE bl-tint2-manager'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-tint2-manager package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-tint2-manager 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:24-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-tint2-manager:85
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-tint2-manager:87
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-tint2-manager:108
+msgid ""
+"bl-tint2-manager is a tint2 selection and switcher script\n"
+"which uses yad to generate a graphical user interface.\n"
+"\n"
+"Usage:  bl-tint2-manager\n"
+"   or:  bl-tint2-manager -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported at this "
+"time)\n"
+"\n"
+"Use:\n"
+"\n"
+"    With no command option the script runs the gui\n"
+"\n"
+"    Tint2 config files must be in HOME/.config/tint2/\n"
+"\n"
+"    When the dialog opens, any running tint2s will be checkmarked.\n"
+"\n"
+"    Click \"Apply\" and all running tint2s are stopped,\n"
+"    and all checkmarked tint2s are started.\n"
+"\n"
+"    To stop a tint2 just uncheck it, and click \"Apply\".\n"
+"\n"
+"    Click \"Apply\" to return to the dialog after applying changes,\n"
+"    click \"Apply+Close\" to close the window after applying changes,\n"
+"    click \"Close\" to close the window without applying any more changes.\n"
+"\n"
+"    Running tint2s are saved to a session file, and can be run with\n"
+"    the \"tint2-session\" script. To start them at login, add the\n"
+"    following line to autostart:\n"
+"\n"
+"            bl-tint2-session\n"
+msgstr ""
+"bl-tint2-manager é um script de seleção e alternância do tint2\n"
+"que usa o yad para gerar uma interface gráfica de usuário.\n"
+"\n"
+"Uso:  bl-tint2-manager\n"
+"  ou:  bl-tint2-manager -h|--help\n"
+"\n"
+"Argumentos opcionais:\n"
+"\n"
+"    -h | --help    Exibe esta mensagem (nenhuma outra opção é suportada no "
+"momento)\n"
+"\n"
+"Uso:\n"
+"\n"
+"    Sem opções de comando, o script executa a interface gráfica\n"
+"\n"
+"    Os arquivos de configuração do Tint2 devem estar em HOME/.config/tint2/\n"
+"\n"
+"    Quando a caixa de diálogo abrir, quaisquer instâncias do tint2 em execução estarão marcadas.\n"
+"\n"
+"    Clique em \"Aplicar\" e todas as instâncias do tint2 em execução serão interrompidas,\n"
+"    e todas as marcadas serão iniciadas.\n"
+"\n"
+"    Para parar uma instância do tint2, basta desmarcá-la e clicar em \"Aplicar\".\n"
+"\n"
+"    Clique em \"Aplicar\" para retornar à caixa de diálogo após aplicar as alterações,\n"
+"    clique em \"Aplicar+Fechar\" para fechar a janela após aplicar as alterações,\n"
+"    clique em \"Fechar\" para fechar a janela sem aplicar mais nenhuma alteração.\n"
+"\n"
+"    As instâncias do tint2 em execução são salvas em um arquivo de sessão e podem ser executadas com\n"
+"    o script \"tint2-session\". Para iniciá-las ao fazer login, adicione a\n"
+"    seguinte linha ao autostart:\n"
+"\n"
+"            bl-tint2-session\n"
+
+#: bl-tint2-manager:159
+msgid "Error: Failed to locate bl-includes in %s"
+msgstr "Erro: Falha ao localizar bl-includes em %s"
+
+#: bl-tint2-manager:171
+msgid "BunsenLabs Tint2 Manager"
+msgstr "Gerenciador do Tint2 do BunsenLabs"
+
+#: bl-tint2-manager:173
+msgid "OK"
+msgstr "OK"
+
+#: bl-tint2-manager:174
+msgid "Apply"
+msgstr "Aplicar"
+
+#: bl-tint2-manager:175
+msgid "Close"
+msgstr "Fechar"
+
+#: bl-tint2-manager:188
+msgid "%s: pgrep parsing failed: command is not 'tint2'"
+msgstr "%s: falha na análise do pgrep: o comando não é 'tint2'"
+
+#: bl-tint2-manager:200
+msgid "%s: pgrep tint2 parsing failed: %s is not a file"
+msgstr "%s: falha na análise do pgrep tint2: %s não é um arquivo"
+
+#: bl-tint2-manager:242
+msgid "Select Tint2s from the list:"
+msgstr "Selecione as instâncias do Tint2 na lista:"
+
+#: bl-tint2-manager:244
+msgid "Select"
+msgstr "Selecionar"
+
+#: bl-tint2-manager:244
+msgid "tint2 Name"
+msgstr "Nome do tint2"
+
+#: bl-tint2-manager:244
+msgid "path"
+msgstr "caminho"
+
+#: bl-tint2-manager:246
+msgid "Apply+Close"
+msgstr "Aplicar+Fechar"
+
+#: bl-tint2-manager:255
+msgid ""
+"Nothing chosen.\n"
+"\n"
+"Kill all running Tint2s?"
+msgstr ""
+"Nada foi escolhido.\n"
+"\n"
+"Encerrar todas as instâncias do Tint2 em execução?"
+
+#: bl-tint2-manager:259
+msgid "Try Again"
+msgstr "Tentar novamente"
+
+#: bl-tint2-manager:304
+msgid "%s: ERROR: sorry I don't understand %s"
+msgstr "%s: ERRO: desculpe, não entendo %s"
+

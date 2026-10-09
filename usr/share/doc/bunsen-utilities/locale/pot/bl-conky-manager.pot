@@ -1,0 +1,264 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-conky-manager 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-conky-manager:84 bl-conky-manager:96
+msgid "Warning"
+msgstr ""
+
+#: bl-conky-manager:85
+msgid "The conky program is not installed."
+msgstr ""
+
+#: bl-conky-manager:97
+msgid "The bl-conky-session program is not installed."
+msgstr ""
+
+#: bl-conky-manager:118
+msgid ""
+"USAGE:  bl-conky-manager [OPTION]...FILES\n"
+"\n"
+"    With no command option the script runs the gui\n"
+"\n"
+"    -h,--help   : The full USAGE help\n"
+"    -f,--file <FILENAME>    : specify file to save session to\n"
+"    -z,--choose-sessfile    : run filename entry dialog for new saved "
+"session\n"
+"    -s,--choose-startup     : choose session file to run at startup\n"
+msgstr ""
+
+#: bl-conky-manager:130
+msgid ""
+"bl-conky-manager is a Conky selection and switcher script\n"
+"which uses yad to generate a graphical user interface.\n"
+"\n"
+"Usage: bl-conky-manager [OPTION]...FILES\n"
+"\n"
+"With no command option the script runs the gui\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h,--help   : This USAGE help\n"
+"    -f,--file <FILENAME> : specify file to save session to\n"
+"    -z,--choose-sessfile : run gui filename entry dialog for new saved "
+"session\n"
+"        (user also has the option of setting this session as startup)\n"
+"    -s,--choose-startup  : choose session file to run at startup\n"
+"\n"
+"Filenames are considered relative to ~/.config/conky/\n"
+"\n"
+"When the dialog opens, any running conkys will be checkmarked.\n"
+"Click \"OK\" and all running conkys are stopped, and all\n"
+"checkmarked conkys are started.\n"
+"\n"
+"To stop a conky just uncheck it, and click \"OK\"\n"
+"\n"
+"Examples:\n"
+"    Save session to a new saved-session file with:\n"
+"\n"
+"        bl-conky-manager -f sessionfile-name\n"
+"\n"
+"    To start the default conky session at login, add the\n"
+"    following line to autostart:\n"
+"\n"
+"        bl-conky-session &\n"
+"\n"
+msgstr ""
+
+#: bl-conky-manager:185
+msgid "Error: Failed to source bl-includes in %s"
+msgstr ""
+
+#: bl-conky-manager:196
+msgid "%s: Failed to locate %s, generating default..."
+msgstr ""
+
+#: bl-conky-manager:204
+msgid "%s: generating missing symlink %s to %s"
+msgstr ""
+
+#: bl-conky-manager:206
+msgid "%s: WARNING: failed to create symlink %s"
+msgstr ""
+
+#: bl-conky-manager:215
+msgid "BunsenLabs Conky Manager"
+msgstr ""
+
+#: bl-conky-manager:217
+msgid "OK"
+msgstr ""
+
+#: bl-conky-manager:218
+msgid "Apply"
+msgstr ""
+
+#: bl-conky-manager:219
+msgid "Cancel"
+msgstr ""
+
+#: bl-conky-manager:220
+msgid "Close"
+msgstr ""
+
+#: bl-conky-manager:237
+msgid "%s: pgrep parsing failed: command is not 'conky'"
+msgstr ""
+
+#: bl-conky-manager:249
+msgid "%s: pgrep conky parsing failed: %s is not a file"
+msgstr ""
+
+#: bl-conky-manager:291 bl-conky-manager:349
+msgid "%s is not a file."
+msgstr ""
+
+#: bl-conky-manager:424
+msgid "Desktop where launched"
+msgstr ""
+
+#: bl-conky-manager:444
+msgid "Choose a desktop for %s:"
+msgstr ""
+
+#: bl-conky-manager:447
+msgid ""
+"(Conkys running on native Wayland cannot be assigned to a desktop\n"
+" so this choice will be applied in X11 sessions only.)"
+msgstr ""
+
+#: bl-conky-manager:452 bl-conky-manager:476 bl-conky-manager:502
+msgid "Select"
+msgstr ""
+
+#: bl-conky-manager:452
+msgid "Desktop Name"
+msgstr ""
+
+#: bl-conky-manager:452
+msgid "desktop"
+msgstr ""
+
+#: bl-conky-manager:461
+msgid "%s: '--choose-startup' option uses bl-conky-session"
+msgstr ""
+
+#: bl-conky-manager:474
+msgid "Choose the startup Conky session:"
+msgstr ""
+
+#: bl-conky-manager:476
+msgid "Session File"
+msgstr ""
+
+#: bl-conky-manager:476
+msgid "Filepath"
+msgstr ""
+
+#: bl-conky-manager:486 bl-conky-manager:633 bl-conky-manager:643
+msgid "Conky sessionfile"
+msgstr ""
+
+#: bl-conky-manager:486
+msgid ""
+"Set %s \n"
+"as default startup session?"
+msgstr ""
+
+#: bl-conky-manager:487
+msgid "Yes"
+msgstr ""
+
+#: bl-conky-manager:487
+msgid "No"
+msgstr ""
+
+#: bl-conky-manager:499
+msgid ""
+"Session will be saved to: \n"
+"%s"
+msgstr ""
+
+#: bl-conky-manager:502
+msgid "Conky Name"
+msgstr ""
+
+#: bl-conky-manager:504
+msgid "Apply+Close"
+msgstr ""
+
+#: bl-conky-manager:526
+msgid ""
+"Nothing chosen.\n"
+"\n"
+"Kill all running Conkys?"
+msgstr ""
+
+#: bl-conky-manager:530 bl-conky-manager:645
+msgid "Try Again"
+msgstr ""
+
+#: bl-conky-manager:538
+msgid ""
+"The default Conky will be launched at next login.\n"
+"To stop all conkys, edit ~/.config/bunsen/autostart:\n"
+"\n"
+"Comment out 'bl-conky-session &amp;'"
+msgstr ""
+
+#: bl-conky-manager:616
+msgid "%s: Session file %s not found"
+msgstr ""
+
+#: bl-conky-manager:619
+msgid "%s: No session file name specified"
+msgstr ""
+
+#: bl-conky-manager:627
+msgid "Save Conky sessionfile"
+msgstr ""
+
+#: bl-conky-manager:628
+msgid "New saved session file:"
+msgstr ""
+
+#: bl-conky-manager:629
+msgid "File to be saved in %s"
+msgstr ""
+
+#: bl-conky-manager:633
+msgid ""
+"No file specified for new saved session\n"
+"\n"
+"Try again?"
+msgstr ""
+
+#: bl-conky-manager:643
+msgid ""
+"Filename already exists\n"
+"\n"
+"Overwrite it?"
+msgstr ""
+
+#: bl-conky-manager:658
+msgid "%s: %s: unknown option"
+msgstr ""
+
+#: bl-conky-manager:671
+msgid "%s: session %s is already in saved sessions"
+msgstr ""

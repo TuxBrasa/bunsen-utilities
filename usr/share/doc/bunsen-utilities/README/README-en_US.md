@@ -1,0 +1,37 @@
+bunsen-utilities
+================
+
+A collection of small scripts to provide various functions
+which might be useful to BunsenLinux users and system administrators.
+
+beepmein:               Alarm clock script based on "at".
+
+bl-imgbb-upload:        Take screenshots and upload them to Imgbb.
+bl-imgur-upload:        Take screenshots and upload them to Imgur.
+bl-image-upload:        Generic BunsenLabs image upload utility.
+
+bl-conkyedit:           Find and edit conky config files.
+bl-conky-manager:       Yad-based conky manager.
+bl-conkymove:           Assist the movement of conky windows.
+bl-conky-session:       Handle multiple conky sessions.
+
+bl-kb:                  Read openbox keyboard shortcuts and write them to a text file.
+bl-xbk:                 Parse xbindkeys configs and write them to the same text file as bl-kb.
+bl-lock:                Lock the display (requires bunsen-exit).
+bl-setlocale:           Yad-based script to allow users to choose their locale.
+
+bl-pkg-versions:        Utility to display the versions of BunsenLabs packages in the apt repository and on GitHub.
+bl-notify-broadcast:    Send user notification popups from root processes.
+bl-urxlx:               Convert Xresources colours to rgb for lxterminal configuration.
+bl-xinerama-prop:       Get xinerama properties in a shell script.
+bl-reload-gtk23:        Script to notify GTK2/3 clients of GTK2/3 app configuration changes such as theming.
+
+xml2xconf               Script to convert xfce4 xfconf xml file entries into xfconf-query commands.
+
+NOTE tint2 is no longer part of the default BunsenLabs desktop,
+ but these utilities are still shipped with this package:
+
+bl-tint2edit:           Find and edit tint2 config files.
+bl-tint2-manager:       Yad-based tint2 manager.
+bl-tint2-restart:       Restart all running tint2 processes.
+bl-tint2-session:       Handle multiple tint2 sessions.

@@ -1,0 +1,32 @@
+# Portuguese translations for bl-image-upload package.
+# Copyright (C) 2026 THE bl-image-upload'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-image-upload package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-image-upload 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: 2026-10-09 09:22-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-image-upload:46
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-image-upload:47
+msgid "The %s program is not installed."
+msgstr "O programa %s não está instalado."
+
+#: bl-image-upload:54
+msgid "%s: %s is not available"
+msgstr "%s: %s não está disponível"
+

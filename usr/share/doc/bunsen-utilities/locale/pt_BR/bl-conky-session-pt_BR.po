@@ -1,0 +1,217 @@
+# Portuguese translations for bl-conky-session package.
+# Copyright (C) 2026 THE bl-conky-session'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-conky-session package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-conky-session 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: 2026-10-09 09:21-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-conky-session:60
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-conky-session:61
+msgid "The conky program is not installed."
+msgstr "O programa conky não está instalado."
+
+#: bl-conky-session:81
+msgid ""
+"bl-conky-session is a script to parse saved BunsenLabs Conky session "
+"file(s)\n"
+"and start the conkys\n"
+"\n"
+"Usage: bl-conky-session [OPTION(S)]...FILES\n"
+"\n"
+"With no command argument, the script uses \"~/.config/conky/conky-startup-"
+"session\"\n"
+"which is a symlink pointing by default to \"~/.config/conky/conky-"
+"sessionfile\".\n"
+"Change the symlink to make a different sessionfile the default at startup.\n"
+"\n"
+"If not absolute, sessionfile paths are assumed to be relative to ~/.config/"
+"conky/\n"
+"\n"
+"Options:\n"
+"\n"
+"        --default       : add the default sessionfile to a list of files\n"
+"            sessionfile1  sessionfile2 etc\n"
+"        --kill-running  : kill current running conkys without prompting\n"
+"        --set-startup <file>  : set <file> as default startup session\n"
+"            (Use \"default\" to reset session to conky-sessionfile.)\n"
+"        --list          : list available session files\n"
+"            (An asterisk is appended to the current startup session.)\n"
+"\n"
+"Examples:\n"
+"\n"
+"    Run default sessionfile at login:\n"
+"\n"
+"            \"bl-conky-session &\"\n"
+"\n"
+"    Run specified sessionfile at login:\n"
+"\n"
+"            \"bl-conky-session /path/to/sessionfile &\"\n"
+"\n"
+"    Run default sessionfile, do not prompt about killing current conkys:\n"
+"\n"
+"            \"bl-conky-session --kill-running\"\n"
+"\n"
+"    Run several conky sessionfiles, including default:\n"
+"\n"
+"            \"bl-conky-session sessionfile1 --default sessionfile2 etc\"\n"
+"\n"
+"    Set newsession as default sessionfile:\n"
+"    (filepath can be absolute or relative to HOME/.config/conky/)\n"
+"            \"bl-conky-session --set-startup newsession\"\n"
+"\n"
+"    Restore HOME/.config/conky/conky-sessionfile as startup session:\n"
+"            \"bl-conky-session --set-startup default\"\n"
+msgstr ""
+"bl-conky-session é um script para analisar arquivo(s) de sessão salvos do Conky do BunsenLabs\n"
+"e iniciar as instâncias do conky\n"
+"\n"
+"Uso: bl-conky-session [OPÇÃO(ÕES)]...ARQUIVOS\n"
+"\n"
+"Sem argumentos de comando, o script usa \"~/.config/conky/conky-startup-"
+"session\"\n"
+"que é um link simbólico apontando por padrão para \"~/.config/conky/conky-"
+"sessionfile\".\n"
+"Altere o link simbólico para tornar um arquivo de sessão diferente o padrão na inicialização.\n"
+"\n"
+"Se não forem absolutos, os caminhos do arquivo de sessão são considerados relativos a ~/.config/"
+"conky/\n"
+"\n"
+"Opções:\n"
+"\n"
+"        --default       : adiciona o arquivo de sessão padrão a uma lista de arquivos\n"
+"            arquivodesessão1  arquivodesessão2 etc\n"
+"        --kill-running  : encerra os conkys em execução atual sem perguntar\n"
+"        --set-startup <arquivo>  : define <arquivo> como a sessão de inicialização padrão\n"
+"            (Use \"default\" para redefinir a sessão para conky-sessionfile.)\n"
+"        --list          : lista os arquivos de sessão disponíveis\n"
+"            (Um asterisco é adicionado à sessão de inicialização atual.)\n"
+"\n"
+"Exemplos:\n"
+"\n"
+"    Executar o arquivo de sessão padrão no login:\n"
+"\n"
+"            \"bl-conky-session &\"\n"
+"\n"
+"    Executar o arquivo de sessão especificado no login:\n"
+"\n"
+"            \"bl-conky-session /caminho/para/arquivodesessão &\"\n"
+"\n"
+"    Executar o arquivo de sessão padrão sem perguntar sobre encerrar conkys atuais:\n"
+"\n"
+"            \"bl-conky-session --kill-running\"\n"
+"\n"
+"    Executar vários arquivos de sessão do conky, incluindo o padrão:\n"
+"\n"
+"            \"bl-conky-session arquivodesessão1 --default arquivodesessão2 etc\"\n"
+"\n"
+"    Definir novasessão como o arquivo de sessão padrão:\n"
+"    (o caminho do arquivo pode ser absoluto ou relativo a HOME/.config/conky/)\n"
+"            \"bl-conky-session --set-startup novasessão\"\n"
+"\n"
+"    Restaurar HOME/.config/conky/conky-sessionfile como sessão de inicialização:\n"
+"            \"bl-conky-session --set-startup default\"\n"
+
+#: bl-conky-session:143
+msgid "BunsenLabs Conky Session"
+msgstr "Sessão do Conky do BunsenLabs"
+
+#: bl-conky-session:145
+msgid "OK"
+msgstr "OK"
+
+#: bl-conky-session:146
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-conky-session:155
+msgid "Kill running conkys first?"
+msgstr "Encerrar os conkys em execução primeiro?"
+
+#: bl-conky-session:156
+msgid "Don't kill"
+msgstr "Não encerrar"
+
+#: bl-conky-session:179
+msgid "%s: WARNING %s is empty or does not exist"
+msgstr "%s: AVISO: %s está vazio ou não existe"
+
+#: bl-conky-session:194 bl-conky-session:203
+msgid "%s: WARNING: failed to parse line %s in %s"
+msgstr "%s: AVISO: falha ao analisar a linha %s em %s"
+
+#: bl-conky-session:215
+msgid "%s: reformatting %s"
+msgstr "%s: reformatando %s"
+
+#: bl-conky-session:238
+msgid "%s: WARNING: cannot read %s"
+msgstr "%s: AVISO: não foi possível ler %s"
+
+#: bl-conky-session:247
+msgid "%s: no conkys to launch"
+msgstr "%s: nenhum conky para iniciar"
+
+#: bl-conky-session:276
+msgid "conky %s is running on xwayland"
+msgstr "o conky %s está sendo executado no xwayland"
+
+#: bl-conky-session:281
+msgid "conky %s is not on xwayland"
+msgstr "o conky %s não está no xwayland"
+
+#: bl-conky-session:306
+msgid "%s: ERROR: cannot set session file %s as startup, it does not exist."
+msgstr "%s: ERRO: não foi possível definir o arquivo de sessão %s como inicialização, ele não existe."
+
+#: bl-conky-session:311
+msgid "%s: ERROR: failed to create symlink %s"
+msgstr "%s: ERRO: falha ao criar o link simbólico %s"
+
+#: bl-conky-session:333
+msgid "Cannot find any session files"
+msgstr "Não foi possível encontrar nenhum arquivo de sessão"
+
+#: bl-conky-session:362
+msgid "%s: There is no default session file: %s, generating now..."
+msgstr "%s: Não há arquivo de sessão padrão: %s, gerando agora..."
+
+#: bl-conky-session:368
+msgid "%s: %s not found, using %s in session file."
+msgstr "%s: %s não encontrado, usando %s no arquivo de sessão."
+
+#: bl-conky-session:374
+msgid "%s: ERROR: unable to generate default session file."
+msgstr "%s: ERRO: não foi possível gerar o arquivo de sessão padrão."
+
+#: bl-conky-session:384
+msgid "%s: generating missing symlink %s to %s"
+msgstr "%s: gerando link simbólico ausente %s para %s"
+
+#: bl-conky-session:386
+msgid "%s: WARNING: failed to create symlink %s"
+msgstr "%s: AVISO: falha ao criar o link simbólico %s"
+
+#: bl-conky-session:416
+msgid "%s: %s: no such option"
+msgstr "%s: %s: opção inexistente"
+
+#: bl-conky-session:427
+msgid "%s: WARNING: session file %s does not exist."
+msgstr "%s: AVISO: o arquivo de sessão %s não existe."
+

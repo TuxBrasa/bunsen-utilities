@@ -1,0 +1,182 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: beepmein 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:39-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: beepmein:68
+msgid "Warning"
+msgstr ""
+
+#: beepmein:70
+msgid "The following required program is not installed: "
+msgstr ""
+
+#: beepmein:90
+msgid ""
+"beepmein is a simple alarm clock based on \"at\"\n"
+"\n"
+"Usage: beepmein [OPTIONS]\n"
+"\n"
+"Play a sound and flash the screen at a preset time.\n"
+"Two modes are available, \"reminder\" and \"alarm\".\n"
+"\n"
+"Options:\n"
+"\n"
+"beepmein now + 3 minutes   # reminder (\"at\" time format)\n"
+"\n"
+"beepmein 22:10             # reminder (\"at\" time format)\n"
+"\n"
+"beepmein 3                 # reminder (in 3 minutes, beepmein shortcut)\n"
+"\n"
+"beepmein 8:00 --alarm      # alarm (must be last parameter)\n"
+"\n"
+"beepmein --nr 5            # with no reason (must be first parameter)\n"
+"\n"
+"beepmein --reason <reason> # pass reason (must be first & second "
+"parameters)\n"
+"\n"
+"Set sounds:\n"
+"\n"
+"    (playback depends on mpv or vlc)\n"
+"\n"
+"    --set-alarm <path/to/alarm.sound>\n"
+"    --set-remind <path/to/reminder.sound>\n"
+"\n"
+"Test playback, blinking and notifications:\n"
+"\n"
+"    --reaction reminder_text\n"
+"    --reaction --alarm alarm_text\n"
+"    --test # test everything\n"
+"\n"
+"List jobs:\n"
+"\n"
+"    --list # or -l\n"
+"\n"
+"Kill all running playback/beeping:\n"
+"\n"
+"    killall beepmein\n"
+"\n"
+"*Notes*\n"
+"\n"
+"    at -l       # will list pending jobs (or atq)\n"
+"    at -r <num> # will remove job <num> (or atrm)\n"
+"\n"
+"External reference:\n"
+"\n"
+"    https://brontosaurusrex.github.io/2019/11/19/beepmein/\n"
+msgstr ""
+
+#: beepmein:167
+msgid "%s not found, warning."
+msgstr ""
+
+#: beepmein:183
+msgid "I need at: sudo apt install --no-install-recommends at"
+msgstr ""
+
+#: beepmein:184
+msgid "I need speaker-test from alsa-utils (for reminder sound)."
+msgstr ""
+
+#: beepmein:185
+msgid "I need notify-send."
+msgstr ""
+
+#: beepmein:209
+msgid "No monitors found error"
+msgstr ""
+
+#: beepmein:214
+msgid "Could not get current brightness error"
+msgstr ""
+
+#: beepmein:256
+msgid ""
+"Note: alarmSample %s not found, Internal fail-safe beep will be used instead."
+msgstr ""
+
+#: beepmein:271
+msgid "no player"
+msgstr ""
+
+#: beepmein:279 beepmein:280
+msgid "notify test"
+msgstr ""
+
+#: beepmein:280 beepmein:283 beepmein:292
+msgid "failed"
+msgstr ""
+
+#: beepmein:282
+msgid "fail-safe internal beep test used for reminders"
+msgstr ""
+
+#: beepmein:285
+msgid "mpv sample test used for alarms (either this or vlc must pass)"
+msgstr ""
+
+#: beepmein:286
+msgid "mpv failed"
+msgstr ""
+
+#: beepmein:288
+msgid "vlc sample test used for alarms"
+msgstr ""
+
+#: beepmein:289
+msgid "cvlc failed"
+msgstr ""
+
+#: beepmein:291
+msgid "fail-safe internal beep test used for alarms"
+msgstr ""
+
+#: beepmein:330
+msgid "Select alarm sample path"
+msgstr ""
+
+#: beepmein:335
+msgid "No valid alarm path given."
+msgstr ""
+
+#: beepmein:348
+msgid "Select reminder sample path"
+msgstr ""
+
+#: beepmein:353
+msgid "No valid reminder path given."
+msgstr ""
+
+#: beepmein:389
+msgid "at time format error."
+msgstr ""
+
+#: beepmein:394
+msgid "reason?"
+msgstr ""
+
+#: beepmein:394
+msgid "beepmein"
+msgstr ""
+
+#: beepmein:399
+msgid "beepmein: %s, reason: %s %s"
+msgstr ""
+
+#: beepmein:408
+msgid "at input error."
+msgstr ""

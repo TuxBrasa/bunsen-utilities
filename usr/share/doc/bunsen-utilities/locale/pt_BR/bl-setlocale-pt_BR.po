@@ -1,0 +1,151 @@
+# Portuguese translations for bl-setlocale package.
+# Copyright (C) 2026 THE bl-setlocale'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-setlocale package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-setlocale 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:23-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-setlocale:75
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-setlocale:77
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-setlocale:90
+msgid ""
+"bl-setlocale is a GUI (yad) script to set a user locale\n"
+"\n"
+"Usage:  bl-setlocale\n"
+"   or:  bl-setlocale -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported at this "
+"time)\n"
+"\n"
+"Without options, the user will be shown a list of locales installed\n"
+"on the system and asked to choose which one to use.\n"
+"The chosen locale will be written to ~/.dmrc and sent to accountsservice\n"
+"if the daemon is running.\n"
+"\n"
+"It is necessary to log out and back in to use the new locale.\n"
+"\n"
+"*NOTE*\n"
+"\n"
+"The LightDM GTK greeter already offers a locale chooser widget,\n"
+"making this utility unnecessary. However, other interfaces,\n"
+"such as slick-greeter, do not have any such facility, hence this script.\n"
+"\n"
+msgstr ""
+"bl-setlocale é um script gráfico (yad) para definir a localidade (locale) do usuário\n"
+"\n"
+"Uso:  bl-setlocale\n"
+"  ou:  bl-setlocale -h|--help\n"
+"\n"
+"Argumentos opcionais:\n"
+"\n"
+"    -h | --help    Exibe esta mensagem (nenhuma outra opção é suportada no "
+"momento)\n"
+"\n"
+"Sem opções, uma lista de localidades instaladas no sistema será exibida\n"
+"para o usuário escolher qual usar.\n"
+"A localidade escolhida será gravada em ~/.dmrc e enviada ao accountsservice\n"
+"se o serviço (daemon) estiver em execução.\n"
+"\n"
+"É necessário encerrar a sessão e entrar novamente para usar a nova localidade.\n"
+"\n"
+"*NOTA*\n"
+"\n"
+"O gerenciador de login LightDM GTK greeter já oferece um recurso de escolha de localidade,\n"
+"tornando esta utilidade desnecessária. No entanto, outras interfaces,\n"
+"como o slick-greeter, não possuem essa funcionalidade, daí a razão deste script.\n"
+
+#: bl-setlocale:131 bl-setlocale:217
+msgid "OK"
+msgstr "OK"
+
+#: bl-setlocale:135
+msgid ""
+"%s error:\n"
+"%s"
+msgstr ""
+"Erro %s:\n"
+"%s"
+
+#: bl-setlocale:157
+msgid ""
+"%s: accounts-daemon is not running, accountsservice language will not be "
+"updated."
+msgstr ""
+"%s: o accounts-daemon não está em execução, o idioma do accountsservice não será "
+"atualizado."
+
+#: bl-setlocale:165
+msgid "error finding %s's accountsservice path"
+msgstr "erro ao encontrar o caminho do accountsservice de %s"
+
+#: bl-setlocale:167
+msgid "error setting %s's language in accountsservice"
+msgstr "erro ao definir o idioma de %s no accountsservice"
+
+#: bl-setlocale:172
+msgid ""
+"Your current locale is %s\n"
+"These are the locales you have enabled;\n"
+"to add more: %s\n"
+"\n"
+"Please choose:"
+msgstr ""
+"Sua localidade atual é %s\n"
+"Estas são as localidades habilitadas;\n"
+"para adicionar mais: %s\n"
+"\n"
+"Por favor escolha:"
+
+#: bl-setlocale:210 bl-setlocale:237
+msgid "Choose language"
+msgstr "Escolher idioma"
+
+#: bl-setlocale:216
+msgid "locale"
+msgstr "localidade"
+
+#: bl-setlocale:216
+msgid "name"
+msgstr "nome"
+
+#: bl-setlocale:217
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-setlocale:227
+msgid "Error setting language. Please check ~/dmrc"
+msgstr "Erro ao definir o idioma. Por favor verifique ~/dmrc"
+
+#: bl-setlocale:232
+msgid ""
+"Your locale has been set to %s in ~/.dmrc%s.\n"
+"The change will be seen after your next login."
+msgstr ""
+"Sua localidade foi definida para %s em ~/.dmrc%s.\n"
+"A alteração será visível após o seu próximo login."
+
+#: bl-setlocale:240
+msgid "%s returned an error..."
+msgstr "%s retornou um erro..."
+

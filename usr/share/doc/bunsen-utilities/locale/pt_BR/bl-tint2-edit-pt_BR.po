@@ -1,0 +1,98 @@
+# Portuguese translations for bl-tint2edit package.
+# Copyright (C) 2026 THE bl-tint2edit'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-tint2edit package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-tint2edit 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:23-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-tint2-edit:73
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-tint2-edit:75
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-tint2-edit:91
+msgid ""
+"bl-tint2edit is a script to edit selected tint2 config files\n"
+"which are displayed in a yad window with checkboxes.\n"
+"\n"
+"Usage:  bl-tint2edit\n"
+"   or:  bl-tint2edit -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported at this "
+"time)\n"
+"\n"
+"Tint2 files must be in %s\n"
+"\n"
+"Checkmarked tint2s will be opened in the text editor.\n"
+"Multiple tint2s can be chosen.\n"
+msgstr ""
+"bl-tint2edit é um script para editar arquivos de configuração do tint2 selecionados\n"
+"que são exibidos em uma janela do yad com caixas de seleção.\n"
+"\n"
+"Uso:  bl-tint2edit\n"
+"  ou:  bl-tint2edit -h|--help\n"
+"\n"
+"Argumentos opcionais:\n"
+"\n"
+"    -h | --help    Exibe esta mensagem (nenhuma outra opção é suportada no "
+"momento)\n"
+"\n"
+"Os arquivos do Tint2 devem estar em %s\n"
+"\n"
+"As configurações do tint2 marcadas serão abertas no editor de texto.\n"
+"Múltiplos arquivos do tint2 podem ser escolhidos.\n"
+
+#: bl-tint2-edit:111
+msgid "BunsenLabs Tint2 Edit"
+msgstr "Editar Tint2 do BunsenLabs"
+
+#: bl-tint2-edit:113
+msgid "OK"
+msgstr "OK"
+
+#: bl-tint2-edit:114
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-tint2-edit:153
+msgid "Error: Failed to locate bl-includes in %s"
+msgstr "Erro: Falha ao localizar bl-includes em %s"
+
+#: bl-tint2-edit:168
+msgid ""
+"Select Tint2s to edit from the list\n"
+"Multiple Tint2s can be chosen\n"
+msgstr ""
+"Selecione as configurações do Tint2 para editar a partir da lista\n"
+"Múltiplos arquivos do Tint2 podem ser escolhidos\n"
+
+#: bl-tint2-edit:172
+msgid "Select"
+msgstr "Selecionar"
+
+#: bl-tint2-edit:172
+msgid "Tint2 Name"
+msgstr "Nome do Tint2"
+
+#: bl-tint2-edit:172
+msgid "path"
+msgstr "caminho"
+

@@ -1,0 +1,97 @@
+# Portuguese translations for xml2xfconf package.
+# Copyright (C) 2026 THE xml2xfconf'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the xml2xfconf package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: xml2xfconf 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:25-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: xml2xfconf:67
+msgid "Warning"
+msgstr "Aviso"
+
+#: xml2xfconf:69
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: xml2xfconf:83
+msgid ""
+"xml2xfconf: convert xfce xfconf xml file entries into xfconf-query commands\n"
+"\n"
+"SUMMARY:    xml2xfconf -x|--xml-file <filepath> [-c|--channel "
+"<channelname>]\n"
+"\n"
+"Passed an xfce xfconf xml file, this script will print\n"
+"the necessary xfconf-query commands to update\n"
+"the xfconf database for that channel.\n"
+"\n"
+"If passed a channel name, that will be compared with\n"
+"the channel name defined in the xml,\n"
+"and if they are different the script will exit.\n"
+"\n"
+"This is expected to be useful when restoring the xfconf settings of\n"
+"an app whose xml file has been backed up.\n"
+"\n"
+"USAGE EXAMPLE:\n"
+"\n"
+"restore=$(mktemp);\n"
+"xml2xfconf -x /path/to/xfce4-terminal.xml -c xfce4-terminal > \"$restore\";\n"
+"bash \"$restore\"\n"
+msgstr ""
+"xml2xfconf: converte entradas de arquivo xml xfconf do xfce em comandos xfconf-query\n"
+"\n"
+"RESUMO:    xml2xfconf -x|--xml-file <caminho_do_arquivo> [-c|--channel "
+"<nome_do_canal>]\n"
+"\n"
+"Recebendo um arquivo xml xfconf do xfce, este script exibirá\n"
+"os comandos xfconf-query necessários para atualizar\n"
+"o banco de dados do xfconf para esse canal.\n"
+"\n"
+"Se um nome de canal for passado, ele será comparado com\n"
+"o nome de canal definido no xml,\n"
+"e se forem diferentes, o script será encerrado.\n"
+"\n"
+"Isso deve ser útil ao restaurar as configurações xfconf de\n"
+"um aplicativo cujo arquivo xml foi copiado como backup.\n"
+"\n"
+"EXEMPLO DE USO:\n"
+"\n"
+"restore=$(mktemp);\n"
+"xml2xfconf -x /caminho/para/xfce4-terminal.xml -c xfce4-terminal > \"$restore\";\n"
+"bash \"$restore\"\n"
+
+#: xml2xfconf:122
+msgid "%s: %s: no such option"
+msgstr "%s: %s: opção inexistente"
+
+#: xml2xfconf:133
+msgid "%s: xmlstarlet not found; install it first."
+msgstr "%s: xmlstarlet não encontrado; instale-o primeiro."
+
+#: xml2xfconf:140
+msgid "%s: missing -x|--xml-file option"
+msgstr "%s: opção -x|--xml-file ausente"
+
+#: xml2xfconf:149
+msgid "%s: %s file not found"
+msgstr "%s: arquivo %s não encontrado"
+
+#: xml2xfconf:160
+msgid "%s: Could not parse channel name from %s"
+msgstr "%s: Não foi possível extrair o nome do canal de %s"
+
+#: xml2xfconf:167
+msgid "%s: Passed channel name %s does not match %s in the xml file"
+msgstr "%s: O nome do canal informado (%s) não corresponde a %s no arquivo xml"

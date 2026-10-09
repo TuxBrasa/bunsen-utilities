@@ -1,0 +1,64 @@
+# Portuguese translations for bl-xinerama-prop package.
+# Copyright (C) 2026 THE bl-xinerama-prop'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-xinerama-prop package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-xinerama-prop 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:33-0300\n"
+"PO-Revision-Date: 2026-10-09 09:26-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-xinerama-prop:61
+msgid ""
+"Using the current cursor position, print the dimensions of the monitor the "
+"cursor is on, or the monitor name."
+msgstr ""
+"Usando a posição atual do cursor, exibe as dimensões do monitor onde o "
+"cursor está localizado ou o nome do monitor."
+
+#: bl-xinerama-prop:66
+msgid "print debug information"
+msgstr "exibe informações de depuração"
+
+#: bl-xinerama-prop:67
+msgid "print current monitor name instead of dimensions"
+msgstr "exibe o nome do monitor atual em vez das dimensões"
+
+#: bl-xinerama-prop:83
+#, python-format
+msgid "Failed to open X11 display %s - does it exist?"
+msgstr "Falha ao abrir o display X11 %s - ele existe?"
+
+#: bl-xinerama-prop:86
+msgid "Failed to open GDK default display"
+msgstr "Falha ao abrir o display padrão do GDK"
+
+#: bl-xinerama-prop:87
+#, python-format
+msgid "Using display: %s"
+msgstr "Usando o display: %s"
+
+#: bl-xinerama-prop:95
+msgid "No pointer device associated with display - none connected?"
+msgstr "Nenhum dispositivo ponteiro associado ao display - nenhum conectado?"
+
+#: bl-xinerama-prop:98
+#, python-format
+msgid "Using pointer device is: %s"
+msgstr "Usando o dispositivo ponteiro: %s"
+
+#: bl-xinerama-prop:102
+#, python-format
+msgid "Using monitor: %s (%s)"
+msgstr "Usando o monitor: %s (%s)"
+

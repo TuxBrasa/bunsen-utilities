@@ -1,0 +1,678 @@
+# Portuguese translations for bl-imgur-upload package.
+# Copyright (C) 2026 THE bl-imgur-upload'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-imgur-upload package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-imgur-upload 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:22-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-imgur-upload:84
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-imgur-upload:86
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-imgur-upload:106
+msgid ""
+"bl-imgur-upload is a script to take screenshots and upload them to Imgur\n"
+"this can be to an existing account, or anonymously.\n"
+"\n"
+"Usage:    bl-imgur-upload [option]... [file]...\n"
+"\n"
+"With no script args, %s will upload a screenshot of\n"
+"the full desktop, as anonymous user.\n"
+"\n"
+"Arguments:\n"
+"\n"
+"  -h, --help                   Show this help, exit\n"
+"  -l, --login                  Upload to Imgur account\n"
+"  -c, --connect                Show connected Imgur account, exit\n"
+"  -r, --register               Register for Imgur account\n"
+"  -s, --select                 Take screenshot in select mode\n"
+"  -w, --window                 Take screenshot in active window mode\n"
+"  -f, --full                   Take screenshot in full desktop mode\n"
+"  -d, --delay <seconds>        Delay in integer seconds, before taking "
+"screenshot\n"
+"  -a, --album <album_title>    Upload to specified album\n"
+"  -t, --title <image title>    Label uploaded image\n"
+"  --file  <filepath/filename>  Upload specified image. Overrides scrot "
+"options\n"
+"  --auto-upload                Upload image from filemanager, put BBCode on "
+"clipboard\n"
+"  --test-account               For use by external command, to see if user\n"
+"                               has an Imgur account already\n"
+"\n"
+"The final dialog displays forum BB-Code for both the direct image link and\n"
+"the linked image thumbnail. These can be copy/pasted as desired.\n"
+"\n"
+"If more than one of '-f','-w', or '-s' are passed to the script, the LAST\n"
+"one will be used.\n"
+"\n"
+"There is an option to delete uploaded and/or local screenshot images\n"
+"before exiting the script. This doesn't apply if using '--auto-upload'.\n"
+"\n"
+"'imgur.conf' settings, such as filepaths and image format, can be changed\n"
+"by editing the file directly.\n"
+"\n"
+msgstr ""
+"bl-imgur-upload é um script para tirar capturas de tela e enviá-las para o Imgur\n"
+"isso pode ser feito em uma conta existente ou de forma anônima.\n"
+"\n"
+"Uso:    bl-imgur-upload [opção]... [arquivo]...\n"
+"\n"
+"Sem argumentos, o %s enviará uma captura de tela\n"
+"da área de trabalho inteira como usuário anônimo.\n"
+"\n"
+"Argumentos:\n"
+"\n"
+"  -h, --help                   Exibe esta ajuda e sai\n"
+"  -l, --login                  Envia para uma conta do Imgur\n"
+"  -c, --connect                Exibe a conta do Imgur conectada e sai\n"
+"  -r, --register               Registra uma conta do Imgur\n"
+"  -s, --select                 Tira captura de tela no modo de seleção\n"
+"  -w, --window                 Tira captura de tela da janela ativa\n"
+"  -f, --full                   Tira captura de tela da área de trabalho inteira\n"
+"  -d, --delay <segundos>       Atraso em segundos (número inteiro) antes de tirar\n"
+"                               a captura de tela\n"
+"  -a, --album <título_álbum>   Envia para o álbum especificado\n"
+"  -t, --title <título_imagem>  Define o título da imagem enviada\n"
+"  --file  <caminho/arquivo>    Envia a imagem especificada. Sobrescreve as opções\n"
+"                               do scrot\n"
+"  --auto-upload                Envia imagem do gerenciador de arquivos e põe\n"
+"                               o BBCode na área de transferência\n"
+"  --test-account               Para uso por comando externo, para verificar se\n"
+"                               o usuário já possui uma conta no Imgur\n"
+"\n"
+"A caixa de diálogo final exibe o BBCode para o fórum, tanto para o link direto\n"
+"da imagem quanto para a miniatura com link. Eles podem ser copiados/colados conforme desejado.\n"
+"\n"
+"Se mais de uma das opções '-f', '-w' ou '-s' for informada, a ÚLTIMA\n"
+"será utilizada.\n"
+"\n"
+"Há uma opção para excluir as capturas enviadas e/ou imagens locais\n"
+"antes de fechar o script. Isso não se aplica se usar '--auto-upload'.\n"
+"\n"
+"As configurações do 'imgur.conf', como caminhos e formato de imagem, podem\n"
+"ser alteradas editando o arquivo diretamente.\n"
+"\n"
+
+#: bl-imgur-upload:170 bl-imgur-upload:336
+msgid "Anonymous upload"
+msgstr "Envio anônimo"
+
+#: bl-imgur-upload:199
+msgid ""
+"Delay value must be an integer\n"
+"\\tExiting script...\n"
+msgstr ""
+"O valor do atraso deve ser um número inteiro\n"
+"\\tSaindo do script...\n"
+
+#: bl-imgur-upload:218
+msgid ""
+"File %s doesn't exist!\n"
+"\n"
+"\\tExiting script...\n"
+msgstr ""
+"O arquivo %s não existe!\n"
+"\n"
+"\\tSaindo do script...\n"
+
+#: bl-imgur-upload:235
+msgid ""
+"Failed to parse options\n"
+"\\tExiting script..."
+msgstr ""
+"Falha ao analisar as opções\n"
+"\\tSaindo do script..."
+
+#: bl-imgur-upload:242
+msgid "Failed to parse options"
+msgstr "Falha ao analisar as opções"
+
+#: bl-imgur-upload:302
+msgid ""
+"\n"
+"            This script requires the following commands:\n"
+"\n"
+"                %s\n"
+"\n"
+"            Please install the packages containing the missing commands\n"
+"            and rerun the script.\n"
+"            "
+msgstr ""
+"\n"
+"            Este script requer os seguintes comandos:\n"
+"\n"
+"                %s\n"
+"\n"
+"            Por favor instale os pacotes contendo os comandos ausentes\n"
+"            e execute novamente o script.\n"
+"            "
+
+#: bl-imgur-upload:325
+msgid ""
+"\n"
+"                    This action will upload %s,\n"
+"                    and return the BBCode to the clipboard.\n"
+"\n"
+"                    Do you want to upload to your Imgur account\n"
+"                    or upload Anonymously?\n"
+"\n"
+"                    "
+msgstr ""
+"\n"
+"                    Esta ação enviará %s\n"
+"                    e retornará o BBCode para a área de transferência.\n"
+"\n"
+"                    Você deseja enviar para a sua conta do Imgur\n"
+"                    ou enviar anonimamente?\n"
+"\n"
+"                    "
+
+#: bl-imgur-upload:336
+msgid "To Account"
+msgstr "Para a conta"
+
+#: bl-imgur-upload:349
+msgid ""
+"No file specified for upload!\n"
+"\n"
+"\\tExiting script..."
+msgstr ""
+"Nenhum arquivo especificado para envio!\n"
+"\n"
+"\\tSaindo do script..."
+
+#: bl-imgur-upload:366
+msgid ""
+"Proceed with Imgur account screenshot?\n"
+"\n"
+"\\t         There will be a pause of %s, to select windows etc\n"
+msgstr ""
+"Prosseguir com a captura de tela para a conta do Imgur?\n"
+"\n"
+"\\t         Haverá uma pausa de %s para selecionar janelas etc.\n"
+
+#: bl-imgur-upload:377
+msgid ""
+"Selected Area screenshot...\n"
+"\n"
+"\\tProceed with Imgur account screenshot?\n"
+msgstr ""
+"Captura de tela da área selecionada...\n"
+"\n"
+"\\tProsseguir com a captura de tela para a conta do Imgur?\n"
+
+#: bl-imgur-upload:384
+msgid ""
+"Active Window screenshot...\n"
+"\n"
+"\\tProceed with Imgur account screenshot?\n"
+msgstr ""
+"Captura de tela da janela ativa...\n"
+"\n"
+"\\tProsseguir com a captura de tela para a conta do Imgur?\n"
+
+#: bl-imgur-upload:392
+msgid ""
+"Full desktop screenshot...\n"
+"\n"
+"\\tProceed with Imgur account screenshot?\n"
+msgstr ""
+"Captura de tela de toda a área de trabalho...\n"
+"\n"
+"\\tProsseguir com a captura de tela para a conta do Imgur?\n"
+
+#: bl-imgur-upload:416
+msgid ""
+"This action will upload this screenshot of your desktop,\n"
+"and return the BBCode to the clipboard.\n"
+"\n"
+"Do you want to upload anonymously to Imgur?"
+msgstr ""
+"Esta ação enviará esta captura de tela da sua área de trabalho\n"
+"e retornará o BBCode para a área de transferência.\n"
+"\n"
+"Deseja enviar anonimamente para o Imgur?"
+
+#: bl-imgur-upload:423
+msgid "Confirm Screenshot Upload"
+msgstr "Confirmar envio da captura de tela"
+
+#: bl-imgur-upload:424
+msgid "Show Fullsize"
+msgstr "Exibir em tamanho real"
+
+#: bl-imgur-upload:424
+msgid "Imgur T.O.S"
+msgstr "Termos de Serviço do Imgur"
+
+#: bl-imgur-upload:449
+msgid ""
+"file %s doesn't exist!\n"
+"\n"
+"\\tExiting script..."
+msgstr ""
+"O arquivo %s não existe!\n"
+"\n"
+"\\tSaindo do script..."
+
+#: bl-imgur-upload:469
+msgid ""
+"Choose the images to delete...\n"
+"\n"
+"%s"
+msgstr ""
+"Escolha as imagens para excluir...\n"
+"\n"
+"%s"
+
+#: bl-imgur-upload:472
+msgid "Uploaded screenshot"
+msgstr "Captura de tela enviada"
+
+#: bl-imgur-upload:473
+msgid "Local screenshot"
+msgstr "Captura de tela local"
+
+#: bl-imgur-upload:481 bl-imgur-upload:516
+msgid "deleting upload.."
+msgstr "excluindo envio..."
+
+#: bl-imgur-upload:485
+msgid "deleting local..."
+msgstr "excluindo local..."
+
+#: bl-imgur-upload:489
+msgid ""
+"File was saved locally as:\n"
+"\n"
+"%s\n"
+msgstr ""
+"O arquivo foi salvo localmente como:\n"
+"\n"
+"%s\n"
+
+#: bl-imgur-upload:498
+msgid ""
+"BBCode for linked thumbnail\n"
+"            %s\n"
+"\n"
+"            is on the clipboard.\n"
+"\n"
+"\n"
+"            File was saved as:\n"
+"            %s\n"
+msgstr ""
+"O BBCode para a miniatura com link\n"
+"            %s\n"
+"\n"
+"            está na área de transferência.\n"
+"\n"
+"\n"
+"            O arquivo foi salvo como:\n"
+"            %s\n"
+
+#: bl-imgur-upload:536
+msgid ""
+"Uploaded image successfully deleted.\n"
+"\n"
+"delete hash: %s"
+msgstr ""
+"Imagem enviada excluída com sucesso.\n"
+"\n"
+"hash de exclusão: %s"
+
+#: bl-imgur-upload:543
+msgid "The upload was interrupted."
+msgstr "O envio foi interrompido."
+
+#: bl-imgur-upload:546
+msgid "The image could not be deleted."
+msgstr "A imagem não pôde ser excluída."
+
+#: bl-imgur-upload:556
+msgid ""
+"Confirm moving local uploaded file to 'Trash'?\n"
+"\n"
+"\\t%s"
+msgstr ""
+"Confirmar envio do arquivo local enviado para a 'Lixeira'?\n"
+"\n"
+"\\t%s"
+
+#: bl-imgur-upload:577
+msgid "Local screenshot image was deleted"
+msgstr "A imagem da captura de tela local foi excluída"
+
+#: bl-imgur-upload:589
+msgid ""
+"Failed to take screenshot of\n"
+"\\t%s:\n"
+"\\tError: %s"
+msgstr ""
+"Falha ao tirar captura de tela de\n"
+"\\t%s:\n"
+"\\tErro: %s"
+
+#: bl-imgur-upload:607
+msgid "Clipboard cleared of BBCode"
+msgstr "BBCode removido da área de transferência"
+
+#: bl-imgur-upload:626 bl-imgur-upload:977
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-imgur-upload:644
+msgid ""
+"Your CLIENT_ID and CLIENT_SECRET are not set.\n"
+"\n"
+"            You need to register an imgur application at:\n"
+"            https://api.imgur.com/oauth2/addclient"
+msgstr ""
+"Seus CLIENT_ID e CLIENT_SECRET não estão configurados.\n"
+"\n"
+"            Você precisa registrar uma aplicação do Imgur em:\n"
+"            https://api.imgur.com/oauth2/addclient"
+
+#: bl-imgur-upload:649
+msgid "Get Credentials"
+msgstr "Obter credenciais"
+
+#: bl-imgur-upload:659
+msgid ""
+"Your CLIENT_ID and CLIENT_SECRET are not set.\n"
+"        To register an imgur application:\n"
+"\n"
+"        1: \"Run browser\"\n"
+"        2: Select \"OAuth 2 authorization without a callback URL\" and fill "
+"out the form.\n"
+"        3: Then, set the CLIENT_ID and CLIENT_SECRET in your imgur.conf,\n"
+"           or paste them in the fields below, and click \"OK\""
+msgstr ""
+"Seus CLIENT_ID e CLIENT_SECRET não estão configurados.\n"
+"        Para registrar uma aplicação no Imgur:\n"
+"\n"
+"        1: Clique em \"Abrir navegador\"\n"
+"        2: Selecione \"OAuth 2 authorization without a callback URL\" e preencha "
+"o formulário.\n"
+"        3: Em seguida, defina CLIENT_ID e CLIENT_SECRET no seu imgur.conf,\n"
+"           ou cole-os nos campos abaixo e clique em \"OK\""
+
+#: bl-imgur-upload:668 bl-imgur-upload:783
+msgid "Get Imgur authorization"
+msgstr "Obter autorização do Imgur"
+
+#: bl-imgur-upload:672
+msgid "Client ID"
+msgstr "Client ID"
+
+#: bl-imgur-upload:672
+msgid "Client Secret"
+msgstr "Client Secret"
+
+#: bl-imgur-upload:673 bl-imgur-upload:786
+msgid "Run browser"
+msgstr "Abrir navegador"
+
+#: bl-imgur-upload:684
+msgid "Client ID is wrong!"
+msgstr "Client ID está incorreto!"
+
+#: bl-imgur-upload:687
+msgid "Client Secret is wrong!"
+msgstr "Client Secret está incorreto!"
+
+#: bl-imgur-upload:694
+msgid "Try again or Exit script?"
+msgstr "Tentar novamente ou Sair do script?"
+
+#: bl-imgur-upload:697
+msgid "Exit"
+msgstr "Sair"
+
+#: bl-imgur-upload:724
+msgid ""
+"You need to Register an Imgur account\n"
+"            before being able to log in!"
+msgstr ""
+"Você precisa registrar uma conta no Imgur\n"
+"            antes de poder fazer login!"
+
+#: bl-imgur-upload:763
+msgid ""
+"You need to authorize %s to upload images.\n"
+"\n"
+"    To grant access to this application visit the link below, by clicking "
+"'Run browser'.\n"
+"\n"
+"    %s\n"
+"\n"
+"    Then copy and paste the URL from your browser.\n"
+"    It should look like 'https://imgur.com/#access_token=...'\n"
+"\n"
+"    Make sure the WHOLE of the URL is selected: it is a long string!\n"
+"\n"
+"        [ You may need to close the browser before the script continues ]\n"
+"\n"
+"    "
+msgstr ""
+"Você precisa autorizar %s a enviar imagens.\n"
+"\n"
+"    Para conceder acesso a esta aplicação, visite o link abaixo clicando em "
+"'Abrir navegador'.\n"
+"\n"
+"    %s\n"
+"\n"
+"    Em seguida, copie e cole a URL do seu navegador.\n"
+"    Ela deve se parecer com 'https://imgur.com/#access_token=...'\n"
+"\n"
+"    Certifique-se de que TODA a URL esteja selecionada: é uma sequência longa!\n"
+"\n"
+"        [ Pode ser necessário fechar o navegador antes que o script continue ]\n"
+"\n"
+"    "
+
+#: bl-imgur-upload:785
+msgid "Paste here"
+msgstr "Cole aqui"
+
+#: bl-imgur-upload:787
+msgid "Save token"
+msgstr "Salvar token"
+
+#: bl-imgur-upload:796
+msgid "ERROR: That URL doesn't look right, please start script again"
+msgstr "ERRO: Essa URL não parece correta, por favor reinicie o script"
+
+#: bl-imgur-upload:820
+msgid ""
+"ERROR: Failed parsing the URL.\n"
+"\n"
+"\\tDid you copy the full URL?"
+msgstr ""
+"ERRO: Falha ao analisar a URL.\n"
+"\n"
+"\\tVocê copiou a URL inteira?"
+
+#: bl-imgur-upload:852
+msgid "Refreshing access token..."
+msgstr "Atualizando token de acesso..."
+
+#: bl-imgur-upload:868
+msgid "Error: Something is wrong with your credentials:"
+msgstr "Erro: Há algo de errado com suas credenciais:"
+
+#: bl-imgur-upload:889
+msgid "newer"
+msgstr "mais recente"
+
+#: bl-imgur-upload:889
+msgid "older"
+msgstr "mais antigo"
+
+#: bl-imgur-upload:923
+msgid "User name %s written to imgur.conf"
+msgstr "Nome de usuário %s gravado em imgur.conf"
+
+#: bl-imgur-upload:929
+msgid ""
+"Logged in as %s.\n"
+"\n"
+"\\t%s"
+msgstr ""
+"Conectado como %s.\n"
+"\n"
+"\\t%s"
+
+#: bl-imgur-upload:939
+msgid "Failed to fetch info: %s"
+msgstr "Falha ao obter informações: %s"
+
+#: bl-imgur-upload:973
+msgid "Image BBCode"
+msgstr "BBCode da imagem"
+
+#: bl-imgur-upload:975
+msgid "Delete"
+msgstr "Excluir"
+
+#: bl-imgur-upload:976
+msgid "Close"
+msgstr "Fechar"
+
+#: bl-imgur-upload:978
+msgid "OK"
+msgstr "OK"
+
+#: bl-imgur-upload:1004
+msgid "Error: Failed to source yad-includes in %s"
+msgstr "Erro: Falha ao carregar (source) yad-includes em %s"
+
+#: bl-imgur-upload:1010
+msgid "Error: Failed to source %s in %s"
+msgstr "Erro: Falha ao carregar (source) %s em %s"
+
+#: bl-imgur-upload:1016
+msgid "Warning: Failed to source %s in %s"
+msgstr "Aviso: Falha ao carregar (source) %s em %s"
+
+#: bl-imgur-upload:1057
+msgid ""
+"You are already registered with Imgur as\n"
+"\n"
+"        %s\n"
+"\n"
+"        Continue with script?"
+msgstr ""
+"Você já está registrado no Imgur como\n"
+"\n"
+"        %s\n"
+"\n"
+"        Continuar com o script?"
+
+#: bl-imgur-upload:1135
+msgid "File exists"
+msgstr "O arquivo existe"
+
+#: bl-imgur-upload:1144
+msgid "Image not found"
+msgstr "Imagem não encontrada"
+
+#: bl-imgur-upload:1177
+msgid ""
+"BBCode for linked thumbnail\n"
+"\n"
+"\n"
+"            %s\n"
+"\n"
+"\n"
+"            is on the clipboard.\n"
+"\n"
+"\n"
+"            File was saved as:\n"
+"\n"
+"            %s"
+msgstr ""
+"O BBCode para a miniatura com link\n"
+"\n"
+"\n"
+"            %s\n"
+"\n"
+"\n"
+"            está na área de transferência.\n"
+"\n"
+"\n"
+"            O arquivo foi salvo como:\n"
+"\n"
+"            %s"
+
+#: bl-imgur-upload:1194
+msgid ""
+"BBCode for linked thumbnail\n"
+"\n"
+"\n"
+"            %s\n"
+"\n"
+"\n"
+"            is on the clipboard."
+msgstr ""
+"O BBCode para a miniatura com link\n"
+"\n"
+"\n"
+"            %s\n"
+"\n"
+"\n"
+"            está na área de transferência."
+
+#: bl-imgur-upload:1210
+msgid ""
+"BB Code - Image thumbnail Linked\n"
+"\n"
+"            Use Ctrl-C/Ctrl-V to copy/paste the selection.\n"
+"            BBCode for a linked thumbnail will automatically be\n"
+"            put on the clipboard."
+msgstr ""
+"BBCode - Miniatura com link para a imagem\n"
+"\n"
+"            Use Ctrl-C/Ctrl-V para copiar/colar a seleção.\n"
+"            O BBCode para uma miniatura com link será colocado\n"
+"            automaticamente na área de transferência."
+
+#: bl-imgur-upload:1218
+msgid "BB Code - Thumbnail linked"
+msgstr "BBCode - Miniatura com link"
+
+#: bl-imgur-upload:1219
+msgid "BB Code - Direct image link"
+msgstr "BBCode - Link direto da imagem"
+
+#: bl-imgur-upload:1236
+msgid ""
+"BBCode for linked thumbnail\n"
+"\n"
+"%s\n"
+"\n"
+"is on the clipboard"
+msgstr ""
+"O BBCode para a miniatura com link\n"
+"\n"
+"%s\n"
+"\n"
+"está na área de transferência"
+

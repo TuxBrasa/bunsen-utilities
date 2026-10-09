@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-restart 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-restart:57
+msgid ""
+"bl-restart is a script to restart all running instances of\n"
+"any process name passed\n"
+"\n"
+"Usage: bl-restart <name>\n"
+"   or: bl-restart -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help  Show this message (no other options are supported at this "
+"time)\n"
+"\n"
+"Each running process is stopped with SIGTERM.\n"
+"\n"
+"All previously running commands are then re-run, forked and disowned,\n"
+"with any duplicates removed.\n"
+msgstr ""
+
+#: bl-restart:92
+msgid "%s: no %s processes running"
+msgstr ""
+
+#: bl-restart:101
+msgid "%s: no %s processes found belonging to %s"
+msgstr ""
+
+#: bl-restart:105
+msgid "%s: ERROR: failed to kill %s"
+msgstr ""
+
+#: bl-restart:113
+msgid "%s: Some processes still running after %s, killing %s"
+msgstr ""

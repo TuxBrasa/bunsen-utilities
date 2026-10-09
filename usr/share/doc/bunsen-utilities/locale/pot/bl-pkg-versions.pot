@@ -1,0 +1,57 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-pkg-versions 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-pkg-versions:64
+msgid "Warning"
+msgstr ""
+
+#: bl-pkg-versions:66
+msgid "The following required program is not installed: "
+msgstr ""
+
+#: bl-pkg-versions:79
+msgid ""
+"bl-pkg-versions: a script to check versions of BunsenLabs packages\n"
+"\n"
+"Usage:\n"
+"\n"
+"    bl-pkg-versions [-h|--help][<release>]\n"
+"\n"
+"Options:\n"
+"\n"
+"        -h, --help      Show this message.\n"
+"        <empty>|carbon  Check the Carbon packages.\n"
+"        boron           Check the Boron packages.\n"
+"        beryllium       Check the Beryllium packages.\n"
+"        lithium         Check the Lithium packages.\n"
+"\n"
+"It will display the versions of bunsen packages\n"
+"on the BunsenLabs package and GitHub source repositories.\n"
+msgstr ""
+
+#: bl-pkg-versions:137
+msgid "%s: no such option"
+msgstr ""
+
+#: bl-pkg-versions:151
+msgid ""
+"This script requires the following commands: %s\n"
+"Please install the packages containing the missing commands\n"
+"and rerun the script."
+msgstr ""

@@ -1,0 +1,56 @@
+# Portuguese translations for bl-notify-broadcast package.
+# Copyright (C) 2026 THE bl-notify-broadcast'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-notify-broadcast package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-notify-broadcast 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 17:39-0300\n"
+"PO-Revision-Date: 2026-10-09 17:46-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-notify-broadcast:44
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-notify-broadcast:46
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-notify-broadcast:59
+msgid ""
+"Call notify-send for all current X users.\n"
+"Passed arguments (message, icon etc) are sent on as-is.\n"
+"This script must be run as root."
+msgstr ""
+"Chama o notify-send para todos os usuários X atuais.\n"
+"Os argumentos passados (mensagem, ícone etc.) são repassados como estão.\n"
+"Este script deve ser executado como root."
+
+#: bl-notify-broadcast:74
+msgid "%s error: %s"
+msgstr "Erro em %s: %s"
+
+#: bl-notify-broadcast:85
+msgid ""
+"This script requires the following commands: %s\n"
+"Please install the packages containing the missing commands\n"
+"and rerun the script."
+msgstr ""
+"Este script requer os seguintes comandos: %s\n"
+"Por favor instale os pacotes contendo os comandos ausentes\n"
+"e execute novamente o script."
+
+#: bl-notify-broadcast:89
+msgid "This script must be run as root."
+msgstr "Este script deve ser executado como root."
+

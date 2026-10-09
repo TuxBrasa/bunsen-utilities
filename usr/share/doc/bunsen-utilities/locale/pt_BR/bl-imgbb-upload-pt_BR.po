@@ -1,0 +1,422 @@
+# Portuguese translations for bl-imgbb-upload package.
+# Copyright (C) 2026 THE bl-imgbb-upload'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-imgbb-upload package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-imgbb-upload 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:22-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-imgbb-upload:82
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-imgbb-upload:84
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-imgbb-upload:110
+msgid ""
+"bl-imgbb-upload is a script to take screenshots and upload them to imgbb\n"
+"\n"
+"Credentials for an account can be set up.\n"
+"A settings file (imgbb.conf) is created in %s\n"
+"The script returns BB-Code for the direct image link, and a linked "
+"thumbnail.\n"
+"YAD dialogs are used for user interaction.\n"
+"\n"
+"Usage:    bl-imgbb-upload [option]... [file]...\n"
+"\n"
+"With no script args, %s will upload a screenshot of\n"
+"the full desktop.\n"
+"\n"
+"The first use will ask for a client API key, by logging in or registering\n"
+"for a new account.\n"
+"\n"
+"Arguments:\n"
+"\n"
+"    -h, --help                   Show this help, exit\n"
+"    -s, --select                 Take screenshot in select mode\n"
+"    -w, --window                 Take screenshot in active window mode\n"
+"    -f, --full                   Take screenshot in full desktop mode\n"
+"    -d, --delay <seconds>        Delay in integer seconds, before taking "
+"screenshot\n"
+"    --file  <filepath/filename>  Upload specified image. Overrides scrot "
+"options\n"
+"    --test-account               For use by external script to see if user\n"
+"                               has an imgbb Client ID configured\n"
+"\n"
+"The final dialog displays forum BB-Code for both the direct image link and\n"
+"the linked image thumbnail. These can be copy/pasted as desired.\n"
+"\n"
+"There are options to delete uploaded and/or local screenshot images\n"
+"before exiting the script.\n"
+"\n"
+"If more than one of '-f','-w', or '-s' are passed to the script, the LAST\n"
+"one will be used.\n"
+"\n"
+msgstr ""
+"bl-imgbb-upload é um script para tirar capturas de tela e enviá-las para o imgbb\n"
+"\n"
+"Credenciais de uma conta podem ser configuradas.\n"
+"Um arquivo de configurações (imgbb.conf) é criado em %s\n"
+"O script retorna o BBCode para o link direto da imagem e uma miniatura com link.\n"
+"Caixas de diálogo do YAD são usadas para interação com o usuário.\n"
+"\n"
+"Uso:    bl-imgbb-upload [opção]... [arquivo]...\n"
+"\n"
+"Sem argumentos, %s enviará uma captura de tela\n"
+"da área de trabalho inteira.\n"
+"\n"
+"O primeiro uso solicitará uma chave de API do cliente, fazendo login ou registrando\n"
+"uma nova conta.\n"
+"\n"
+"Argumentos:\n"
+"\n"
+"    -h, --help                   Exibe esta ajuda e sai\n"
+"    -s, --select                 Tira captura de tela no modo de seleção\n"
+"    -w, --window                 Tira captura de tela da janela ativa\n"
+"    -f, --full                   Tira captura de tela da área de trabalho inteira\n"
+"    -d, --delay <segundos>       Atraso em segundos (número inteiro) antes de tirar\n"
+"                               a captura de tela\n"
+"    --file  <caminho/arquivo>    Envia a imagem especificada. Sobrescreve as opções\n"
+"                               do scrot\n"
+"    --test-account               Para uso por script externo, para verificar se\n"
+"                               o usuário possui um ID de cliente do imgbb configurado\n"
+"\n"
+"A caixa de diálogo final exibe o BBCode para o fórum, tanto para o link direto\n"
+"da imagem quanto para a miniatura com link. Eles podem ser copiados/colados conforme desejado.\n"
+"\n"
+"Há opções para excluir as capturas enviadas e/ou imagens locais\n"
+"antes de fechar o script.\n"
+"\n"
+"Se mais de uma das opções '-f', '-w' ou '-s' for informada, a ÚLTIMA\n"
+"será utilizada.\n"
+"\n"
+
+#: bl-imgbb-upload:164
+msgid "Image BBCode"
+msgstr "BBCode da imagem"
+
+#: bl-imgbb-upload:166
+msgid "Delete"
+msgstr "Excluir"
+
+#: bl-imgbb-upload:167
+msgid "Close"
+msgstr "Fechar"
+
+#: bl-imgbb-upload:168 bl-imgbb-upload:458 bl-imgbb-upload:483
+#: bl-imgbb-upload:611 bl-imgbb-upload:692
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-imgbb-upload:169 bl-imgbb-upload:691
+msgid "OK"
+msgstr "OK"
+
+#: bl-imgbb-upload:194
+msgid ""
+"Delay value must be an integer\n"
+"Exiting script..."
+msgstr ""
+"O valor do atraso deve ser um número inteiro\n"
+"Saindo do script..."
+
+#: bl-imgbb-upload:206 bl-imgbb-upload:207
+msgid "'--file': requires a filename..."
+msgstr "'--file': requer um nome de arquivo..."
+
+#: bl-imgbb-upload:219
+msgid ""
+"Failed to parse options\n"
+"Exiting script..."
+msgstr ""
+"Falha ao analisar as opções\n"
+"Saindo do script..."
+
+#: bl-imgbb-upload:226
+msgid "Failed to parse options"
+msgstr "Falha ao analisar as opções"
+
+#: bl-imgbb-upload:278
+msgid ""
+"This script requires the following commands:\n"
+"\n"
+"                %s\n"
+"\n"
+"            Please install the packages containing the missing commands\n"
+"            and re-run the script."
+msgstr ""
+"Este script requer os seguintes comandos:\n"
+"\n"
+"                %s\n"
+"\n"
+"            Por favor instale os pacotes contendo os comandos ausentes\n"
+"            e execute novamente o script."
+
+#: bl-imgbb-upload:299
+msgid ""
+"Use '-d' (delay) or '-s' (select area), not both together.\n"
+"\n"
+"\\tExiting script...\n"
+msgstr ""
+"Use '-d' (atraso) ou '-s' (selecionar área), não ambos juntos.\n"
+"\n"
+"\\tSaindo do script...\n"
+
+#: bl-imgbb-upload:321
+msgid ""
+"file %s doesn't exist!\n"
+"\n"
+"\\tExiting script...\n"
+msgstr ""
+"O arquivo %s não existe!\n"
+"\n"
+"\\tSaindo do script...\n"
+
+#: bl-imgbb-upload:351
+msgid ""
+"Move local screenshot image to 'Trash'?\n"
+"\n"
+"\\t%s\n"
+msgstr ""
+"Mover imagem da captura de tela local para a 'Lixeira'?\n"
+"\n"
+"\\t%s\n"
+
+#: bl-imgbb-upload:367
+msgid "Local screenshot deleted:"
+msgstr "Captura de tela local excluída:"
+
+#: bl-imgbb-upload:385
+msgid ""
+"Countdown to screenshot from %s seconds\n"
+"    (There may be a few seconds of inactivity\n"
+"    while the screenshot takes place."
+msgstr ""
+"Contagem regressiva para a captura de tela a partir de %s segundos\n"
+"    (Pode haver alguns segundos de inatividade\n"
+"    enquanto a captura de tela é realizada)."
+
+#: bl-imgbb-upload:403
+msgid ""
+"\n"
+"        Failed to take screenshot of\n"
+"        %s\n"
+"\n"
+"        Error: %s\n"
+msgstr ""
+"\n"
+"        Falha ao tirar captura de tela de\n"
+"        %s\n"
+"\n"
+"        Erro: %s\n"
+
+#: bl-imgbb-upload:433
+msgid "Can't find %s"
+msgstr "Não foi possível encontrar %s"
+
+#: bl-imgbb-upload:455
+msgid "Reduce dimensions to %"
+msgstr "Reduzir dimensões para %"
+
+#: bl-imgbb-upload:456
+msgid "Increase dimensions to %"
+msgstr "Aumentar dimensões para %"
+
+#: bl-imgbb-upload:458
+msgid "Reduce"
+msgstr "Reduzir"
+
+#: bl-imgbb-upload:458
+msgid "Enlarge"
+msgstr "Ampliar"
+
+#: bl-imgbb-upload:472
+msgid "convert %s -resize %s %s"
+msgstr "convert %s -resize %s %s"
+
+#: bl-imgbb-upload:475
+msgid "Resizing image..."
+msgstr "Redimensionando imagem..."
+
+#: bl-imgbb-upload:489
+msgid ""
+"Failed to resize image\n"
+"\\t%s:\n"
+"\n"
+"\\tError: %s"
+msgstr ""
+"Falha ao redimensionar a imagem\n"
+"\\t%s:\n"
+"\n"
+"\\tErro: %s"
+
+#: bl-imgbb-upload:512
+msgid ""
+"UPLOAD\n"
+"     DELETED"
+msgstr ""
+"ENVIO\n"
+"     EXCLUÍDO"
+
+#: bl-imgbb-upload:528
+msgid ""
+"You need to register or log in to your imgbb account to get an API key.\n"
+"\n"
+"1. Choose \"Run browser\" to go to \"https://api.imgbb.com/\"\n"
+"2. Create an account or sign in, then return to the API page (\"About\" >> "
+"\"API\").\n"
+"3. Choose \"Get API key\" and copy/paste it into the dialog entry field.\n"
+"4. Choose \"OK.\""
+msgstr ""
+"Você precisa registrar ou fazer login na sua conta do imgbb para obter uma chave de API.\n"
+"\n"
+"1. Escolha \"Abrir navegador\" para ir para \"https://api.imgbb.com/\"\n"
+"2. Crie uma conta ou entre, depois retorne à página da API (\"Sobre\" >> "
+"\"API\").\n"
+"3. Escolha \"Obter chave de API\" e copie/cole no campo da caixa de diálogo.\n"
+"4. Escolha \"OK.\""
+
+#: bl-imgbb-upload:537
+msgid "imgbb Client API key"
+msgstr "Chave de API de cliente do imgbb"
+
+#: bl-imgbb-upload:540
+msgid "Client API key"
+msgstr "Chave de API do cliente"
+
+#: bl-imgbb-upload:541
+msgid "Run browser"
+msgstr "Abrir navegador"
+
+#: bl-imgbb-upload:553
+msgid "Client API key is wrong!"
+msgstr "A chave de API do cliente está incorreta!"
+
+#: bl-imgbb-upload:557
+msgid ""
+"%s\n"
+"\n"
+"Try again or Exit script?"
+msgstr ""
+"%s\n"
+"\n"
+"Tentar novamente ou Sair do script?"
+
+#: bl-imgbb-upload:565 bl-imgbb-upload:784
+msgid "Exit"
+msgstr "Sair"
+
+#: bl-imgbb-upload:600
+msgid "Uploading screenshot to imgbb..."
+msgstr "Enviando captura de tela para o imgbb..."
+
+#: bl-imgbb-upload:630
+msgid "BBCode placed on clipboard"
+msgstr "BBCode colocado na área de transferência"
+
+#: bl-imgbb-upload:670
+msgid ""
+"<b>imgbb Screenshooter</b>\n"
+"\n"
+"%s\n"
+"Filesize: %s\n"
+"(EDITED)"
+msgstr ""
+"<b>Capturador de tela do imgbb</b>\n"
+"\n"
+"%s\n"
+"Tamanho do arquivo: %s\n"
+"(EDITADO)"
+
+#: bl-imgbb-upload:685
+msgid "Enter name of editor or browse for the executable file"
+msgstr "Digite o nome do editor ou navegue até o arquivo executável"
+
+#: bl-imgbb-upload:690
+msgid "Browse"
+msgstr "Navegar"
+
+#: bl-imgbb-upload:729
+msgid "Error: Failed to source yad-includes in %s"
+msgstr "Erro: Falha ao carregar (source) yad-includes em %s"
+
+#: bl-imgbb-upload:735
+msgid "Error: Failed to source %s in %s"
+msgstr "Erro: Falha ao carregar (source) %s em %s"
+
+#: bl-imgbb-upload:767
+msgid ""
+"<b>imgbb Screenshooter</b>\n"
+"\n"
+"%s\n"
+"Filesize: %s"
+msgstr ""
+"<b>Capturador de tela do imgbb</b>\n"
+"\n"
+"%s\n"
+"Tamanho do arquivo: %s"
+
+#: bl-imgbb-upload:780
+msgid "Edit"
+msgstr "Editar"
+
+#: bl-imgbb-upload:781
+msgid "Show screenshot"
+msgstr "Exibir captura de tela"
+
+#: bl-imgbb-upload:782
+msgid "Resize image"
+msgstr "Redimensionar imagem"
+
+#: bl-imgbb-upload:783
+msgid "Upload"
+msgstr "Enviar"
+
+#: bl-imgbb-upload:815
+msgid "BB Code - Thumbnail linked"
+msgstr "BBCode - Miniatura com link"
+
+#: bl-imgbb-upload:816
+msgid "BB Code - Direct image link"
+msgstr "BBCode - Link direto da imagem"
+
+#: bl-imgbb-upload:817 bl-imgbb-upload:863
+msgid "Show Image"
+msgstr "Exibir imagem"
+
+#: bl-imgbb-upload:828
+msgid ""
+"Choose 'OK' when you have confirmed image deletion\n"
+"\n"
+"    (the delete link is below the image)"
+msgstr ""
+"Escolha 'OK' quando tiver confirmado a exclusão da imagem\n"
+"\n"
+"    (o link de exclusão está abaixo da imagem)"
+
+#: bl-imgbb-upload:853
+msgid ""
+"Screenshot was saved as\n"
+"\"%s\"\n"
+"\n"
+"File size: %s"
+msgstr ""
+"A captura de tela foi salva como\n"
+"\"%s\"\n"
+"\n"
+"Tamanho do arquivo: %s"
+

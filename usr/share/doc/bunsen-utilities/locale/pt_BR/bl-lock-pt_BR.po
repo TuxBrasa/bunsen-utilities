@@ -1,0 +1,74 @@
+# Portuguese translations for bl-lock package.
+# Copyright (C) 2026 THE bl-lock'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-lock package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-lock 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: 2026-10-09 09:22-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-lock:68
+msgid ""
+"\n"
+"bl-lock is a wrapper for the configured screenlock command\n"
+"\n"
+"Usage:  bl-lock\n"
+"   or:  bl-lock -h|--help\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported)\n"
+"\n"
+"If running in live mode, offer up a prompt detailing the live session "
+"password.\n"
+"Else, run %s\n"
+msgstr ""
+"\n"
+"bl-lock é um wrapper para o comando de bloqueio de tela configurado\n"
+"\n"
+"Uso:  bl-lock\n"
+"  ou:  bl-lock -h|--help\n"
+"\n"
+"Argumentos opcionais:\n"
+"\n"
+"    -h | --help    Exibe esta mensagem (nenhuma outra opção é suportada)\n"
+"\n"
+"Se estiver sendo executado em modo live, exibe uma mensagem detalhando a "
+"senha da sessão live.\n"
+"Caso contrário, executa %s\n"
+
+#: bl-lock:100
+msgid "%s: %s no such command."
+msgstr "%s: %s comando não encontrado."
+
+#: bl-lock:110
+msgid "Lock screen info:"
+msgstr "Informações de bloqueio de tela:"
+
+#: bl-lock:110
+msgid ""
+"Lock screen has detected you are running a live session.\n"
+"The username needed to unlock the screen is \"user\" and the password is "
+"\"live\".\n"
+"This notice will only be displayed once per live session."
+msgstr ""
+"O bloqueio de tela detectou que você está executando uma sessão live.\n"
+"O nome de usuário necessário para desbloquear a tela é \"user\" e a senha é "
+"\"live\".\n"
+"Este aviso só será exibido uma vez por sessão live."
+
+#: bl-lock:112
+msgid "OK"
+msgstr "OK"
+

@@ -1,0 +1,78 @@
+# Portuguese translations for bl-pkg-versions package.
+# Copyright (C) 2026 THE bl-pkg-versions'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-pkg-versions package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-pkg-versions 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:36-0300\n"
+"PO-Revision-Date: 2026-10-09 09:23-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-pkg-versions:64
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-pkg-versions:66
+msgid "The following required program is not installed: "
+msgstr "O seguinte programa necessário não está instalado: "
+
+#: bl-pkg-versions:79
+msgid ""
+"bl-pkg-versions: a script to check versions of BunsenLabs packages\n"
+"\n"
+"Usage:\n"
+"\n"
+"    bl-pkg-versions [-h|--help][<release>]\n"
+"\n"
+"Options:\n"
+"\n"
+"        -h, --help      Show this message.\n"
+"        <empty>|carbon  Check the Carbon packages.\n"
+"        boron           Check the Boron packages.\n"
+"        beryllium       Check the Beryllium packages.\n"
+"        lithium         Check the Lithium packages.\n"
+"\n"
+"It will display the versions of bunsen packages\n"
+"on the BunsenLabs package and GitHub source repositories.\n"
+msgstr ""
+"bl-pkg-versions: um script para verificar as versões dos pacotes do BunsenLabs\n"
+"\n"
+"Uso:\n"
+"\n"
+"    bl-pkg-versions [-h|--help][<versão>]\n"
+"\n"
+"Opções:\n"
+"\n"
+"        -h, --help      Exibe esta mensagem.\n"
+"        <vazio>|carbon  Verifica os pacotes do Carbon.\n"
+"        boron           Verifica os pacotes do Boron.\n"
+"        beryllium       Verifica os pacotes do Beryllium.\n"
+"        lithium         Verifica os pacotes do Lithium.\n"
+"\n"
+"Ele exibirá as versões dos pacotes do bunsen\n"
+"nos repositórios de pacotes do BunsenLabs e no código-fonte do GitHub.\n"
+
+#: bl-pkg-versions:137
+msgid "%s: no such option"
+msgstr "%s: opção inexistente"
+
+#: bl-pkg-versions:151
+msgid ""
+"This script requires the following commands: %s\n"
+"Please install the packages containing the missing commands\n"
+"and rerun the script."
+msgstr ""
+"Este script requer os seguintes comandos: %s\n"
+"Por favor instale os pacotes contendo os comandos ausentes\n"
+"e execute novamente o script."
+

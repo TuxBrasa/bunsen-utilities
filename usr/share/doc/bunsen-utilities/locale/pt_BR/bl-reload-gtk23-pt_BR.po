@@ -1,0 +1,176 @@
+# Portuguese translations for bl-reload-gtk23 package.
+# Copyright (C) 2026 THE bl-reload-gtk23'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-reload-gtk23 package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-reload-gtk23 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:33-0300\n"
+"PO-Revision-Date: 2026-10-09 09:26-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-reload-gtk23:71
+msgid ""
+"\n"
+"After changing GTK2 and GTK3 configuration files, notify running GTK2 and "
+"GTK3 clients to apply\n"
+"those changes. The notification mechanism used by GTK3 requires that "
+"xsettingsd is running. If it is\n"
+"installed and not running, the program will launch it.\n"
+"\n"
+"EXIT CODES:\n"
+"\n"
+"   0 - both gtk2 and gtk3 clients notified successfully\n"
+"   1 - failed to notify gtk2 clients\n"
+"   2 - failed to notify gtk3 clients\n"
+"   3 - failed to notify gtk2 and gtk3 clients\n"
+"\n"
+msgstr ""
+"\n"
+"Após alterar os arquivos de configuração do GTK2 e GTK3, notifica os clientes GTK2 e "
+"GTK3 em execução para aplicar\n"
+"essas alterações. O mecanismo de notificação usado pelo GTK3 requer que o "
+"xsettingsd esteja em execução. Se ele estiver\n"
+"instalado e não estiver rodando, o programa irá iniciá-lo.\n"
+"\n"
+"CÓDIGOS DE SAÍDA:\n"
+"\n"
+"   0 - clientes gtk2 e gtk3 notificados com sucesso\n"
+"   1 - falha ao notificar clientes gtk2\n"
+"   2 - falha ao notificar clientes gtk3\n"
+"   3 - falha ao notificar clientes gtk2 e gtk3\n"
+"\n"
+
+#: bl-reload-gtk23:160
+msgid "print debug information"
+msgstr "exibe informações de depuração"
+
+#: bl-reload-gtk23:162
+msgid ""
+"debug action without side effects: dump the would-be GTK property type "
+"mappings and exit"
+msgstr ""
+"ação de depuração sem efeitos colaterais: descarrega os mapeamentos do tipo "
+"de propriedade do GTK e sai"
+
+#: bl-reload-gtk23:163
+msgid "ignore all errors"
+msgstr "ignora todos os erros"
+
+#: bl-reload-gtk23:165
+msgid "Path of GTK3 settings.ini file to sync settings for xsettingsd from"
+msgstr "Caminho do arquivo settings.ini do GTK3 do qual sincronizar as configurações para o xsettingsd"
+
+#: bl-reload-gtk23:167
+msgid ""
+"Do not modify xsettingsd config based on current GTK3 settings but still "
+"send SIGHUP to xsettingsd"
+msgstr ""
+"Não modifica a configuração do xsettingsd com base nas configurações atuais do GTK3, mas ainda "
+"envia SIGHUP para o xsettingsd"
+
+#: bl-reload-gtk23:169
+msgid ""
+"Do not signal xsettingsd SIGHUP after rewriting its config file on --sync-"
+"xsettingsd-from"
+msgstr ""
+"Não envia o sinal SIGHUP para o xsettingsd após reescrever seu arquivo de configuração em --sync-"
+"xsettingsd-from"
+
+#: bl-reload-gtk23:190
+msgid "does not exist"
+msgstr "não existe"
+
+#: bl-reload-gtk23:276
+#, python-format
+msgid ""
+"Found setting %s in settings which is not known to the currently installed "
+"GTK3 version, ignoring."
+msgstr ""
+"Encontrada a configuração %s em settings que não é conhecida pela versão do "
+"GTK3 atualmente instalada, ignorando."
+
+#: bl-reload-gtk23:289
+#, python-format
+msgid "Ignoring source key of unhandled type: %s (%s)"
+msgstr "Ignorando chave de origem de tipo não suportado: %s (%s)"
+
+#: bl-reload-gtk23:291
+#, python-format
+msgid "Mapping FROM %s = %s (%s)"
+msgstr "Mapeando DE %s = %s (%s)"
+
+#: bl-reload-gtk23:292
+#, python-format
+msgid "        TO   %s %s (%s)"
+msgstr "        PARA %s %s (%s)"
+
+#: bl-reload-gtk23:295
+#, python-format
+msgid "Ignoring key without defined mapping: %s"
+msgstr "Ignorando chave sem mapeamento definido: %s"
+
+#: bl-reload-gtk23:304
+msgid "XDG failed to create the current user's xsettingsd directory"
+msgstr "O XDG falhou ao criar o diretório xsettingsd do usuário atual"
+
+#: bl-reload-gtk23:308
+#, python-format
+msgid "Loading GTK3 settings from: %s"
+msgstr "Carregando configurações do GTK3 de: %s"
+
+#: bl-reload-gtk23:321
+msgid "GTK3 config without [Settings] section, ignoring file"
+msgstr "Configuração do GTK3 sem a seção [Settings], ignorando arquivo"
+
+#: bl-reload-gtk23:323
+#, python-format
+msgid "Argument to -s is not a file or inaccessible, ignoring: %s"
+msgstr "O argumento para -s não é um arquivo ou está inacessível, ignorando: %s"
+
+#: bl-reload-gtk23:325
+msgid "Skipping syncing of xsettingsd config as requested"
+msgstr "Sincronização da configuração do xsettingsd ignorada conforme solicitado"
+
+#: bl-reload-gtk23:332
+#, python-format
+msgid "Found xsettingsd process and sent SIGHUP: PID %d"
+msgstr "Processo xsettingsd encontrado e SIGHUP enviado: PID %d"
+
+#: bl-reload-gtk23:338
+#, python-format
+msgid "xsettingsd not running; started from %s; PID: %d"
+msgstr "xsettingsd não está em execução; iniciado a partir de %s; PID: %d"
+
+#: bl-reload-gtk23:340
+msgid "xsettingsd not running and not in PATH, no settings changes propagated"
+msgstr "xsettingsd não está em execução e não está no PATH, nenhuma alteração de configuração propagada"
+
+#: bl-reload-gtk23:342
+msgid "Skipping sending of SIGHUP to xsettingsd as requested"
+msgstr "Envio de SIGHUP para o xsettingsd ignorado conforme solicitado"
+
+#: bl-reload-gtk23:352
+#, python-format
+msgid "debug_gtk_mappings() failed: %s"
+msgstr "debug_gtk_mappings() falhou: %s"
+
+#: bl-reload-gtk23:359
+#, python-format
+msgid "Failed to reload GTK2 settings: %s"
+msgstr "Falha ao recarregar as configurações do GTK2: %s"
+
+#: bl-reload-gtk23:364
+#, python-format
+msgid "Failed to reload GTK3 settings: %s"
+msgstr "Falha ao recarregar as configurações do GTK3: %s"
+

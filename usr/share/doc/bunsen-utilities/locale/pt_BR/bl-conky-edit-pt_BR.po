@@ -1,0 +1,100 @@
+# Portuguese translations for bl-conky-edit package.
+# Copyright (C) 2026 THE bl-conky-edit'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bl-conky-edit package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-conky-edit 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: 2026-10-09 09:21-0300\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge."
+"net>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bl-conky-edit:62 bl-conky-edit:74
+msgid "Warning"
+msgstr "Aviso"
+
+#: bl-conky-edit:63
+msgid "The conky program is not installed."
+msgstr "O programa conky não está instalado."
+
+#: bl-conky-edit:75
+msgid "The bl-text-editor program is not installed."
+msgstr "O programa bl-text-editor não está instalado."
+
+#: bl-conky-edit:83
+msgid ""
+"bl-conky-edit is a script to edit selected Conky config files\n"
+"which are displayed in a yad window with checkboxes.\n"
+"\n"
+"Usage: bl-conky-edit [-h|--help]\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported)\n"
+"\n"
+"Conkys must be in %s\n"
+"The name must end with 'conkyrc', 'conky' or be '*conky*.conf'\n"
+"\n"
+"Checkmarked conkys will be opened in the text editor.\n"
+"Multiple conkys can be chosen.\n"
+msgstr ""
+"bl-conky-edit é um script para editar arquivos de configuração do Conky selecionados\n"
+"que são exibidos em uma janela do yad com caixas de seleção.\n"
+"\n"
+"Uso: bl-conky-edit [-h|--help]\n"
+"\n"
+"Argumentos opcionais:\n"
+"\n"
+"    -h | --help    Exibe esta mensagem (nenhuma outra opção é suportada)\n"
+"\n"
+"Os arquivos do Conky devem estar em %s\n"
+"O nome deve terminar com 'conkyrc', 'conky' ou ser '*conky*.conf'\n"
+"\n"
+"Os arquivos do conky marcados serão abertos no editor de texto.\n"
+"Múltiplos arquivos do conky podem ser escolhidos.\n"
+
+#: bl-conky-edit:103
+msgid "BunsenLabs Conky Edit"
+msgstr "Editar Conky do BunsenLabs"
+
+#: bl-conky-edit:105
+msgid "OK"
+msgstr "OK"
+
+#: bl-conky-edit:106
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: bl-conky-edit:147
+msgid "Error: Failed to source bl-includes in %s"
+msgstr "Erro: Falha ao carregar (source) bl-includes em %s"
+
+#: bl-conky-edit:163
+msgid ""
+"Select Conkys to edit from the list\n"
+"Multiple Conkys can be chosen"
+msgstr ""
+"Selecione as configurações do Conky para editar a partir da lista\n"
+"Múltiplos arquivos do Conky podem ser escolhidos"
+
+#: bl-conky-edit:166
+msgid "Select"
+msgstr "Selecionar"
+
+#: bl-conky-edit:166
+msgid "Conky Name"
+msgstr "Nome do Conky"
+
+#: bl-conky-edit:166
+msgid "path"
+msgstr "caminho"
+

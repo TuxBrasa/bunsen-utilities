@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: genman.sh 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 18:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: genman.sh:105
+msgid "Warning"
+msgstr ""
+
+#: genman.sh:107
+msgid "The following required program is not installed: "
+msgstr ""
+
+#: genman.sh:125
+msgid "%s: Not in debian source directory?"
+msgstr ""
+
+#: genman.sh:151
+msgid ""
+"genman.sh is a wrapper script round 'help2man'\n"
+"to generate man pages for debian packages.\n"
+"\n"
+"Usage: genman.sh [OPTIONS] [file]\n"
+"\n"
+"This is a script for debian packagers, which automates the generation\n"
+"of simple man pages from the output of executables' \"--help\" options,\n"
+"along with information from dpkg, and configuration files\n"
+"in the package source debian/ directory.\n"
+"\n"
+"Arguments:\n"
+"\n"
+"    <no arguments>\n"
+"            Generate the necessary files in the source directory.\n"
+"\n"
+"    --clean\n"
+"            Return everything in the package debian/ directory\n"
+"            to the state it was in before running the script.\n"
+"\n"
+"    --test <executable>\n"
+"            Display the manpage that would be generated for this file.\n"
+"            Nothing is changed in the source directory.\n"
+"\n"
+"    --makeone <executable>\n"
+"            Generate a single man file for this one executable and\n"
+"            place it in the working directory (package source root).\n"
+"            (You will still need to add it to debian/<package>.manpages.)\n"
+"\n"
+"    -h --help\n"
+"            Show this message.\n"
+"\n"
+"\n"
+"Configuration:\n"
+"\n"
+"    The script will look for files in debian/\n"
+"\n"
+"        <packagename>.<section>.genman-list\n"
+"\n"
+"        <packagename>.genman-list\n"
+"\n"
+"        genman-list\n"
+"\n"
+"    If <section> ([1-8]) is missing, assume 1.\n"
+"\n"
+"    If <packagename> is also missing, get from dpkg.\n"
+"\n"
+"    The genman-list file should have a list of the executables\n"
+"    (paths relative to the package root) whose manpages are to be built.\n"
+"    Shell globs may be used.\n"
+"    Multiple genman-list files can be used, for source building\n"
+"    multiple packages, or for different manual sections.\n"
+"\n"
+"Built manpages will be put in debian/genman-pages/, and\n"
+"their paths will be appended to an existing debian/*manpages file,\n"
+"or put in a new manpages or <packagename>.manpages file.\n"
+"\n"
+"The script can be located anywhere, but should be run\n"
+"from the package source root directory.\n"
+"Run it manually before building the package,\n"
+"or to auto-run, add this to debian/rules:\n"
+"(adjust the path to genman.sh if necessary)\n"
+"\n"
+"override_dh_installman:\n"
+"\n"
+"<tab>debian/genman.sh\n"
+"\n"
+"<tab>dh_installman\n"
+"\n"
+"override_dh_clean:\n"
+"\n"
+"<tab>dh_clean\n"
+"\n"
+"<tab>debian/genman.sh --clean\n"
+"\n"
+"Also add help2man to Build-Depends in debian/control.\n"
+msgstr ""
+
+#: genman.sh:262
+msgid "%s: %s already in %s, skipping"
+msgstr ""
+
+#: genman.sh:269
+#: genman.sh:295
+msgid "a script provided by %s"
+msgstr ""
+
+#: genman.sh:326
+msgid "Please pass a file to test."
+msgstr ""
+
+#: genman.sh:337
+msgid "Please pass a file to make a manpage for."
+msgstr ""
+
+#: genman.sh:355
+msgid "%s: ERROR %s: no such option"
+msgstr ""
+
+#: genman.sh:367
+msgid "%s: manpages already built"
+msgstr ""
+

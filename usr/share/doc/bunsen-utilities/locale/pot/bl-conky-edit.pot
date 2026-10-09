@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# fernando <kurumin@disroot.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: bl-conky-edit 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 02:37-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: fernando <kurumin@disroot.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bl-conky-edit:62 bl-conky-edit:74
+msgid "Warning"
+msgstr ""
+
+#: bl-conky-edit:63
+msgid "The conky program is not installed."
+msgstr ""
+
+#: bl-conky-edit:75
+msgid "The bl-text-editor program is not installed."
+msgstr ""
+
+#: bl-conky-edit:83
+msgid ""
+"bl-conky-edit is a script to edit selected Conky config files\n"
+"which are displayed in a yad window with checkboxes.\n"
+"\n"
+"Usage: bl-conky-edit [-h|--help]\n"
+"\n"
+"Optional arguments:\n"
+"\n"
+"    -h | --help    Show this message (no other options are supported)\n"
+"\n"
+"Conkys must be in %s\n"
+"The name must end with 'conkyrc', 'conky' or be '*conky*.conf'\n"
+"\n"
+"Checkmarked conkys will be opened in the text editor.\n"
+"Multiple conkys can be chosen.\n"
+msgstr ""
+
+#: bl-conky-edit:103
+msgid "BunsenLabs Conky Edit"
+msgstr ""
+
+#: bl-conky-edit:105
+msgid "OK"
+msgstr ""
+
+#: bl-conky-edit:106
+msgid "Cancel"
+msgstr ""
+
+#: bl-conky-edit:147
+msgid "Error: Failed to source bl-includes in %s"
+msgstr ""
+
+#: bl-conky-edit:163
+msgid ""
+"Select Conkys to edit from the list\n"
+"Multiple Conkys can be chosen"
+msgstr ""
+
+#: bl-conky-edit:166
+msgid "Select"
+msgstr ""
+
+#: bl-conky-edit:166
+msgid "Conky Name"
+msgstr ""
+
+#: bl-conky-edit:166
+msgid "path"
+msgstr ""
