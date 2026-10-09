@@ -1,0 +1,876 @@
+#!/usr/bin/env bash
+#
+################### bl-imgbb-upload ####################################
+# Take screenshots and upload them to imgbb.
+#
+# Credentials for an account can be set up.
+#
+# Settings file (imgbb.conf) is created in $HOME/.config/image-upload/imgbb
+#
+# The script returns BB-Code for the direct image link, and a linked thumbnail.
+# YAD dialogs are used for user interaction.
+#
+########################################################################
+#
+#    Copyright (C) 2020 damo    <damo@bunsenlabs.org>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+########################################################################
+#
+### REQUIRES:  yad, jq, wget, curl, scrot, xdotool, convert, composite
+#
+########################################################################
+
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-imgbb-upload script
+
+TEXTDOMAIN="bl-imgbb-upload"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+if ! command -v yad &> /dev/null; then
+
+  echo -e "\nThe yad program is not installed.\n"
+
+  exit 1
+
+fi
+
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+
+
+for cmd in wget jq curl pkill notify-send convert sed du; do
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        yad \
+            --center \
+            --window-icon "$logo" \
+            --image=dialog-error \
+            --timeout=10 \
+            --no-buttons \
+            --title "$(gettext "Warning")" \
+            --text "$(printf '%s\n' \
+                "$(gettext "The following required program is not installed: ")
+" \
+                "${cmd}")" \
+            --width="450" \
+            --height="100" \
+            2>/dev/null
+
+        exit 1
+    fi
+
+done
+
+
+
+
+export API_URL="https://api.imgbb.com/"   # used by run_browser()
+export BL_YAD_INCLUDES='/usr/lib/bunsen/common/yad-includes'
+export IMG_VIEWER   # used by show_image()
+
+USR_CFG_DIR="$HOME/.config/image-upload/imgbb"
+SETTINGS_FILE="${USR_CFG_DIR}/imgbb.conf"
+SCRIPT=$(basename "$0")
+THUMB_SIZE=250                      # Thumbnail to be 250px wide
+KEEP_BB=1                           # Flag to keep BBCode on clipboard
+TEST=0                              # Flag for '--test-account' parameter
+
+USAGE="$(gettext "bl-imgbb-upload is a script to take screenshots and upload them to imgbb
+
+Credentials for an account can be set up.
+A settings file (imgbb.conf) is created in %s
+The script returns BB-Code for the direct image link, and a linked thumbnail.
+YAD dialogs are used for user interaction.
+
+Usage:    bl-imgbb-upload [option]... [file]...
+
+With no script args, %s will upload a screenshot of
+the full desktop.
+
+The first use will ask for a client API key, by logging in or registering
+for a new account.
+
+Arguments:
+
+    -h, --help                   Show this help, exit
+    -s, --select                 Take screenshot in select mode
+    -w, --window                 Take screenshot in active window mode
+    -f, --full                   Take screenshot in full desktop mode
+    -d, --delay <seconds>        Delay in integer seconds, before taking screenshot
+    --file  <filepath/filename>  Upload specified image. Overrides scrot options
+    --test-account               For use by external script to see if user
+                               has an imgbb Client ID configured
+
+The final dialog displays forum BB-Code for both the direct image link and
+the linked image thumbnail. These can be copy/pasted as desired.
+
+There are options to delete uploaded and/or local screenshot images
+before exiting the script.
+
+If more than one of '-f','-w', or '-s' are passed to the script, the LAST
+one will be used.
+
+")"
+
+# if help option anywhere in args, output $USAGE and exit immediately
+
+for i in "$@"
+do
+    case "$i" in
+    -h|--help)
+
+        printf "$USAGE" "$HOME/.config/image-upload/imgbb" "${SCRIPT}"
+
+        exit 0
+        ;;
+    esac
+done
+
+#### YAD ###
+
+DIALOG="yad --center --borders=20 --window-icon=distributor-logo-bunsenlabs"
+TITLE="--title=$(gettext "Image BBCode")"
+T="--text="
+DELETE="--button=$(gettext "Delete"):2"
+CLOSE="--button=$(gettext "Close"):1"
+CANCEL="--button=$(gettext "Cancel"):1"
+OK="--button=$(gettext "OK"):0"
+
+### required programs ###
+
+declare -a APPS
+APPS=( "yad" "wget" "curl" "scrot" "xdotool" "convert" "composite" )
+
+### FUNCTIONS  #########################################################
+
+### Get script args ###
+
+function getargs(){
+    while [[ ${#} != 0 ]]; do
+        case "$1" in
+            -h | --help)    echo -e "\n${USAGE}"
+                            exit 0
+                            ;;
+            -s | --select)  SCROT="${SCREENSHOT_SELECT_COMMAND}"
+                            ;;
+            -w | --window)  SCROT="${SCREENSHOT_WINDOW_COMMAND}"
+                            ;;
+            -f | --full)    SCROT="${SCREENSHOT_FULL_COMMAND}"
+                            ;;
+            -d | --delay)   if [[ $2 != ?(-)+([0-9]) ]];then
+
+message="\n\t$(gettext "Delay value must be an integer
+Exiting script...")\n"
+                                echo -e "${message}"
+                                yad_error "${message}"
+                                exit 1
+                            else
+                                DELAY="$2"
+                            fi
+                            shift
+                            ;;
+            --file)         FNAME="$2"
+                            if [[ -z "${FNAME}" ]];then
+                                echo "$(gettext "'--file': requires a filename...")" >&2
+                                notify_msg "$(gettext "'--file': requires a filename...")"
+                                exit 1
+                            fi
+                            shift
+                            F_FLAG=1
+                            ;;
+            --auto-upload)  : # ignore - option added for compatibility with bl-imgur-upload
+                            ;;
+            --test-account) TEST=1  # to test if user has Imgbb account
+                            ;;
+                         *) 
+
+message="\n\t$(gettext "Failed to parse options
+Exiting script...")\n"
+
+                            echo -e "${message}" >&2
+                            yad_error "${message}"
+                            exit 1
+                            ;;
+        esac || { echo "$(gettext "Failed to parse options")" >&2 && exit 1; }
+        shift
+    done
+}
+
+### Initialize imgbb.conf config  ###
+
+function settings_conf(){
+    ! [[ -d "${USR_CFG_DIR}" ]] && mkdir -p "${USR_CFG_DIR}" 2>/dev/null
+
+    if ! [[ -f "${SETTINGS_FILE}" ]] 2>/dev/null;then
+        touch "${SETTINGS_FILE}" && chmod 600 "${SETTINGS_FILE}"
+        cat <<EOF > "${SETTINGS_FILE}"
+### IMGBB SCREENSHOT DEFAULT CONFIG ####
+### Read by ${SCRIPT} ###################
+# Most of these settings can be overridden with script args
+
+# imgbb settings
+CLIENT_API_KEY=""
+IMG_VIEWER="bl-image-viewer"
+IMG_EDITOR=""
+
+# Local file settings
+# User directory to save image:
+FILE_DIR="$(xdg-user-dir PICTURES)/screenshots"
+FILE_NAME="imgbb-%Y_%m_%d-%H:%M:%S"
+# possible formats are png | jpg | tif | gif | bmp | webp
+FILE_FORMAT="png"
+
+# Screenshot scrot commands
+SCREENSHOT_SELECT_COMMAND="scrot -s"
+SCREENSHOT_WINDOW_COMMAND="scrot -u"
+SCREENSHOT_FULL_COMMAND="scrot"
+
+EOF
+    fi
+    source "${SETTINGS_FILE}"
+}
+
+# Check for availability of commands used in script.
+
+function declareDependencies(){     # adapted from bl-includes
+    # Usage: declareDependencies command [command...]
+    local missing_commands=()
+    i=
+    for i in "$@"
+    do
+        hash "$i" 2>/dev/null || missing_commands+=(" $i")
+    done
+
+    if [[ ${missing_commands[0]} ]];then
+
+        ERR_MSG="$(gettext "This script requires the following commands:
+
+                %s
+
+            Please install the packages containing the missing commands
+            and re-run the script.")"
+
+        yad_error "$(printf "${ERR_MSG}" "${missing_commands[*]}")"
+
+        exit
+    fi
+}
+
+### File and Image functions ###
+
+function getimage(){
+    local message ret
+    if ! [[ -z ${DELAY} ]] && ! [[ ${SCROT} == "${SCREENSHOT_SELECT_COMMAND}" ]];then
+        SCROT="${SCROT} -d ${DELAY} "
+    elif [[ ${DELAY} ]] && [[ ${SCROT} == "${SCREENSHOT_SELECT_COMMAND}" ]];then
+
+        yad_error "\n\t$(gettext "Use '-d' (delay) or '-s' (select area), not both together.
+
+\tExiting script...
+")"
+        exit
+    else
+        DELAY=0
+        SCROT="${SCROT} -d 1 "   # need a pause so YAD dialog can leave the scene
+    fi
+    if [[ -z "$1" ]]; then
+        # new filename with date
+        img_file="$(date +"${FILE_NAME}.${FILE_FORMAT}")"
+        img_file="${FILE_DIR}/${img_file}" && export img_file
+        take_screenshot "${img_file}"
+    else
+        # upload file instead of screenshot
+        img_file="$1"
+    fi
+
+    # check if file exists
+
+    if ! [[ -f "${img_file}" ]]; then
+        message="\n\t$(printf "$(gettext "file %s doesn't exist!
+
+\tExiting script...
+")" "'${img_file}'")"
+
+        echo -e "${message}"
+        yad_error "${message}"
+        exit 1
+    fi
+    make_thumbnail "${img_file}"     # make thumbnail for dialog icon
+}
+
+function make_thumbnail(){
+    local img="$1"
+    local img_name img_dirpath
+
+    img_name="$(basename "${img}")"
+    img_dirpath="$(dirname "${img}")"
+    thumbnail="${img_dirpath}/th_${img_name}"
+
+    convert "${img}" -resize ${THUMB_SIZE} "${img_dirpath}/th_${img_name}"
+}
+
+function delete_local(){    # delete local screenshot; don't delete if '--file' was script arg.
+    local message msg ret
+    source "${BL_YAD_INCLUDES}"
+
+    if (( F_FLAG == 0));then    # local file wasn't uploaded, so don't offer to delete it
+
+
+        message="\n\t"$(printf "$(gettext "Move local screenshot image to 'Trash'?
+
+\t%s
+")" "${img_file}")
+
+
+        yad_question "--image=dialog-question" "${message}"
+        ret="$?"
+
+        if (( ret == 0 )); then
+            if gio trash "${img_file}" >/dev/null;then # send to 'Wastebasket'
+                gio trash "${thumbnail}"
+            else
+                rm -f "${img_file}"
+                rm -f "${thumbnail}"
+            fi
+            msg="\t$(gettext "Local screenshot deleted:")
+
+\t\"${img_file}\"\n"
+
+        else
+            rm -f "${thumbnail}"   # Presumably we don't want to keep temporary thumbnail
+        fi
+    else
+        rm -f "${thumbnail}"   # Delete file upload thumbnail
+    fi
+    notify_msg "${msg}"
+    rm -f "${thumb_tempfile}"
+}
+
+function take_screenshot() {
+    local cmd_scrot shot_err message msg
+    cmd_scrot="${SCROT}$1"
+
+    msg="$(gettext "Countdown to screenshot from %s seconds
+    (There may be a few seconds of inactivity
+    while the screenshot takes place.")"
+
+    if (( DELAY > 1 ));then
+        if echo "${cmd_scrot}" | grep -w "\-d" &>/dev/null;then     # show countdown indicator
+            ${DIALOG} --image=dialog-information --undecorated  \
+                --timeout=${DELAY} --timeout-indicator=bottom \
+                --text="$(printf "${msg}" "${DELAY}")" \
+                ${CANCEL}
+            (( $? == 1 )) && exit
+        fi
+    fi
+
+    shot_err="$( (${cmd_scrot} >&2) 2>&1)" #takes a screenshot
+
+    if (( $? != 0 )); then
+
+        message="$(gettext "
+        Failed to take screenshot of
+        %s
+
+        Error: %s
+")"
+
+        printf "${message}" "$1" "'${shot_err}'"
+
+        yad_error "$(printf "${message}" "$1" "'${shot_err}'")"
+
+        exit 1
+    fi
+}
+
+function show_image(){  # display image using viewer set in imgbb.conf
+    # if image viewer not set, then default to browser
+    [[ -z "${IMG_VIEWER}" ]] && IMG_VIEWER="x-www-browser"
+    ${IMG_VIEWER} "${img_file}"
+}
+
+function image_resize(){
+    # Reduce image size to 10%-90% of original, or
+    # Increase image size by 10%-300%
+
+    local img="$1"
+    local message
+
+    if ! [[ -f "${img}" ]];then
+
+        err_msg="$(gettext "Can't find %s")"
+
+        printf "\n${err_msg}\n" "${img}"
+
+        yad_error "$(printf "${err_msg}" "${img}")"
+
+        exit 1
+    fi
+
+    img_name="$(basename "${img}")"
+    img_dirpath="$(dirname "${img}")"
+
+    # Escape the ! characters:
+
+    dlg=$(yad --center --form --undecorated --on-top --borders=20 \
+        --image="${thumbnail}" \
+        --text="\n\t$(printf "Screenshot saved to: %s
+
+\
+\tImage : %s
+\tFilesize: %s" "${img_dirpath}" "${img_name}" "${img_size}" )\n" \
+        --columns=2 \
+        --field="\t\t$(gettext "Reduce dimensions to %") ":NUM "50\!10..95\!5\!\!" \
+        --field="\t\t$(gettext "Increase dimensions to %") ":NUM "200\!110..300\!10\!\!" \
+        --field=:LBL --field=:LBL \
+        --button=$(gettext "Reduce"):0 --button=$(gettext "Enlarge"):2 --button=$(gettext "Cancel"):1 \
+        )
+    ans=$?
+    reduce=$(echo "${dlg}" | awk -F '|' '{print $1}')
+    enlarge=$(echo "${dlg}" | awk -F '|' '{print $2}')
+
+    if (( ans == 0 ));then
+        resize=${reduce}
+    elif (( ans == 2 ));then
+        resize=${enlarge}
+    fi
+    if (( ans != 1 ));then
+        temp_file=$(mktemp --tmpdir resize.XXX) # stores curl output for use by ${response}
+
+        resize_cmd="$(gettext "convert %s -resize %s %s")"
+
+        message="
+        $(gettext "Resizing image...")
+
+        "
+set -x # needed so progress bar shows
+
+        eval "$(printf "${resize_cmd}" "${img}" "${resize}%" "${img_file}")" 2>&1 > "${temp_file}" | yad --center --progress --pulsate --auto-close \
+            --progress-text="${message}" \
+            --undecorated --on-top --sticky \
+            --borders=20 --button="$(gettext "Cancel")":'/bin/bash -c "killall convert"' 2>/dev/null
+set +x
+        resize_err=$(cat "${temp_file}")  # used by calling function
+
+        if (( $? != 0 )); then
+
+            message="$(gettext "Failed to resize image
+\t%s:
+
+\tError: %s")"
+
+            printf "\n\t$(gettext "${message}")\n" "${img_name}" "${resize_err}"
+
+            yad_error "$(printf "\n\t$(gettext "${message}")\n" "${img_name}" "${resize_err}")"
+
+            exit 1
+        fi
+
+        rm -f "${temp_file}"
+
+    fi
+}
+
+function watermark_thumb() {    # add watermark to thumbnail if uploaded image has been deleted
+
+    local delete_text="$HOME/tmp/deleted.png"
+
+    # create watermark image
+
+    convert  -background transparent -fill red -size 160x60 label:"$(gettext 'UPLOAD
+     DELETED')" "${delete_text}"
+
+    # overlay thumbnail with watermark
+
+    composite -dissolve 50% -gravity west "${delete_text}" "${thumb_tempfile}" "${thumb_tempfile}"
+
+    rm -f "${delete_text}"
+}
+### END Image Functions ################################################
+
+function get_client_api_key(){
+    local curr_desktop message dlg ans dlg_msg dlg_err
+
+    curr_desktop=$(xdotool get_desktop)             # get Desktop index, so we can return to it
+
+    message="$(gettext 'You need to register or log in to your imgbb account to get an API key.
+
+1. Choose "Run browser" to go to "https://api.imgbb.com/"
+2. Create an account or sign in, then return to the API page ("About" >> "API").
+3. Choose "Get API key" and copy/paste it into the dialog entry field.
+4. Choose "OK."')"
+
+
+    dlg=$(${DIALOG} --center --form --image=dialog-question --image-on-top \
+    --title="$(gettext "imgbb Client API key")" --text="${message}" \
+    --fixed --borders=20 \
+    --sticky --on-top \
+    --field="$(gettext "Client API key"):" "" \
+    --button="$(gettext "Run browser")":"/bin/bash -c 'run_browser addclient'" \
+    --width=650 \
+    ${OK} ${CANCEL}
+    ) 2>/dev/null
+    ans="$?"
+    [[ ${ans} == 1 ]] && exit 0
+    CLIENT_API_KEY="$(echo "${dlg}" | awk -F '|' '{print $1}')" # 'pipe' separators
+
+    # check returned values: API key must be 32 chars long, containing 'aA-fF' or '0-9'
+
+    if [[ -z "${CLIENT_API_KEY}" ]] || (( ${#CLIENT_API_KEY} != 32 )) \
+        || ! [[ ${CLIENT_API_KEY} =~ ^[a-fA-F0-9]+$ ]];then
+        err_msg="$(gettext "Client API key is wrong!")"
+    fi
+    if [[ ${err_msg} ]]; then
+
+        dlg_msg="$(gettext "%s
+
+Try again or Exit script?")"
+
+        printf "\n${dlg_msg}\n" "${err_msg}"
+
+        dlg_err=$(${DIALOG} --text="$(printf "\n${dlg_msg}\n" "${err_msg}")" \
+        --undecorated \
+        --image="dialog-question" --button="$(gettext "Exit"):1" ${OK}) 2>/dev/null
+        ans=$?
+        if (( ans == 0 )); then
+            get_client_api_key
+        else
+            exit
+        fi
+    fi
+
+    # write credentials to imgbb.conf
+    # sed: change line containing <string> to <stringvar>
+
+    api_line="CLIENT_API_KEY="\""${CLIENT_API_KEY}\""
+    sed -i "s/^CLIENT_API_KEY.*/${api_line}/" "${SETTINGS_FILE}"
+    source "${SETTINGS_FILE}"
+
+    xdotool key ctrl+shift+w  # close browser window
+    xdotool set_desktop "${curr_desktop}"
+}
+
+function run_browser(){     # run browser with API url, or user's account
+    local api_call="$1"     # function called from button in dialog
+
+    if [[ ${api_call} = "addclient" ]]; then        # get client API key
+        x-www-browser --new-window "${API_URL}" &
+    else
+        x-www-browser --new-window "${api_call}" &  # open image url
+    fi
+}
+
+function upload_image(){
+    temp_file=$(mktemp --tmpdir response.XXX) # stores curl output for use by ${response}
+    curl_cmd="curl -s --location --request POST https://api.imgbb.com/1/upload?key=${CLIENT_API_KEY} \
+    --form image=@${img_file}"
+    local message="
+    $(gettext "Uploading screenshot to imgbb...")
+
+    "
+
+    # Run curl command passed as first arg; write output to tempfile; pipe to yad --progress
+
+set -x  # needed so pulsate progress displays, for some reason
+
+    eval "${curl_cmd}" 2>&1 > "${temp_file}" | yad --center --progress --pulsate --auto-close \
+    --progress-text="${message}" \
+    --undecorated --on-top --sticky \
+    --borders=20 --button="$(gettext "Cancel")":'/bin/bash -c "killall curl"' 2>/dev/null
+set +x
+    response=$(cat "${temp_file}")  # used by calling function
+    rm -f "${temp_file}"
+
+    del_url="$(jq -r '.data.delete_url' <<< "${response}")"
+    img_link="$(jq -r '.data.image.url' <<< "${response}")" && export img_link  # used by show_image()
+    img_small="$(jq -r '.data.thumb.url' <<< "${response}")"
+
+    bb_direct_link="[img]${img_link}[/img]"
+    bb_thumb_linked="[url=${img_link}][img]${img_small}[/img][/url]"
+
+    # download image thumbnail, for display in YAD dialog
+
+    thumb_tempfile="${HOME}/tmp/thumb.jpg"
+    wget -q -O "${thumb_tempfile}" "${img_small}"
+
+    KEEP_BB=1                               # Keep BBCodes on clipboard
+
+    notify_msg "$(gettext "BBCode placed on clipboard")"
+}
+
+function return_to_desktop(){
+    local curr_desktop="$1"
+    if [[ ${IMG_VIEWER} = "x-www-browser" ]];then
+        xdotool key ctrl+shift+w  # close browser window
+    else
+        pkill -xf "${IMG_VIEWER} ${img_file}"
+    fi
+    xdotool set_desktop "${curr_desktop}"
+}
+
+function notify_msg(){      # for displaying notifications; add to or clear clipboard
+    local MSG="$1"
+    if (( KEEP_BB == 0 ));then  # uploaded file was deleted, clear clipboard
+        echo '' | xsel -i       # 'xsel -c' not working when clipboard manager in use :(
+        echo '' | xsel -ib
+    else
+        echo "${bb_thumb_linked}" | xsel -i     # for middle-mouse paste
+        echo "${bb_thumb_linked}" | xsel -ib    # for ctrl-V/Paste
+    fi
+    notify-send "$(echo -e ${MSG})"
+}
+
+### IMAGE EDITOR FUNCTIONS ###
+
+function run_editor() {          # run selected image editor
+
+    local img="$1"
+
+    if [[ -z "${IMG_EDITOR}" ]]; then
+        set_editor
+    else
+        gimp "${img}"
+    fi
+
+    make_thumbnail "${img}"      # make new thumbnail
+
+    TEXT="$(printf '%s\n' \
+        "$(gettext '<b>imgbb Screenshooter</b>
+
+%s
+Filesize: %s
+(EDITED)')" \
+        "$(basename "${img}")" \
+        "${img_size}"
+    )"
+}
+
+
+
+function set_editor(){          # set image editor
+    local ret
+    local txt="
+$(gettext "Enter name of editor or browse for the executable file")
+
+"
+    SET_DLG=$($DIALOG "${TITLE}" --entry --image="dialog-question" \
+        "${T}${txt}" \
+        --button="$(gettext "Browse"):2" \
+        --button="$(gettext "OK"):0" \
+        --button="$(gettext "Cancel"):1" \
+        )
+    ret=$?
+
+    case ${ret} in
+        0)  IMG_EDITOR="${SET_DLG}"     # edit SETTINGS_FILE with contents of entry box
+            sed -i 's|IMG_EDITOR=\"\"|IMG_EDITOR=\"'"${IMG_EDITOR}"'\"|' "${SETTINGS_FILE}"
+            source "${SETTINGS_FILE}"
+            ;;
+        2)  browse_editor           # browse for executable file of image editor
+            ;;
+    esac
+}
+
+function browse_editor(){           # browse for executable file of image editor
+    ED_DLG=$($DIALOG --file --filename="/usr/bin" 2>/dev/null)
+    sed -i 's|IMG_EDITOR=\"\"|IMG_EDITOR=\"'"${ED_DLG}"'\"|' "${SETTINGS_FILE}"
+    source "${SETTINGS_FILE}"
+}
+
+### MAIN FUNCTION ###
+
+function main(){
+    settings_conf   # set up imgbb.conf if necessary
+
+    # set defaults
+    SCROT="${SCREENSHOT_FULL_COMMAND}"
+    IMG_VIEWER=$(grep -oP '(?<=IMG_VIEWER=").*(?=")' "${SETTINGS_FILE}")
+    TEST=0                      # Flag to test if user has Imgbb account
+
+    export -f run_browser       # to be used in YAD button command
+    export -f show_image        # to be used in YAD button command
+
+    [[ -z "${IMG_VIEWER}" ]] && IMG_VIEWER="x-www-browser"
+
+    if ! . "${BL_YAD_INCLUDES}" 2> /dev/null; then
+
+        printf "$(gettext "Error: Failed to source yad-includes in %s")" "${BL_YAD_INCLUDES}" >&2
+
+        exit 1
+
+    elif ! . "${SETTINGS_FILE}" 2> /dev/null; then
+
+        printf "$(gettext "Error: Failed to source %s in %s")" "${SETTINGS_FILE}" "${USR_CFG_DIR}/" >&2
+
+        exit 1
+    fi
+
+    declareDependencies  "${APPS[@]}"    # see if system has the required commands installed
+
+    getargs "${@}"
+
+    # if '--test-account' was used: see if user has imgbb credentials, return exit code.
+
+    if (( TEST == 1 ));then
+        if [[ -z "${CLIENT_API_KEY}" ]];then
+            exit 1
+        else
+            exit 0
+        fi
+    fi
+
+    # If no imgbb account has been set in SETTINGS_FILE, then register for API key
+
+    [[ -z "${CLIENT_API_KEY}" ]] && get_client_api_key
+
+    getimage "${FNAME}"
+
+    img_size=$(du -h "${img_file}" | awk '{print $1}') # filesize for display in dialog text
+
+    dtop="$(xdotool get_desktop)"
+
+    # Options to show or edit screenshot before uploading
+
+    TEXT="$(printf '%s\n' \
+    "$(gettext '<b>imgbb Screenshooter</b>
+
+%s
+Filesize: %s')" \
+    "$(basename "${img_file}")" \
+    "${img_size}"
+)"
+
+
+    while true;do
+        ${DIALOG} --sticky --on-top --center "${TITLE}" \
+        --image="${thumbnail}" \
+        --text="${TEXT}" \
+        --button="$(gettext "Edit"):5" \
+        --button="$(gettext "Show screenshot"):2" \
+        --button="$(gettext "Resize image"):3" \
+        --button="$(gettext "Upload"):4" \
+        --button="$(gettext "Exit"):1"
+
+        ans=$?
+        case ${ans} in
+            2)  show_image
+                continue
+                ;;
+            3)  image_resize "${img_file}"
+                continue
+                ;;
+            4)  upload_image
+                break
+                ;;
+            5)  run_editor "${img_file}"
+                continue
+                ;;
+            *)  delete_local
+                exit
+                ;;
+        esac
+    done
+    return_to_desktop "${dtop}"
+
+    # Show 'Delete' button until image has been deleted
+
+    while true;do
+        if wget --spider "${del_url}" 2>/dev/null; then # page exists
+
+            ret=$(${DIALOG} --image-on-top --image="${thumb_tempfile}" "${TITLE}" \
+                ${T}"${TEXT}" --text-align=left \
+                --form \
+                --field="$(gettext "BB Code - Thumbnail linked")":TXT "${bb_thumb_linked}" \
+                --field="$(gettext "BB Code - Direct image link")":TXT "${bb_direct_link}" \
+                --button="$(gettext "Show Image")":"/bin/bash -c 'show_image'" \
+                ${DELETE} ${CLOSE} \
+                --width="680") 2>/dev/null
+            ret="$?"
+            if (( ret == 2 )); then # block loop until image deletion is confirmed by user
+                curr_desktop=$(xdotool get_desktop) # get Desktop index, so we can return to it
+
+                # Open user's imgbb webpage with uploaded screenshot
+                x-www-browser --new-window "${del_url}" &
+
+                txt="
+    $(gettext "Choose 'OK' when you have confirmed image deletion
+
+    (the delete link is below the image)")"
+
+                dlg=$(${DIALOG} --on-top --undecorated --image="dialog-information" \
+                    ${T}"${txt}" \
+                    ${OK} ${CANCEL} \
+                    )
+                ret=$?
+                if (( ret == 0 ));then
+                    xdotool key ctrl+shift+w  # close browser window, and resume loop
+                    xdotool set_desktop "${curr_desktop}"
+                    watermark_thumb
+                    continue
+                else
+                    xdotool key ctrl+shift+w  # close browser window, and resume loop
+                    xdotool set_desktop "${curr_desktop}"
+                    continue
+                fi
+            else        # dialog 'Close' chosen
+                break
+            fi
+        else    # Image deletion confirmed, but user may still want to view the image
+
+            msg="$(printf '%s\n' \
+    "$(gettext 'Screenshot was saved as
+"%s"
+
+File size: %s')" \
+    "${img_file}" \
+    "${img_size}"
+)"
+
+            ret=$(${DIALOG} --image-on-top --image="${thumb_tempfile}" "${TITLE}" \
+            ${T}"${msg}" --text-align=left \
+            --button="$(gettext "Show Image")":"/bin/bash -c 'show_image'" \
+            ${CLOSE}  \
+            ) 2>/dev/null
+            break
+        fi
+    done
+    delete_local
+}
+
+### END FUNCTIONS ######################################################
+
+main "$@"
+exit
+

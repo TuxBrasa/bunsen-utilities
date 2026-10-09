@@ -1,0 +1,235 @@
+#!/usr/bin/env bash
+#
+#    bl-tint2-session: a script to read a saved Tint2 session file
+#     and start the tint2s
+#    Copyright (C) 2015 damo    <damo@bunsenlabs.org>
+#                  2021 John Crawley <john@bunsenlabs.org>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   To start the chosen Tint2 session at login, add the following line
+#   to config/openbox/autostart:
+#
+#      bl-tint2-session
+#
+########################################################################
+
+
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-tint2-session script
+
+TEXTDOMAIN="bl-tint2-session"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+if ! command -v yad &> /dev/null; then
+
+  echo -e "\nThe yad program is not installed.\n"
+
+  exit 1
+
+fi
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+
+
+for cmd in tint2 pkill; do
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        yad \
+            --center \
+            --window-icon "$logo" \
+            --image=dialog-error \
+            --timeout=10 \
+            --no-buttons \
+            --title "$(gettext "Warning")" \
+            --text "$(printf '%s\n' \
+                "$(gettext "The following required program is not installed: ")
+" \
+                "${cmd}")" \
+            --width="450" \
+            --height="100" \
+            2>/dev/null
+
+        exit 1
+    fi
+
+done
+
+
+
+TINT2PATH="$HOME/.config/tint2"
+DEFAULTTINT2=$(readlink -f "${TINT2PATH}/tint2rc") # tint2rc is a symlink to this release's default tint2 file
+SESSIONFILE="$TINT2PATH/tint2-sessionfile"
+
+USAGE="$(gettext 'bl-tint2-session is a script to parse a saved Tint2 session file
+and start the tint2s.
+
+Usage: bl-tint2-session [OPTION(S)]...[FILES]
+
+Optional arguments:
+
+    --help | -h
+        show this message
+    <SESSIONFILE>
+
+With no command arguments, the script uses the default tint2 session file
+~/.config/tint2/tint2-sessionfile" if it exists and is non-empty,
+otherwise the default tint2rc is written to a new tint2-sessionfile.
+
+If a filepath is passed it is used as the session file,
+multiple sessions can be loaded.
+
+If not absolute, sessionfile paths are assumed to be relative to ~/.config/tint2/
+
+Relative tint2 paths are checked against HOME and ~/.config/tint2/,
+with the latter having priority.
+
+NOTE this script will return an error if passed an empty sessionfile.
+To avoid that, check the file before calling bl-tint2-session.
+
+To start the default tint2 session at login,
+add the following line to autostart:
+
+    bl-tint2-session
+')"
+
+# look for a help option somewhere
+
+for i in "$@"
+do
+    case "$i" in
+    -h|--help)
+        echo "$USAGE"
+        exit 0
+        ;;
+    esac
+done
+
+# Kill only with exact match, and only if process belongs to executor.
+# Usage: safeKill <processname>
+
+function safeKill(){
+    pkill -x -u "$USER" "$1"
+}
+
+findArgs(){
+    while [[ -n $1 ]]
+    do
+        case "$1" in
+        '-h'|'--help') # but already checked above
+            echo -e "$USAGE"
+            exit 0
+            ;;
+        -*)
+            printf "\n$(gettext "%s: %s: no such option")\n" "$0" "${1}" >&2
+
+            echo -e "$USAGE"
+            exit 1
+            ;;
+        *)
+            loadSession "$1" # non-default session file was passed
+            ;;
+        esac
+        shift
+    done
+}
+
+fullPath(){
+    local path=$1
+    if [[ $path != /* ]]; then
+        if [[ -r "$TINT2PATH/$path" ]]; then
+            path="$TINT2PATH/$path"
+        elif [[ -r "$HOME/$path" ]]; then
+            path="$HOME/$path"
+        fi
+    fi
+
+    [[ -r $path ]] || { printf "\n$(gettext "%s: WARNING: cannot read %s")\n" "$0" "$path" >&2 ; return 1;}
+
+    printf '%s' "$path"
+}
+
+loadSession(){
+    local sessfile=$1 tints
+    [[ $sessfile = /* ]] || sessfile="$TINT2PATH/$sessfile" # was relative path
+    if [[ -f $sessfile ]] && grep -q '[^[:space:]]' "$sessfile"; then
+        safeKill tint2
+        tints=0
+        set -m
+        while read -r path;do
+            [[ -z $path ]] && continue ## ignore empty line
+            path=$( fullPath "$path" ) || continue
+            tint2 -c "$path" >/dev/null 2>&1 &
+            disown
+            sleep 0.5
+            (( tints++ ))
+        done < "$sessfile"
+        set +m
+        (( tints > 0 )) || {
+
+            printf "$(gettext "%s: ERROR: session file %s did not launch any tint2s.")" "$0" "$sessfile" >&2
+
+            exit 1
+        }
+    else
+
+        printf "$(gettext "%s: ERROR: session file %s is empty or does not exist.")" "$0" "$sessfile" >&2
+
+        exit 1
+    fi
+}
+
+########################################################################
+
+if [[ ! -f $SESSIONFILE ]] || ! grep -q '[^[:space:]]' "$SESSIONFILE"; then
+
+    printf "$(gettext "%s: There is no non-empty default session file: %s, generating now...")" "$0" "${SESSIONFILE}" >&2
+
+    if [[ -f $DEFAULTTINT2 ]]; then
+
+        echo "${DEFAULTTINT2#"$HOME"/}" > "$SESSIONFILE"
+
+    else
+
+        printf "$(gettext "%s: ERROR: unable to generate default session file.")" "$0" >&2
+
+        exit 1
+    fi
+fi
+
+if (( $# == 0 )); then
+    loadSession "$SESSIONFILE"
+else
+    findArgs "$@"
+fi
+

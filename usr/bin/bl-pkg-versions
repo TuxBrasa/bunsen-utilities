@@ -1,0 +1,193 @@
+#!/usr/bin/env bash
+#
+#    bl-pkg-versions: a script to check versions of BunsenLabs packages
+#    Copyright (C) 2015-2025  John Crawley <john@bunsenlabs.org>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+########################################################################
+
+
+# https://github.com/BunsenLabs/bunsen-utilities
+
+
+# Internationalize the bl-pkg-versions script
+
+TEXTDOMAIN="bl-pkg-versions"
+TEXTDOMAINDIR="/usr/share/locale"
+
+export TEXTDOMAIN TEXTDOMAINDIR
+
+
+if ! command -v yad &> /dev/null; then
+
+  echo -e "\nThe yad program is not installed.\n"
+
+  exit 1
+
+fi
+
+logo="/usr/share/icons/Bunsen-lightdm/256x256/status/avatar-default.png"
+
+which gettext        1> /dev/null 2> /dev/null || { yad \
+--center \
+--window-icon "$logo" \
+--image=dialog-error \
+--timeout=10 \
+--no-buttons \
+--title "Warning" \
+--text "The gettext program is not installed." \
+--width="450" --height="100" \
+2>/dev/null   ; exit ; }
+
+
+for cmd in curl awk sed tput printf; do
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        yad \
+            --center \
+            --window-icon "$logo" \
+            --image=dialog-error \
+            --timeout=10 \
+            --no-buttons \
+            --title "$(gettext "Warning")" \
+            --text "$(printf '%s\n' \
+                "$(gettext "The following required program is not installed: ")
+" \
+                "${cmd}")" \
+            --width="450" \
+            --height="100" \
+            2>/dev/null
+
+        exit 1
+    fi
+
+done
+
+
+HELP="$(gettext "bl-pkg-versions: a script to check versions of BunsenLabs packages
+
+Usage:
+
+    bl-pkg-versions [-h|--help][<release>]
+
+Options:
+
+        -h, --help      Show this message.
+        <empty>|carbon  Check the Carbon packages.
+        boron           Check the Boron packages.
+        beryllium       Check the Beryllium packages.
+        lithium         Check the Lithium packages.
+
+It will display the versions of bunsen packages
+on the BunsenLabs package and GitHub source repositories.
+")"
+
+
+
+required_commands='curl awk sed tput printf'
+
+# base url for GitHub repository names
+readonly GITHUB_ROOT=https://github.com/BunsenLabs
+readonly GITHUB_CONTENT_ROOT=https://raw.githubusercontent.com/BunsenLabs
+
+case $1 in
+--help|-h)
+    echo "$HELP"
+    exit
+    ;;
+''|carbon)
+    readonly GITHUB_BRANCH=carbon
+    readonly SERVER=http://pkg.bunsenlabs.org
+    readonly RELEASE=carbon
+    ;;
+boron)
+    readonly GITHUB_BRANCH=boron
+    readonly SERVER=http://pkg.bunsenlabs.org
+    readonly RELEASE=boron
+    ;;
+beryllium)
+    readonly GITHUB_BRANCH=beryllium
+    readonly SERVER=http://pkg.bunsenlabs.org
+    readonly RELEASE=beryllium
+    ;;
+#beryllium-dev)
+#    readonly GITHUB_BRANCH=beryllium
+#    readonly SERVER=https://kelaino.bunsenlabs.org/~johnraff
+#    readonly RELEASE=beryllium
+#    ;;
+lithium)
+    readonly GITHUB_BRANCH=lithium
+    readonly SERVER=http://pkg.bunsenlabs.org
+    readonly RELEASE=lithium
+    ;;
+*)
+
+    printf "$(gettext "%s: no such option")" "$1" >&2
+
+    exit 1
+    ;;
+esac
+
+readonly BUNSEN_PACKAGE_LIST="${SERVER}/debian/dists/${RELEASE}/main/binary-amd64/Packages"
+
+missing_commands=
+for i in $required_commands
+do
+    hash $i || missing_commands+=" $i"
+done
+
+[[ $missing_commands ]] && error_exit "$(printf "$(gettext "This script requires the following commands: %s
+Please install the packages containing the missing commands
+and rerun the script.")" "$missing_commands")"
+
+# get version of GitHub repo from sourcename
+
+lookup_github() {
+    reponame="$1"
+    chlog="${GITHUB_CONTENT_ROOT}/${reponame}/${GITHUB_BRANCH}/debian/changelog"
+    remote_version="$(curl -s "$chlog" | sed -rn "0,/${reponame}/s/.+\(([0-9]+[a-zA-Z0-9.+~:-]*)\).*/\1/p;")"
+    printf '%s' "$remote_version"
+}
+
+repo_list=$( curl -sL "$BUNSEN_PACKAGE_LIST" | awk '
+BEGIN{RS="";FS="\n"}
+/Package:[ \t]*bunsen-/ {
+    delete A
+    for(i=1;i<=NF;i++) {
+        split($i,F,":")
+        A[F[1]] = F[2]
+    }
+    if ( A["Source"]=="" )
+        A["Source"]=A["Package"];
+    if (B[A["Source"]]=="1")
+        next;
+    print A["Source"], A["Version"]
+    B[A["Source"]]="1"
+}
+')
+
+tput bold
+printf '%-30s %-22s %-22s\n\n' 'Source Repo' 'apt version' 'git version'
+tput sgr0
+while read -r srcname apt_version
+do
+    git_version=$(lookup_github "$srcname")
+    [[ $git_version != "$apt_version" ]] && tput bold
+    printf '%-30s %-22s %-22s\n' "$srcname" "$apt_version" "$git_version"
+    tput sgr0
+done <<<"$repo_list"
+
+exit
+
