@@ -41,18 +41,26 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk # type: ignore
 
 
+# To test:
+
 # LANG=pt_BR.UTF-8 ./bl-reload-gtk23 --help
 
+
 # To internationalize messages with gettext, put the entire string inside _().
+
+
+# The compiled file should be located at:
+
+# /usr/share/locale/.../LC_MESSAGES/bl-reload-gtk23.mo
+
 
 import gettext
 
 DOMAIN = "bl-reload-gtk23"
-LOCALE_DIR = Path(__file__).parent / "locale"
 
 translation = gettext.translation(
     DOMAIN,
-    localedir=LOCALE_DIR,
+    localedir="/usr/share/locale",
     fallback=True,
 )
 
@@ -84,6 +92,7 @@ LOG_FORMAT = "%(asctime)s %(levelname)s %(module)s %(funcName)s() : %(message)s"
 #
 # NOTE: There *are* GTK properties that are NOT part of the xsettings client in gtk and have no
 # place (yet) xsettingsd, for example gtk-application-prefer-dark-theme.
+
 XSETTINGSD_MAPPINGS = {
    "gtk-button-images"                : "Gtk/ButtonImages",
    "gtk-color-palette"                : "Gtk/ColorPalette",
@@ -132,10 +141,12 @@ XSETTINGSD_MAPPINGS = {
 
 # Values seen by GTK's settings parser as truthy as far as booleans are concerned. It is unknown if
 # this list is complete...
+
 TRUTHY = { "1", "true", "TRUE" }
 
 # These are GTK enum types as exposed by the GI GTK repository. They can be cast to the values
 # expected in xsettingsd and gtk INI config by casting them to int.
+
 GTK_ENUMS = {
    gi.repository.Gtk.ToolbarStyle,
    gi.repository.Gtk.IconSize,
