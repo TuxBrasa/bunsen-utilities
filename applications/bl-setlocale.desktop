@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Set User Locale
-Comment=Choose locale for this user from among those installed.
-Exec=bl-setlocale
-Icon=bunsenlabs
-Type=Application
-Categories=Settings;
-StartupNotify=false
