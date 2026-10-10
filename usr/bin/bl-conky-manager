@@ -441,11 +441,17 @@ chooseDesktop(){
         done
         ;;
     esac
-    yadtext="$(printf "$(gettext "Choose a desktop for %s:")" "$(pangoEscape "${path##*/}")"
-    [[ ${CONKY_CONF[out_to_wayland]} = 'true' ]] && yadtext+="
+
+yadtext=$(printf '%s' "$(printf "$(gettext "Choose a desktop for %s:")" \
+    "$(pangoEscape "${path##*/}")")")
+
+if [[ ${CONKY_CONF[out_to_wayland]} = true ]]; then
+    yadtext+="
 
 $(gettext "(Conkys running on native Wayland cannot be assigned to a desktop
- so this choice will be applied in X11 sessions only.)") "
+ so this choice will be applied in X11 sessions only.)")"
+fi
+
     choice=$($DLGDEC $WINICON --list --title="$TITLE" \
         --text="$yadtext" \
         --radiolist \
@@ -454,7 +460,6 @@ $(gettext "(Conkys running on native Wayland cannot be assigned to a desktop
     [[ $choice = x || -z $choice ]] && return 1
     printf '%s' "$choice"
 }
-
 
 chooseStartup(){
     local file chk name sflst choice
